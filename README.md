@@ -1,75 +1,96 @@
-# React + TypeScript + Vite
+# Nameer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Nameer is a React and TypeScript web application built with Vite. The current interface is an Arabic, right-to-left styled with Tailwind CSS and shadcn/ui components.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Requirements
 
-## React Compiler
+- Git
+- Node.js (use a current LTS release)
+- npm (included with Node.js)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Get started
 
-## Expanding the ESLint configuration
+Clone the repository and install the exact dependency versions from the lockfile:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+git clone https://github.com/sanataff/Nameer.git
+cd Nameer
+npm ci
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Start the local development server:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm run dev
 ```
+
+Vite prints the local URL in the terminal (usually `http://localhost:5173`).
+
+## Available commands
+
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the Vite development server with hot reload |
+| `npm run lint` | Check the project with ESLint |
+| `npm run build` | Run the TypeScript project build and create a production build |
+| `npm run preview` | Preview the production build locally (run `npm run build` first) |
+
+Before submitting a change, run:
+
+```bash
+npm run lint
+npm run build
+```
+
+## Project structure
+
+```text
+src/
+  components/
+    ui/          # shadcn/ui components used by the app
+  lib/           # Shared utilities
+  App.tsx        # Main application UI
+  App.css        # Application-specific styles
+  index.css      # Global styles and design tokens
+  main.tsx       # React entry point
+index.html       # HTML entry point; Arabic language and RTL direction
+```
+
+## Working with shadcn/ui
+
+This project uses shadcn/ui with Tailwind CSS v4 and the `@` alias for `src`. Add only the components you need:
+
+```bash
+npx shadcn@latest add button input
+```
+
+Use semantic theme classes such as `bg-primary` and `text-foreground` so components follow the shared theme. The primary brand color is configured in `src/index.css`.
+
+## Contributing
+
+1. Update your local `main` branch before starting work:
+
+   ```bash
+   git switch main
+   git pull
+   ```
+
+2. Create a branch for your change:
+
+   ```bash
+   git switch -c feature/short-description
+   ```
+
+3. Make focused changes that match the existing React, TypeScript, and shadcn/ui patterns.
+4. Run `npm run lint` and `npm run build`.
+5. Commit your changes with a clear message and push your branch:
+
+   ```bash
+   git add <changed-files>
+   git commit -m "Describe the change"
+   git push -u origin feature/short-description
+   ```
+
+6. Open a pull request against `main`. Include a concise summary, screenshots for UI changes, and the checks you ran.
+
