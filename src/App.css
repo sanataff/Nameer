@@ -305,6 +305,282 @@ html[dir="rtl"] .role-option {
   margin-top: 1.5rem;
 }
 
+.app-shell {
+  position: relative;
+  min-height: 100vh;
+}
+
+.supplier-dashboard-page {
+  position: relative;
+  min-height: 100vh;
+  background: var(--muted);
+  color: var(--foreground);
+  font-family: Tahoma, "Segoe UI", sans-serif;
+}
+
+html[lang="en"] .supplier-dashboard-page {
+  font-family: var(--font-sans);
+}
+
+.supplier-dashboard-page .language-switch {
+  position: absolute;
+  inset-block-start: 0.75rem;
+  inset-inline-end: 1rem;
+}
+
+.supplier-dashboard-layout {
+  min-height: 100vh;
+}
+
+.sidebar-brand {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 700;
+}
+
+.supplier-dashboard-content {
+  min-width: 0;
+}
+
+.dashboard-topbar {
+  display: flex;
+  min-height: 4rem;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  border-block-end: 1px solid var(--border);
+  background: var(--card);
+}
+
+.dashboard-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-inline-start: auto;
+  padding-inline-end: 5rem;
+}
+
+.dashboard-main {
+  display: flex;
+  width: min(100%, 82rem);
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-inline: auto;
+  padding: 1.75rem clamp(1rem, 3vw, 2.5rem) 2.5rem;
+}
+
+.dashboard-welcome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.dashboard-welcome h1 {
+  margin: 0.2rem 0 0.4rem;
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.dashboard-welcome p {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+.dashboard-welcome .dashboard-eyebrow {
+  font-size: 0.8125rem;
+}
+
+.dashboard-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.dashboard-metric [data-slot="card-header"] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.metric-icon {
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: var(--secondary);
+  color: var(--primary);
+}
+
+.metric-icon svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.metric-value {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.metric-note {
+  margin: 0.4rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+
+.dashboard-overview {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(20rem, 1fr);
+  gap: 1rem;
+}
+
+.dashboard-chart-card [data-slot="card-header"],
+.dashboard-request-card [data-slot="card-header"] {
+  padding-block-end: 0.5rem;
+}
+
+.chart-total {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-block-end: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.dashboard-chart {
+  display: block;
+  height: 11rem;
+}
+
+.request-cafe-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.request-avatar {
+  border: 1px solid var(--border);
+}
+
+.dashboard-products-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.dashboard-section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.dashboard-section-heading h2 {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.dashboard-section-heading p {
+  margin: 0.25rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+
+.section-link {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+
+.dashboard-products {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.dashboard-product-card {
+  min-width: 0;
+}
+
+.product-image-placeholder {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  min-height: 8.5rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--secondary);
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+
+.product-image-placeholder svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.product-image-placeholder > :not(.product-image-skeleton) {
+  z-index: 1;
+}
+
+.product-image-skeleton {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  opacity: 0.45;
+}
+
+.product-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding-block-start: 0.75rem;
+}
+
+.product-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.product-title-row h3 {
+  overflow: hidden;
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.product-card-content p {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+
+.product-card-content > strong {
+  font-size: 0.875rem;
+}
+
+.product-card-content > strong span {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
 @media (max-width: 30rem) {
   .auth-page {
     padding: 1.25rem 1rem;
@@ -341,4 +617,51 @@ html[dir="rtl"] .role-option {
   .supplier-register .auth-field-row {
     display: grid;
   }
+}
+
+@media (max-width: 62rem) {
+  .dashboard-overview {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 48rem) {
+  .dashboard-metrics,
+  .dashboard-products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboard-topbar {
+    min-height: 3.5rem;
+    padding-inline: 1rem;
+  }
+
+  .dashboard-main {
+    padding-block-start: 1.25rem;
+  }
+}
+
+@media (max-width: 30rem) {
+  .dashboard-metrics,
+  .dashboard-products {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-main {
+    gap: 1.1rem;
+    padding-inline: 0.9rem;
+  }
+
+  .dashboard-welcome {
+    align-items: flex-start;
+  }
+
+  .dashboard-welcome > [data-slot="badge"] {
+    margin-block-start: 0.4rem;
+  }
+
+  .dashboard-overview {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
 }
