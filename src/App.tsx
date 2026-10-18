@@ -1,98 +1,339 @@
-import { useState, type FormEvent } from 'react'
-import { ImageIcon } from 'lucide-react'
+import { useEffect, useState, type FormEvent } from 'react'
+import { ChefHat, Languages, Store } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
-import { Field, FieldGroup, FieldLabel } from '@/components/ui/field'
+import { Field, FieldGroup, FieldLabel, FieldLegend, FieldSet } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
+import i18n from '@/i18n'
 import './App.css'
 
-function App() {
-  const [message, setMessage] = useState('')
+type AccountRole = 'supplier' | 'cafe'
+type Page = 'role' | 'register' | 'login'
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+function App() {
+  const { t, i18n: translation } = useTranslation()
+  const [page, setPage] = useState<Page>('role')
+  const [role, setRole] = useState<AccountRole | null>(null)
+  const [message, setMessage] = useState('')
+  const [formError, setFormError] = useState('')
+  const language = translation.resolvedLanguage?.split('-')[0] ?? 'ar'
+
+  useEffect(() => {
+    document.documentElement.lang = language
+    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr'
+    document.title = `Nameer | ${t(
+      page === 'login'
+        ? 'login.title'
+        : page === 'register'
+          ? 'registration.title'
+          : 'roleSelection.title',
+    )}`
+  }, [language, page, t])
+
+  function openRegistration(selectedRole: AccountRole) {
+    setRole(selectedRole)
+    setMessage('')
+    setFormError('')
+    setPage('register')
+  }
+
+  function handleRegister(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    setMessage('هذه واجهة تجريبية، ولم يتم تسجيل الدخول فعليًا.')
+    setFormError('')
+    const formData = new FormData(event.currentTarget)
+
+    if (formData.get('password') !== formData.get('confirmPassword')) {
+      setMessage('')
+      setFormError(t('registration.passwordMismatch'))
+      return
+    }
+
+    setMessage(t('registration.success'))
+  }
+
+  function handleLogin(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    setMessage(t('login.notConnected'))
   }
 
   return (
-    <main className="login-page" dir="rtl">
-      <div className="login-layout" dir="ltr">
-        <div className="login-visual" aria-hidden="true">
-          <div className="visual-art">
-            <div className="visual-orbit">
-              <div className="visual-center">
-                <ImageIcon />
-              </div>
-            </div>
+    <main className="auth-page">
+      <Button
+        className="language-switch"
+        variant="outline"
+        size="sm"
+        type="button"
+        onClick={() => void i18n.changeLanguage(language === 'ar' ? 'en' : 'ar')}
+        aria-label={t('language.switchTo')}
+      >
+        <Languages data-icon="inline-start" aria-hidden="true" />
+        {t('language.switchTo')}
+      </Button>
+
+      {page === 'role' && (
+        <section className="role-screen" aria-labelledby="role-title">
+          <header className="auth-heading">
+            <h1 id="role-title">{t('roleSelection.title')}</h1>
+            <p>{t('roleSelection.description')}</p>
+          </header>
+
+          <div className="role-options">
+            <Button
+              className="role-option"
+              variant="outline"
+              type="button"
+              onClick={() => openRegistration('supplier')}
+            >
+              <span className="role-illustration" aria-hidden="true">
+                <ChefHat />
+              </span>
+              <span className="role-option-label">{t('roleSelection.supplier')}</span>
+            </Button>
+
+            <Button
+              className="role-option"
+              variant="outline"
+              type="button"
+              onClick={() => openRegistration('cafe')}
+            >
+              <span className="role-illustration" aria-hidden="true">
+                <Store />
+              </span>
+              <span className="role-option-label">{t('roleSelection.cafe')}</span>
+            </Button>
           </div>
-        </div>
 
-        <section className="login-panel" dir="rtl" aria-labelledby="login-title">
-          <div className="login-content">
-            <header className="login-heading">
-              <h1 id="login-title">سجّل الدخول إلى حسابك</h1>
-              <p>أدخل بريدك الإلكتروني أدناه لتسجيل الدخول إلى حسابك</p>
-            </header>
+          <p className="auth-switch">
+            {t('common.alreadyHaveAccount')}{' '}
+            <button type="button" onClick={() => { setMessage(''); setPage('login') }}>
+              {t('common.signIn')}
+            </button>
+          </p>
+        </section>
+      )}
 
-            <form className="login-form" onSubmit={handleSubmit}>
-              <FieldGroup className="login-fields">
+      {page === 'register' && role && (
+        <section
+          className={role === 'cafe' ? 'form-screen business-register' : 'form-screen'}
+          aria-labelledby="register-title"
+        >
+          <header className="auth-heading">
+            <h1 id="register-title">{t('registration.title')}</h1>
+            <p>{t(role === 'supplier' ? 'registration.supplierDescription' : 'registration.cafeDescription')}</p>
+          </header>
+
+          <form className="auth-form" onSubmit={handleRegister}>
+            <FieldGroup className="auth-fields">
+              <Field>
+                <FieldLabel htmlFor="business-name">
+                  {t(role === 'supplier' ? 'common.businessName' : 'common.cafeName')}
+                </FieldLabel>
+                <Input id="business-name" name="businessName" autoComplete="organization" required />
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor="register-email">{t('common.email')}</FieldLabel>
+                <Input
+                  id="register-email"
+                  name="email"
+                  type="email"
+                  dir="ltr"
+                  placeholder={t('common.emailPlaceholder')}
+                  autoComplete="email"
+                  required
+                />
+              </Field>
+
+              <div className="auth-field-row">
                 <Field>
-                  <FieldLabel htmlFor="email">البريد الإلكتروني</FieldLabel>
+                  <FieldLabel htmlFor="register-phone">{t('common.phone')}</FieldLabel>
                   <Input
-                    id="email"
-                    name="email"
-                    type="email"
+                    id="register-phone"
+                    name="phone"
+                    type="tel"
                     dir="ltr"
-                    placeholder="me@example.com"
-                    autoComplete="email"
+                    placeholder="+966"
+                    autoComplete="tel"
                     required
                   />
                 </Field>
-
                 <Field>
-                  <FieldLabel htmlFor="password">كلمة المرور</FieldLabel>
+                  <FieldLabel htmlFor="city">{t('common.city')}</FieldLabel>
+                  <Input id="city" name="city" autoComplete="address-level2" required />
+                </Field>
+              </div>
+
+              {role === 'cafe' && (
+                <FieldSet className="business-details">
+                  <FieldLegend>{t('registration.businessDetails')}</FieldLegend>
+                  <Field>
+                    <FieldLabel htmlFor="registered-business-name">
+                      {t('registration.registeredBusinessName')}
+                    </FieldLabel>
+                    <Input
+                      id="registered-business-name"
+                      name="registeredBusinessName"
+                      autoComplete="organization"
+                      required
+                    />
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="commercial-registration">
+                      {t('registration.commercialRegistration')}
+                    </FieldLabel>
+                    <Input
+                      id="commercial-registration"
+                      name="commercialRegistration"
+                      inputMode="numeric"
+                      autoComplete="off"
+                      required
+                    />
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="vat-number">
+                      {t('registration.vatNumber')} <span className="optional-label">({t('common.optional')})</span>
+                    </FieldLabel>
+                    <Input
+                      id="vat-number"
+                      name="vatNumber"
+                      inputMode="numeric"
+                      autoComplete="off"
+                    />
+                  </Field>
+                  <p className="business-details-note">{t('registration.vatHelp')}</p>
+                  <p className="business-details-label">{t('registration.nationalAddress')}</p>
+                  <div className="auth-field-row">
+                    <Field>
+                      <FieldLabel htmlFor="district">{t('registration.district')}</FieldLabel>
+                      <Input id="district" name="district" autoComplete="address-level3" required />
+                    </Field>
+                    <Field>
+                      <FieldLabel htmlFor="street">{t('registration.street')}</FieldLabel>
+                      <Input id="street" name="street" autoComplete="street-address" required />
+                    </Field>
+                  </div>
+                  <div className="auth-field-row">
+                    <Field>
+                      <FieldLabel htmlFor="building-number">{t('registration.buildingNumber')}</FieldLabel>
+                      <Input id="building-number" name="buildingNumber" inputMode="numeric" required />
+                    </Field>
+                    <Field>
+                      <FieldLabel htmlFor="postal-code">{t('registration.postalCode')}</FieldLabel>
+                      <Input
+                        id="postal-code"
+                        name="postalCode"
+                        inputMode="numeric"
+                        autoComplete="postal-code"
+                        required
+                      />
+                    </Field>
+                  </div>
+                  <Field>
+                    <FieldLabel htmlFor="short-address">
+                      {t('registration.shortAddress')} <span className="optional-label">({t('common.optional')})</span>
+                    </FieldLabel>
+                    <Input id="short-address" name="shortAddress" autoComplete="off" />
+                  </Field>
+                </FieldSet>
+              )}
+
+              <div className="auth-field-row">
+                <Field>
+                  <FieldLabel htmlFor="register-password">{t('common.password')}</FieldLabel>
                   <Input
-                    id="password"
+                    id="register-password"
                     name="password"
                     type="password"
-                    dir="ltr"
-                    autoComplete="current-password"
+                    autoComplete="new-password"
+                    minLength={8}
                     required
                   />
                 </Field>
-              </FieldGroup>
-
-              <div className="login-links">
-                <button
-                  type="button"
-                  onClick={() => setMessage('استعادة كلمة المرور غير مفعّلة في هذه الواجهة التجريبية.')}
-                >
-                  نسيت كلمة المرور؟
-                </button>
+                <Field>
+                  <FieldLabel htmlFor="confirm-password">{t('common.confirmPassword')}</FieldLabel>
+                  <Input
+                    id="confirm-password"
+                    name="confirmPassword"
+                    type="password"
+                    autoComplete="new-password"
+                    minLength={8}
+                    required
+                  />
+                </Field>
               </div>
+            </FieldGroup>
 
-              <Button className="login-submit" type="submit">
-                سجّل الدخول
-              </Button>
+            {formError && <p className="form-feedback form-error" role="alert">{formError}</p>}
+            {message && <p className="form-feedback" role="status">{message}</p>}
 
-              <p className="signup-prompt">
-                ليس لديك حساب؟{' '}
-                <button
-                  type="button"
-                  onClick={() => setMessage('إنشاء الحساب غير مفعّل في هذه الواجهة التجريبية.')}
-                >
-                  سجّل الآن
-                </button>
-              </p>
+            <Button className="auth-submit" type="submit">
+              {t('common.createAccount')}
+            </Button>
+          </form>
 
-              {message && (
-                <p className="login-message" role="status">
-                  {message}
-                </p>
-              )}
-            </form>
+          <div className="auth-footer">
+            <button
+              className="text-button"
+              type="button"
+              onClick={() => { setMessage(''); setFormError(''); setPage('role') }}
+            >
+              {t('common.backToRoleSelection')}
+            </button>
+            <p className="auth-switch">
+              {t('common.alreadyHaveAccount')}{' '}
+              <button type="button" onClick={() => { setMessage(''); setPage('login') }}>
+                {t('common.signIn')}
+              </button>
+            </p>
           </div>
         </section>
-      </div>
+      )}
+
+      {page === 'login' && (
+        <section className="form-screen login-screen" aria-labelledby="login-title">
+          <header className="auth-heading">
+            <h1 id="login-title">{t('login.title')}</h1>
+            <p>{t('login.description')}</p>
+          </header>
+
+          <form className="auth-form" onSubmit={handleLogin}>
+            <FieldGroup className="auth-fields">
+              <Field>
+                <FieldLabel htmlFor="login-email">{t('common.email')}</FieldLabel>
+                <Input
+                  id="login-email"
+                  name="email"
+                  type="email"
+                  dir="ltr"
+                  placeholder={t('common.emailPlaceholder')}
+                  autoComplete="email"
+                  required
+                />
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="login-password">{t('common.password')}</FieldLabel>
+                <Input
+                  id="login-password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                />
+              </Field>
+            </FieldGroup>
+
+            {message && <p className="form-feedback" role="status">{message}</p>}
+            <Button className="auth-submit" type="submit">{t('login.submit')}</Button>
+          </form>
+
+          <p className="auth-switch">
+            {t('common.noAccount')}{' '}
+            <button type="button" onClick={() => { setMessage(''); setPage('role') }}>
+              {t('common.signUp')}
+            </button>
+          </p>
+        </section>
+      )}
     </main>
   )
 }

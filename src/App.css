@@ -2,186 +2,312 @@
   min-height: 100vh;
 }
 
-.login-page {
+.auth-page {
+  position: relative;
   display: grid;
   min-height: 100vh;
   place-items: center;
-  padding: 3rem;
+  padding: 2rem 1.25rem;
   font-family: Tahoma, "Segoe UI", sans-serif;
 }
 
-.login-layout {
+html[lang="en"] .auth-page {
+  font-family: var(--font-sans);
+}
+
+.language-switch {
+  position: absolute;
+  inset-block-start: 1.25rem;
+  inset-inline-end: 1.25rem;
+  font-family: inherit;
+}
+
+.role-screen,
+.form-screen {
+  width: min(100%, 28rem);
+}
+
+.business-register {
+  width: min(100%, 75rem);
+}
+
+.business-register .auth-heading {
+  margin-bottom: 1rem;
+}
+
+.business-register .auth-form {
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.business-register .auth-fields {
   display: grid;
-  width: min(100%, 70rem);
-  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.9fr);
-  align-items: center;
-  gap: clamp(3rem, 9vw, 8rem);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 0.75rem;
 }
 
-.login-visual {
+.business-register .auth-field-row {
+  display: contents;
+}
+
+.business-register .business-details {
   display: grid;
-  min-height: min(72vh, 30rem);
-  place-items: center;
-  background: #f5f5f5;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 0.65rem 0.75rem;
 }
 
-.visual-art {
-  position: relative;
-  display: grid;
-  width: min(72%, 15rem);
-  aspect-ratio: 1;
-  place-items: center;
-  background:
-    linear-gradient(90deg, transparent calc(50% - 0.5px), #e8e8e8 50%, transparent calc(50% + 0.5px)),
-    linear-gradient(0deg, transparent calc(50% - 0.5px), #e8e8e8 50%, transparent calc(50% + 0.5px)),
-    linear-gradient(45deg, transparent calc(50% - 0.5px), #e8e8e8 50%, transparent calc(50% + 0.5px)),
-    linear-gradient(-45deg, transparent calc(50% - 0.5px), #e8e8e8 50%, transparent calc(50% + 0.5px));
+.business-register .business-details [data-slot="field-legend"],
+.business-register .business-details-note,
+.business-register .business-details-label {
+  grid-column: 1 / -1;
 }
 
-.visual-orbit {
-  display: grid;
-  width: 66%;
-  aspect-ratio: 1;
-  place-items: center;
-  border: 1px solid #dedede;
-  border-radius: 50%;
-  background: #f5f5f5;
+.business-register .auth-submit {
+  min-height: 2.25rem;
 }
 
-.visual-center {
-  display: grid;
-  width: 4.25rem;
-  aspect-ratio: 1;
-  place-items: center;
-  border: 1px solid #dedede;
-  border-radius: 50%;
-  background: #fafafa;
-  color: #aaa;
+@media (max-width: 64rem) {
+  .business-register .auth-fields,
+  .business-register .business-details {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
-.visual-center svg {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.login-panel {
+.role-screen {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
-.login-content {
-  width: min(100%, 22rem);
+.auth-heading {
+  margin-bottom: 1.75rem;
+  text-align: center;
 }
 
-.login-heading {
-  margin-bottom: 1.5rem;
-  text-align: right;
-}
-
-.login-heading h1 {
+.auth-heading h1 {
   margin: 0 0 0.45rem;
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1.4;
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.45;
 }
 
-.login-heading p {
+.auth-heading p {
   margin: 0;
   color: var(--muted-foreground);
   font-size: 0.875rem;
+  font-weight: 400;
   line-height: 1.7;
 }
 
-.login-form,
-.login-fields {
+.role-options {
+  display: flex;
+  direction: ltr;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+.role-option {
+  display: flex;
+  width: 12.5rem;
+  height: auto;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.45rem;
+  direction: inherit;
+  padding: 0.45rem;
+  border-color: var(--border);
+  border-radius: var(--radius-md);
+  background: var(--background);
+  color: var(--foreground);
+  white-space: normal;
+}
+
+html[dir="rtl"] .role-option {
+  direction: rtl;
+}
+
+.role-option:hover {
+  border-color: var(--primary);
+  background: var(--background);
+}
+
+.role-illustration {
+  display: grid;
+  width: 100%;
+  aspect-ratio: 1;
+  place-items: center;
+  border-radius: 0.25rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.role-illustration svg {
+  width: 2.25rem;
+  height: 2.25rem;
+  stroke-width: 1.8;
+}
+
+.role-option-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.5rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.auth-form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--card);
 }
 
-.login-fields [data-slot="field-label"] {
-  font-family: inherit;
+.auth-fields {
+  gap: 0.9rem;
+}
+
+.business-details {
+  gap: 0.75rem;
+  padding-block-start: 0.25rem;
+}
+
+.business-details [data-slot="field-legend"] {
   font-size: 0.875rem;
+  font-weight: 600;
 }
 
-.login-fields [data-slot="input"] {
-  height: 2.75rem;
+.business-details-note,
+.business-details-label,
+.optional-label {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.business-details-note {
+  margin: -0.35rem 0 0;
+  line-height: 1.6;
+}
+
+.business-details-label {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.auth-fields [data-slot="field-label"] {
+  font-family: inherit;
+  font-size: 0.8125rem;
+}
+
+.auth-fields [data-slot="input"] {
+  min-height: 2.5rem;
   font-family: "Segoe UI", Tahoma, sans-serif;
 }
 
-.login-links {
-  display: flex;
-  justify-content: flex-start;
-  margin-top: -0.25rem;
+.auth-field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
 }
 
-.login-links button,
-.signup-prompt button {
+.auth-submit {
+  width: 100%;
+  min-height: 2.5rem;
+  font-family: inherit;
+}
+
+.auth-switch {
+  margin: 1.25rem 0 0;
+  color: var(--muted-foreground);
+  text-align: center;
+  font-size: 0.8125rem;
+}
+
+.auth-switch button,
+.text-button {
   padding: 0;
   border: 0;
   background: none;
   color: var(--foreground);
   font: inherit;
-  font-size: 0.8125rem;
   text-decoration: underline;
   text-underline-offset: 3px;
   cursor: pointer;
 }
 
-.login-submit {
-  width: 100%;
-  height: 2.75rem;
-  font-family: inherit;
+.auth-footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
 }
 
-.signup-prompt {
-  margin: 0;
-  text-align: center;
-  font-size: 0.875rem;
+.auth-footer .auth-switch {
+  margin-top: 0.5rem;
 }
 
-.login-message {
+.text-button {
+  margin-top: 1rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+
+.form-feedback {
   margin: 0;
   color: var(--muted-foreground);
-  text-align: center;
   font-size: 0.8125rem;
   line-height: 1.6;
+  text-align: center;
 }
 
-@media (max-width: 48rem) {
-  .login-page {
-    padding: 1.5rem;
-  }
+.form-error {
+  color: var(--destructive);
+}
 
-  .login-layout {
-    width: min(100%, 32rem);
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
-  .login-visual {
-    min-height: 13rem;
-  }
+.login-screen .auth-switch {
+  margin-top: 1.5rem;
 }
 
 @media (max-width: 30rem) {
-  .login-page {
+  .auth-page {
+    padding: 1.25rem 1rem;
+  }
+
+  .auth-heading {
+    margin-bottom: 1.35rem;
+  }
+
+  .role-options {
+    gap: 0.85rem;
+  }
+
+  .role-option {
+    width: min(43vw, 9.5rem);
+  }
+
+  .auth-form {
     padding: 1rem;
   }
 
-  .login-layout {
-    gap: 1.5rem;
+  .auth-field-row {
+    grid-template-columns: 1fr;
   }
 
-  .login-visual {
-    min-height: 10rem;
+  .business-register .auth-fields,
+  .business-register .business-details {
+    grid-template-columns: 1fr;
   }
 
-  .visual-art {
-    width: min(48%, 10rem);
-  }
-
-  .visual-center {
-    width: 3.25rem;
+  .business-register .auth-field-row {
+    display: grid;
   }
 }
