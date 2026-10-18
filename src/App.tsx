@@ -2,8 +2,22 @@ import { useEffect, useState, type FormEvent } from 'react'
 import { ChefHat, Languages, Store } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
-import { Field, FieldGroup, FieldLabel, FieldLegend, FieldSet } from '@/components/ui/field'
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+  FieldLegend,
+  FieldSet,
+} from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import i18n from '@/i18n'
 import './App.css'
 
@@ -41,6 +55,23 @@ function App() {
     event.preventDefault()
     setFormError('')
     const formData = new FormData(event.currentTarget)
+
+    if (role === 'supplier') {
+      const today = new Date()
+      const localToday = [
+        today.getFullYear(),
+        String(today.getMonth() + 1).padStart(2, '0'),
+        String(today.getDate()).padStart(2, '0'),
+      ].join('-')
+      const authorizationExpiry = String(formData.get('authorizationExpiry') ?? '')
+      const healthCertificateExpiry = String(formData.get('healthCertificateExpiry') ?? '')
+
+      if (authorizationExpiry < localToday || healthCertificateExpiry < localToday) {
+        setMessage('')
+        setFormError(t('registration.expiredDocument'))
+        return
+      }
+    }
 
     if (formData.get('password') !== formData.get('confirmPassword')) {
       setMessage('')
@@ -114,7 +145,7 @@ function App() {
 
       {page === 'register' && role && (
         <section
-          className={role === 'cafe' ? 'form-screen business-register' : 'form-screen'}
+          className={role === 'cafe' ? 'form-screen business-register' : 'form-screen supplier-register'}
           aria-labelledby="register-title"
         >
           <header className="auth-heading">
@@ -234,6 +265,123 @@ function App() {
                     </FieldLabel>
                     <Input id="short-address" name="shortAddress" autoComplete="off" />
                   </Field>
+                </FieldSet>
+              )}
+
+              {role === 'supplier' && (
+                <FieldSet className="supplier-details">
+                  <FieldLegend>{t('registration.supplierLegalDetails')}</FieldLegend>
+                  <Field>
+                    <FieldLabel htmlFor="supplier-authorization-type">
+                      {t('registration.authorizationType')}
+                    </FieldLabel>
+                    <Select name="authorizationType" required>
+                      <SelectTrigger id="supplier-authorization-type" className="w-full">
+                        <SelectValue placeholder={t('registration.selectAuthorization')} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="freelance">{t('registration.freelanceDocument')}</SelectItem>
+                        <SelectItem value="productive-family">{t('registration.productiveFamilyCertificate')}</SelectItem>
+                        <SelectItem value="commercial-registration">{t('registration.commercialRegistration')}</SelectItem>
+                        <SelectItem value="other">{t('registration.otherAuthorization')}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="authorization-number">
+                      {t('registration.authorizationNumber')}
+                    </FieldLabel>
+                    <Input id="authorization-number" name="authorizationNumber" required />
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="authorization-expiry">
+                      {t('registration.authorizationExpiry')}
+                    </FieldLabel>
+                    <Input id="authorization-expiry" name="authorizationExpiry" type="date" required />
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="authorization-document">
+                      {t('registration.authorizationDocument')}
+                    </FieldLabel>
+                    <Input
+                      id="authorization-document"
+                      name="authorizationDocument"
+                      type="file"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      required
+                    />
+                    <FieldDescription>{t('registration.documentUploadHelp')}</FieldDescription>
+                  </Field>
+
+                  <Field>
+                    <FieldLabel htmlFor="health-certificate-number">
+                      {t('registration.healthCertificateNumber')}
+                    </FieldLabel>
+                    <Input id="health-certificate-number" name="healthCertificateNumber" required />
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="health-certificate-expiry">
+                      {t('registration.healthCertificateExpiry')}
+                    </FieldLabel>
+                    <Input
+                      id="health-certificate-expiry"
+                      name="healthCertificateExpiry"
+                      type="date"
+                      required
+                    />
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="health-certificate-document">
+                      {t('registration.healthCertificateDocument')}
+                    </FieldLabel>
+                    <Input
+                      id="health-certificate-document"
+                      name="healthCertificateDocument"
+                      type="file"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      required
+                    />
+                    <FieldDescription>{t('registration.documentUploadHelp')}</FieldDescription>
+                  </Field>
+
+                  <p className="business-details-label">{t('registration.nationalAddress')}</p>
+                  <Field>
+                    <FieldLabel htmlFor="supplier-district">{t('registration.district')}</FieldLabel>
+                    <Input id="supplier-district" name="district" autoComplete="address-level3" required />
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="supplier-street">{t('registration.street')}</FieldLabel>
+                    <Input id="supplier-street" name="street" autoComplete="street-address" required />
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="supplier-building-number">{t('registration.buildingNumber')}</FieldLabel>
+                    <Input id="supplier-building-number" name="buildingNumber" inputMode="numeric" required />
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="supplier-postal-code">{t('registration.postalCode')}</FieldLabel>
+                    <Input
+                      id="supplier-postal-code"
+                      name="postalCode"
+                      inputMode="numeric"
+                      autoComplete="postal-code"
+                      required
+                    />
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="supplier-short-address">
+                      {t('registration.shortAddress')} <span className="optional-label">({t('common.optional')})</span>
+                    </FieldLabel>
+                    <Input id="supplier-short-address" name="shortAddress" />
+                  </Field>
+
+                  <Field>
+                    <FieldLabel htmlFor="supplier-vat-number">
+                      {t('registration.vatNumber')} <span className="optional-label">({t('common.optional')})</span>
+                    </FieldLabel>
+                    <Input id="supplier-vat-number" name="vatNumber" inputMode="numeric" />
+                  </Field>
+                  <p className="business-details-note">{t('registration.vatHelp')}</p>
+                  <p className="business-details-note">{t('registration.authorizationHelp')}</p>
                 </FieldSet>
               )}
 

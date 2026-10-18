@@ -31,23 +31,34 @@ html[lang="en"] .auth-page {
   width: min(100%, 75rem);
 }
 
+.supplier-register {
+  width: min(100%, 75rem);
+}
+
 .business-register .auth-heading {
   margin-bottom: 1rem;
 }
 
-.business-register .auth-form {
+.supplier-register .auth-heading {
+  margin-bottom: 1rem;
+}
+
+.business-register .auth-form,
+.supplier-register .auth-form {
   gap: 0.75rem;
   padding: 1rem;
 }
 
-.business-register .auth-fields {
+.business-register .auth-fields,
+.supplier-register .auth-fields {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: start;
   gap: 0.75rem;
 }
 
-.business-register .auth-field-row {
+.business-register .auth-field-row,
+.supplier-register .auth-field-row {
   display: contents;
 }
 
@@ -59,9 +70,20 @@ html[lang="en"] .auth-page {
   gap: 0.65rem 0.75rem;
 }
 
+.supplier-register .supplier-details {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: 0.65rem 0.75rem;
+}
+
 .business-register .business-details [data-slot="field-legend"],
+.supplier-register .supplier-details [data-slot="field-legend"],
 .business-register .business-details-note,
-.business-register .business-details-label {
+.business-register .business-details-label,
+.supplier-register .business-details-note,
+.supplier-register .business-details-label {
   grid-column: 1 / -1;
 }
 
@@ -69,9 +91,15 @@ html[lang="en"] .auth-page {
   min-height: 2.25rem;
 }
 
+.supplier-register .auth-submit {
+  min-height: 2.25rem;
+}
+
 @media (max-width: 64rem) {
   .business-register .auth-fields,
-  .business-register .business-details {
+  .business-register .business-details,
+  .supplier-register .auth-fields,
+  .supplier-register .supplier-details {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -303,11 +331,14 @@ html[dir="rtl"] .role-option {
   }
 
   .business-register .auth-fields,
-  .business-register .business-details {
+  .business-register .business-details,
+  .supplier-register .auth-fields,
+  .supplier-register .supplier-details {
     grid-template-columns: 1fr;
   }
 
-  .business-register .auth-field-row {
+  .business-register .auth-field-row,
+  .supplier-register .auth-field-row {
     display: grid;
   }
 }
