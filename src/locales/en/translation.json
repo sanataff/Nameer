@@ -1,0 +1,40 @@
+{
+  "language": {
+    "switchTo": "العربية"
+  },
+  "common": {
+    "email": "Email address",
+    "emailPlaceholder": "name@example.com",
+    "password": "Password",
+    "signIn": "Sign in",
+    "signUp": "Create an account",
+    "businessName": "Business name",
+    "cafeName": "Café or restaurant name",
+    "phone": "Mobile number",
+    "city": "City",
+    "confirmPassword": "Confirm password",
+    "createAccount": "Create account",
+    "backToRoleSelection": "Back to account type",
+    "alreadyHaveAccount": "Already have an account?",
+    "noAccount": "Don't have an account?"
+  },
+  "roleSelection": {
+    "title": "Create your account",
+    "description": "Choose the account type that suits you",
+    "supplier": "I'm a supplier",
+    "cafe": "I own a café"
+  },
+  "registration": {
+    "title": "Create your account",
+    "supplierDescription": "Enter your supplier business details",
+    "cafeDescription": "Enter your café or restaurant details",
+    "passwordMismatch": "The passwords do not match.",
+    "success": "Your details are valid. Account creation will be available when the service is connected."
+  },
+  "login": {
+    "title": "Sign in to your account",
+    "description": "Enter your email address and password to continue",
+    "submit": "Sign in",
+    "notConnected": "Sign-in is not connected to a service yet."
+  }
+}
