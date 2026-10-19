@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local AI evidence submitted separately to Blackboard
+ai-evidence/
