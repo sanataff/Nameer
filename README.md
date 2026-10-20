@@ -1,6 +1,6 @@
 # Nameer
 
-Nameer is a React and TypeScript web application built with Vite. The current interface is an Arabic, right-to-left styled with Tailwind CSS and shadcn/ui components.
+Nameer is a React and TypeScript web application using React Router Framework Mode in SPA mode, Vite, Tailwind CSS, and shadcn/ui components. The interface supports Arabic (RTL) and English (LTR).
 
 
 ## Requirements
@@ -31,10 +31,11 @@ Vite prints the local URL in the terminal (usually `http://localhost:5173`).
 
 | Command | Description |
 | --- | --- |
-| `npm run dev` | Start the Vite development server with hot reload |
+| `npm run dev` | Start the React Router development server with hot reload |
 | `npm run lint` | Check the project with ESLint |
-| `npm run build` | Run the TypeScript project build and create a production build |
-| `npm run preview` | Preview the production build locally (run `npm run build` first) |
+| `npm run typecheck` | Generate route types and run the TypeScript project build |
+| `npm run build` | Type-check and create the React Router production build |
+| `npm run preview` | Preview the client-side production build locally (run `npm run build` first) |
 
 Before submitting a change, run:
 
@@ -53,9 +54,16 @@ src/
   App.tsx        # Main application UI
   App.css        # Application-specific styles
   index.css      # Global styles and design tokens
-  main.tsx       # React entry point
-index.html       # HTML entry point; Arabic language and RTL direction
+app/
+  root.tsx       # HTML document shell and direction provider
+  routes.ts      # React Router route configuration
+  routes/
+    home.tsx     # Home route
+react-router.config.ts
+vite.config.ts
 ```
+
+Routes are configured in `app/routes.ts`. The current index route renders the existing app UI at `/`; add route modules there as the app grows. SPA mode keeps language detection in the browser and serves the built client app for all routes.
 
 ## Working with shadcn/ui
 
@@ -93,4 +101,3 @@ Use semantic theme classes such as `bg-primary` and `text-foreground` so compone
    ```
 
 6. Open a pull request against `main`. Include a concise summary, screenshots for UI changes, and the checks you ran.
-
