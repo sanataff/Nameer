@@ -19,6 +19,7 @@ html[lang="en"] .auth-page {
   position: absolute;
   inset-block-start: 1.25rem;
   inset-inline-end: 1.25rem;
+  z-index: 40;
   font-family: inherit;
 }
 
@@ -364,6 +365,32 @@ html[lang="en"] .supplier-dashboard-page {
   padding-inline-end: 5rem;
 }
 
+.dashboard-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-inline-start: 0.75rem;
+  font-size: 0.8125rem;
+  min-width: 0;
+}
+
+.dashboard-breadcrumb > span:first-child {
+  overflow: hidden;
+  color: var(--muted-foreground);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard-breadcrumb-separator {
+  color: var(--muted-foreground);
+  opacity: 0.55;
+}
+
+.dashboard-breadcrumb strong {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
 .dashboard-main {
   display: flex;
   width: min(100%, 82rem);
@@ -634,6 +661,11 @@ html[lang="en"] .supplier-dashboard-page {
   .dashboard-topbar {
     min-height: 3.5rem;
     padding-inline: 1rem;
+  }
+
+  .dashboard-breadcrumb > span:first-child,
+  .dashboard-breadcrumb-separator {
+    display: none;
   }
 
   .dashboard-main {

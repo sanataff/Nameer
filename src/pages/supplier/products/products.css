@@ -1,0 +1,932 @@
+/*
+ * Supplier product management page (FR-10 product listing, FR-11 availability).
+ * Visual language: quiet surfaces, thin borders, compact type — inspired by the
+ * dashboards in the reference screenshots (Linear / Attio style).
+ * Only logical properties (inline-start/end, block-start/end) so the layout
+ * mirrors correctly in Arabic RTL.
+ */
+
+.pm-page {
+  --pm-success: oklch(0.62 0.13 152);
+  --pm-warning: oklch(0.68 0.14 70);
+  --pm-danger: oklch(0.58 0.19 25);
+  --pm-radius: 0.75rem;
+  --pm-hairline: color-mix(in oklch, var(--border) 65%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ---------------------------------------------------------------- header -- */
+
+.pm-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.pm-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pm-eyebrow svg {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+/* Letter-spacing looks wrong between connected Arabic letters. */
+html[lang="ar"] .pm-eyebrow,
+html[lang="ar"] .pm-table th {
+  letter-spacing: 0;
+}
+
+.pm-header h1 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.4rem 0 0.3rem;
+  font-size: clamp(1.35rem, 2vw, 1.6rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.pm-count {
+  display: inline-flex;
+  height: 1.4rem;
+  align-items: center;
+  padding-inline: 0.55rem;
+  border-radius: 999px;
+  background: var(--muted);
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.pm-subtitle {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+
+.pm-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* ----------------------------------------------------------------- stats -- */
+
+.pm-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.pm-stat {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.15rem 0.7rem;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: var(--pm-radius);
+  background: var(--card);
+}
+
+/* Icon sits on the inline-end edge; the copy hugs the inline-start edge. */
+.pm-stat > div {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.pm-stat-icon {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  grid-column: 2;
+  grid-row: 1;
+  place-items: center;
+  border-radius: 0.5rem;
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+
+.pm-stat-icon svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.pm-stat-icon--success {
+  background: color-mix(in oklch, var(--pm-success) 14%, transparent);
+  color: var(--pm-success);
+}
+
+.pm-stat-icon--warning {
+  background: color-mix(in oklch, var(--pm-warning) 16%, transparent);
+  color: var(--pm-warning);
+}
+
+.pm-stat-icon--danger {
+  background: color-mix(in oklch, var(--pm-danger) 12%, transparent);
+  color: var(--pm-danger);
+}
+
+.pm-stat p {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+
+.pm-stat strong {
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.pm-stat-note {
+  grid-column: 1 / -1;
+  margin-block-start: 0.35rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+}
+
+/* ------------------------------------------------------- panel + toolbar -- */
+
+.pm-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: calc(var(--pm-radius) + 0.15rem);
+  background: var(--card);
+}
+
+.pm-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 0.9rem;
+  border-block-end: 1px solid var(--border);
+}
+
+.pm-search {
+  position: relative;
+  display: flex;
+  flex: 1 1 16rem;
+  min-width: 11rem;
+  align-items: center;
+}
+
+.pm-search > svg {
+  position: absolute;
+  inset-inline-start: 0.7rem;
+  width: 0.9rem;
+  height: 0.9rem;
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+
+.pm-search [data-slot="input"] {
+  height: 2.25rem;
+  padding-inline: 2.1rem 2.25rem;
+  border-color: transparent;
+  background: color-mix(in oklch, var(--muted) 70%, transparent);
+}
+
+.pm-search [data-slot="input"]:focus-visible {
+  border-color: var(--ring);
+  background: var(--card);
+}
+
+.pm-search kbd {
+  position: absolute;
+  inset-inline-end: 0.6rem;
+  display: grid;
+  min-width: 1.1rem;
+  height: 1.1rem;
+  place-items: center;
+  padding-inline: 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: 0.3rem;
+  background: var(--card);
+  color: var(--muted-foreground);
+  font-family: inherit;
+  font-size: 0.6875rem;
+}
+
+/* Keep the custom "/" hint instead of the browser's clear button. */
+.pm-search input[type="search"]::-webkit-search-cancel-button {
+  display: none;
+}
+
+.pm-filters {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pm-filters .pm-filter {
+  height: 2.25rem;
+  min-width: 9.5rem;
+  border-color: var(--border);
+  background: var(--card);
+}
+
+.pm-view-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.15rem;
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  background: color-mix(in oklch, var(--muted) 60%, transparent);
+}
+
+/* ------------------------------------------------------------- statuses -- */
+
+.pm-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.pm-status-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.pm-status--available {
+  color: var(--pm-success);
+  background: color-mix(in oklch, var(--pm-success) 12%, transparent);
+}
+
+.pm-status--low {
+  color: var(--pm-warning);
+  background: color-mix(in oklch, var(--pm-warning) 16%, transparent);
+}
+
+.pm-status--out {
+  color: var(--pm-danger);
+  background: color-mix(in oklch, var(--pm-danger) 12%, transparent);
+}
+
+.pm-status--paused {
+  color: var(--muted-foreground);
+  background: color-mix(in oklch, var(--muted-foreground) 12%, transparent);
+}
+
+.pm-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  white-space: nowrap;
+}
+
+.pm-category svg {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+/* Category colours are shared by the table thumbnail and the grid cover. */
+.pm-thumb--sweets {
+  background: linear-gradient(140deg, #fdece5, #f8d7c6);
+  color: #b4552d;
+}
+
+.pm-thumb--bakery {
+  background: linear-gradient(140deg, #fbf1da, #f4dfb6);
+  color: #97701d;
+}
+
+.pm-thumb--savory {
+  background: linear-gradient(140deg, #eaf3e5, #d8e9cf);
+  color: #4d7a3d;
+}
+
+.pm-thumb--beverages {
+  background: linear-gradient(140deg, #e8eff8, #d5e1f1);
+  color: #3d6488;
+}
+
+/* ------------------------------------------------------------- collection -- */
+
+.pm-collection {
+  display: flex;
+  flex-direction: column;
+}
+
+.pm-collection .pm-grid {
+  display: none;
+}
+
+.pm-collection[data-view="grid"] .pm-table-wrap {
+  display: none;
+}
+
+.pm-collection[data-view="grid"] .pm-grid {
+  display: grid;
+}
+
+.pm-table-wrap {
+  overflow-x: auto;
+}
+
+.pm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.pm-table th {
+  padding: 0.6rem 0.9rem;
+  border-block-end: 1px solid var(--border);
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-align: start;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.pm-table td {
+  padding: 0.65rem 0.9rem;
+  border-block-end: 1px solid var(--pm-hairline);
+  vertical-align: middle;
+}
+
+.pm-table tbody tr {
+  transition: background-color 0.12s ease;
+}
+
+.pm-table tbody tr:hover {
+  background: color-mix(in oklch, var(--muted) 55%, transparent);
+}
+
+.pm-table tbody tr:last-child td {
+  border-block-end: 0;
+}
+
+.pm-table th:last-child,
+.pm-table td:last-child {
+  width: 3rem;
+  text-align: end;
+}
+
+.pm-thumb {
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: none;
+  place-items: center;
+  border-radius: 0.6rem;
+}
+
+.pm-thumb svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.pm-product-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: 0;
+}
+
+.pm-product-text {
+  min-width: 0;
+}
+
+.pm-product-name {
+  overflow: hidden;
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pm-product-desc {
+  overflow: hidden;
+  max-width: 32ch;
+  margin: 0.2rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pm-price,
+.pm-stock {
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.pm-stock span {
+  margin-inline-start: 0.25rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-weight: 400;
+}
+
+.pm-status-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pm-updated {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+/* -------------------------------------------------------------- grid view -- */
+
+.pm-grid {
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 0.9rem;
+  padding: 1rem;
+}
+
+.pm-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--pm-radius);
+  background: var(--card);
+  transition: border-color 0.15s ease;
+}
+
+.pm-card:hover {
+  border-color: color-mix(in oklch, var(--primary) 40%, var(--border));
+}
+
+.pm-card-media {
+  position: relative;
+  display: flex;
+  min-height: 6.5rem;
+  align-items: flex-start;
+  padding: 0.5rem;
+}
+
+.pm-card-media > svg {
+  position: absolute;
+  inset-block-end: 0.6rem;
+  inset-inline-start: 0.7rem;
+  width: 2rem;
+  height: 2rem;
+  opacity: 0.5;
+}
+
+.pm-card-media-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-inline-start: auto;
+}
+
+.pm-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0.75rem 0.9rem;
+}
+
+.pm-card-body h3 {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.pm-card-body p {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.pm-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.pm-card-meta strong {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.pm-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.6rem 0.9rem;
+  border-block-start: 1px solid var(--border);
+  background: color-mix(in oklch, var(--muted) 45%, transparent);
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+
+/* --------------------------------------------------- loading + empty states -- */
+
+.pm-skeletons {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5rem 0.9rem 1rem;
+}
+
+.pm-skeleton-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 0;
+  border-block-end: 1px solid var(--pm-hairline);
+}
+
+.pm-skeleton-row:last-child {
+  border-block-end: 0;
+}
+
+.pm-skeleton-thumb {
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: none;
+  border-radius: 0.6rem;
+}
+
+.pm-skeleton-line {
+  height: 0.7rem;
+  flex: 1;
+}
+
+.pm-skeleton-line--short {
+  max-width: 8rem;
+}
+
+.pm-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.pm-empty-icon {
+  display: grid;
+  width: 2.75rem;
+  height: 2.75rem;
+  place-items: center;
+  border-radius: 0.85rem;
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+
+.pm-empty-icon svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.pm-empty h2 {
+  margin: 0.35rem 0 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.pm-empty p {
+  max-width: 26rem;
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+
+.pm-empty [data-slot="button"] {
+  margin-block-start: 0.5rem;
+}
+
+.pm-panel-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 0.9rem;
+  border-block-start: 1px solid var(--border);
+}
+
+.pm-panel-footer p {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+
+/* ----------------------------------------------------------------- toast -- */
+
+.pm-toast {
+  position: fixed;
+  inset-block-end: 1.25rem;
+  inset-inline-end: 1.25rem;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.6rem 0.85rem;
+  border: 1px solid var(--border);
+  border-radius: 0.7rem;
+  background: var(--popover);
+  color: var(--popover-foreground);
+  box-shadow: 0 12px 30px -14px rgb(0 0 0 / 0.45);
+  font-size: 0.8125rem;
+  animation: pm-toast-in 0.18s ease-out;
+}
+
+.pm-toast svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--pm-success);
+}
+
+.pm-toast[data-tone="error"] svg {
+  color: var(--pm-danger);
+}
+
+@keyframes pm-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pm-toast,
+  .pm-table tbody tr,
+  .pm-card {
+    animation: none;
+    transition: none;
+  }
+}
+
+/* ------------------------------------------------- product form (sheet) -- */
+
+/* `[data-slot]` keeps these overrides above the utility classes that
+   SheetContent ships with. */
+.pm-sheet[data-slot="sheet-content"] {
+  gap: 0;
+  width: min(100vw, 26rem);
+  padding: 0;
+  font-family: Tahoma, "Segoe UI", sans-serif;
+}
+
+html[lang="en"] .pm-sheet[data-slot="sheet-content"] {
+  font-family: var(--font-sans);
+}
+
+.pm-sheet [data-slot="sheet-header"] {
+  padding: 1rem 1.1rem;
+  border-block-end: 1px solid var(--border);
+}
+
+.pm-sheet-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.pm-sheet-icon {
+  display: grid;
+  width: 2.25rem;
+  height: 2.25rem;
+  flex: none;
+  place-items: center;
+  border-radius: 0.6rem;
+  background: color-mix(in oklch, var(--primary) 14%, transparent);
+  color: var(--primary);
+}
+
+.pm-sheet-icon svg {
+  width: 1.05rem;
+  height: 1.05rem;
+}
+
+.pm-sheet-heading-text {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.pm-sheet-form {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+}
+
+.pm-form-body {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+  padding: 1.1rem;
+}
+
+.pm-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.pm-field label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.pm-field [data-slot="input"],
+.pm-field [data-slot="select-trigger"] {
+  height: 2.25rem;
+}
+
+.pm-field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.pm-field-error {
+  margin: 0;
+  color: var(--destructive);
+  font-size: 0.75rem;
+}
+
+.pm-optional {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
+.pm-input-suffix {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.pm-input-suffix [data-slot="input"] {
+  padding-inline-end: 3rem;
+}
+
+.pm-input-suffix span {
+  position: absolute;
+  inset-inline-end: 0.7rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  pointer-events: none;
+}
+
+.pm-availability-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 0.7rem;
+  background: color-mix(in oklch, var(--muted) 45%, transparent);
+}
+
+.pm-availability-box p {
+  margin: 0.25rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.pm-sheet [data-slot="sheet-footer"] {
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-block-start: 0;
+  padding: 0.9rem 1.1rem;
+  border-block-start: 1px solid var(--border);
+  background: color-mix(in oklch, var(--muted) 45%, transparent);
+}
+
+/* ------------------------------------------------------------ responsive -- */
+
+@media (max-width: 72rem) {
+  .pm-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 64rem) {
+  .pm-col-category {
+    display: none;
+  }
+}
+
+@media (max-width: 56rem) {
+  /* Tables become cards on tablets and phones. */
+  .pm-collection[data-view="table"] .pm-table-wrap {
+    display: none;
+  }
+
+  .pm-collection[data-view="table"] .pm-grid {
+    display: grid;
+  }
+
+  .pm-view-toggle {
+    display: none;
+  }
+
+  .pm-search {
+    flex: 1 1 100%;
+  }
+
+  .pm-search kbd {
+    display: none;
+  }
+
+  .pm-filters {
+    flex: 1 1 100%;
+  }
+
+  .pm-filters .pm-filter {
+    min-width: 0;
+    flex: 1;
+  }
+}
+
+@media (max-width: 40rem) {
+  .pm-header {
+    align-items: flex-start;
+  }
+
+  .pm-header-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .pm-col-updated {
+    display: none;
+  }
+
+  .pm-grid {
+    grid-template-columns: 1fr;
+    padding: 0.75rem;
+  }
+
+  .pm-product-desc {
+    max-width: 22ch;
+  }
+
+  .pm-field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pm-toast {
+    inset-inline: 1rem;
+  }
+}

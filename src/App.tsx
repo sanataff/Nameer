@@ -11,6 +11,8 @@ import {
   Store,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { ProductsPage } from '@/pages/supplier/products/ProductsPage'
+import { DesignSystemPage } from '@/pages/design-system/DesignSystemPage'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
@@ -73,30 +75,37 @@ import i18n from '@/i18n'
 import './App.css'
 
 type AccountRole = 'supplier' | 'cafe'
-type Page = 'role' | 'register' | 'login' | 'supplier-dashboard'
+type Page = 'role' | 'register' | 'login' | 'supplier-dashboard' | 'supplier-products'
+/** Which screen is open inside the supplier workspace. */
+type SupplierView = 'dashboard' | 'products'
 
 function App() {
   const { t, i18n: translation } = useTranslation()
+  const isDesignSystem = window.location.pathname === '/design-system'
   const [page, setPage] = useState<Page>('role')
   const [role, setRole] = useState<AccountRole | null>(null)
   const [message, setMessage] = useState('')
   const [formError, setFormError] = useState('')
   const [supplierName, setSupplierName] = useState('')
   const language = translation.resolvedLanguage?.split('-')[0] ?? 'ar'
+  const inSupplierWorkspace =
+    page === 'supplier-dashboard' || page === 'supplier-products'
 
   useEffect(() => {
     document.documentElement.lang = language
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr'
-    document.title = `Nameer | ${t(
+    document.title = isDesignSystem ? 'Nameer | Design System' : `Nameer | ${t(
       page === 'login'
         ? 'login.title'
         : page === 'register'
           ? 'registration.title'
-          : page === 'supplier-dashboard'
-            ? 'supplierDashboard.title'
-            : 'roleSelection.title',
+          : page === 'supplier-products'
+            ? 'supplierProducts.title'
+            : page === 'supplier-dashboard'
+              ? 'supplierDashboard.title'
+              : 'roleSelection.title',
     )}`
-  }, [language, page, t])
+  }, [isDesignSystem, language, page, t])
 
   function openRegistration(selectedRole: AccountRole) {
     setRole(selectedRole)
@@ -144,8 +153,10 @@ function App() {
     setMessage(t('login.notConnected'))
   }
 
+  if (isDesignSystem) return <DesignSystemPage />
+
   return (
-    <div className={page === 'supplier-dashboard' ? 'supplier-dashboard-page' : 'app-shell'}>
+    <div className={inSupplierWorkspace ? 'supplier-dashboard-page' : 'app-shell'}>
       <Button
         className="language-switch"
         variant="outline"
@@ -158,11 +169,17 @@ function App() {
         {t('language.switchTo')}
       </Button>
 
-      {page === 'supplier-dashboard' && (
-        <SupplierDashboard businessName={supplierName} />
+      {inSupplierWorkspace && (
+        <SupplierDashboard
+          businessName={supplierName}
+          view={page === 'supplier-products' ? 'products' : 'dashboard'}
+          onNavigate={(nextView) =>
+            setPage(nextView === 'products' ? 'supplier-products' : 'supplier-dashboard')
+          }
+        />
       )}
 
-      {page !== 'supplier-dashboard' && <main className="auth-page">
+      {!inSupplierWorkspace && <main className="auth-page">
       {page === 'role' && (
         <section className="role-screen" aria-labelledby="role-title">
           <header className="auth-heading">
@@ -559,7 +576,15 @@ function App() {
   )
 }
 
-function SupplierDashboard({ businessName }: { businessName: string }) {
+function SupplierDashboard({
+  businessName,
+  view,
+  onNavigate,
+}: {
+  businessName: string
+  view: SupplierView
+  onNavigate: (view: SupplierView) => void
+}) {
   const { t, i18n: translation } = useTranslation()
   const language = translation.resolvedLanguage?.split('-')[0] ?? 'ar'
   const revenue = new Intl.NumberFormat(language === 'ar' ? 'ar-SA' : 'en-SA', {
@@ -630,9 +655,10 @@ function SupplierDashboard({ businessName }: { businessName: string }) {
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <SidebarMenuButton
-                      isActive
+                      isActive={view === 'dashboard'}
                       tooltip={t('supplierDashboard.title')}
                       aria-label={t('supplierDashboard.title')}
+                      onClick={() => onNavigate('dashboard')}
                     >
                       <LayoutDashboard aria-hidden="true" />
                       <span>{t('supplierDashboard.title')}</span>
@@ -640,12 +666,13 @@ function SupplierDashboard({ businessName }: { businessName: string }) {
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <SidebarMenuButton
-                      disabled
-                      tooltip={t('supplierDashboard.products')}
-                      aria-label={t('supplierDashboard.products')}
+                      isActive={view === 'products'}
+                      tooltip={t('supplierProducts.title')}
+                      aria-label={t('supplierProducts.title')}
+                      onClick={() => onNavigate('products')}
                     >
                       <Package aria-hidden="true" />
-                      <span>{t('supplierDashboard.products')}</span>
+                      <span>{t('supplierProducts.title')}</span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
@@ -695,6 +722,15 @@ function SupplierDashboard({ businessName }: { businessName: string }) {
         <SidebarInset className="supplier-dashboard-content">
         <header className="dashboard-topbar">
           <SidebarTrigger aria-label={t('supplierDashboard.toggleNavigation')} />
+          <nav className="dashboard-breadcrumb" aria-label={t('supplierDashboard.navigation')}>
+            <span>{businessName || t('supplierDashboard.defaultBusinessName')}</span>
+            <span className="dashboard-breadcrumb-separator" aria-hidden="true">/</span>
+            <strong>
+              {view === 'products'
+                ? t('supplierProducts.title')
+                : t('supplierDashboard.title')}
+            </strong>
+          </nav>
           <div className="dashboard-topbar-actions">
             <Button variant="ghost" size="icon" type="button" aria-label={t('supplierDashboard.notifications')}>
               <Bell aria-hidden="true" />
@@ -706,6 +742,8 @@ function SupplierDashboard({ businessName }: { businessName: string }) {
         </header>
 
         <div className="dashboard-main">
+          {view === 'products' ? <ProductsPage /> : (
+          <>
           <header className="dashboard-welcome">
             <div>
               <p className="dashboard-eyebrow">{t('supplierDashboard.welcome')}</p>
@@ -806,7 +844,15 @@ function SupplierDashboard({ businessName }: { businessName: string }) {
                 <h2 id="products-heading">{t('supplierDashboard.recentProducts')}</h2>
                 <p>{t('supplierDashboard.recentProductsDescription')}</p>
               </div>
-              <span className="section-link">{t('supplierDashboard.previewOnly')}</span>
+              <Button
+                variant="outline"
+                size="sm"
+                type="button"
+                onClick={() => onNavigate('products')}
+              >
+                <Package aria-hidden="true" />
+                {t('supplierDashboard.manageProducts')}
+              </Button>
             </header>
             <div className="dashboard-products">
               {products.map((product) => (
@@ -828,6 +874,8 @@ function SupplierDashboard({ businessName }: { businessName: string }) {
               ))}
             </div>
           </section>
+          </>
+          )}
         </div>
           </SidebarInset>
         </SidebarProvider>
