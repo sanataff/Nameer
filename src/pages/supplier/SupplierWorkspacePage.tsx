@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
 import { ProductsPage } from '@/pages/supplier/products/ProductsPage'
+import { OrdersPage } from '@/pages/supplier/orders/OrdersPage'
 import { AppShell } from '@/components/AppShell'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
@@ -40,7 +41,7 @@ import { usePageTitle } from '@/hooks/use-page-title'
 import { SupplierSidebar } from './SupplierSidebar'
 
 type SupplierWorkspacePageProps = {
-  view: 'dashboard' | 'products'
+  view: 'dashboard' | 'products' | 'orders'
 }
 
 type BusinessRequest = {
@@ -134,7 +135,13 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
     },
   ]
 
-  usePageTitle(t(view === 'products' ? 'supplierProducts.title' : 'supplierDashboard.title'))
+  usePageTitle(t(
+    view === 'products'
+      ? 'supplierProducts.title'
+      : view === 'orders'
+        ? 'supplierOrders.title'
+        : 'supplierDashboard.title',
+  ))
 
   const sales = [
     { label: t('supplierDashboard.chartDays.sat'), sales: 48 },
@@ -183,7 +190,11 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
 
   function navigateTo(nextView: SupplierWorkspacePageProps['view']) {
     navigate(
-      nextView === 'products' ? '/supplier/products' : '/supplier/dashboard',
+      nextView === 'products'
+        ? '/supplier/products'
+        : nextView === 'orders'
+          ? '/supplier/orders'
+          : '/supplier/dashboard',
       { state: { businessName } },
     )
   }
@@ -203,7 +214,9 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
                 <strong>
                   {view === 'products'
                     ? t('supplierProducts.title')
-                    : t('supplierDashboard.title')}
+                    : view === 'orders'
+                      ? t('supplierOrders.title')
+                      : t('supplierDashboard.title')}
                 </strong>
               </nav>
               <div className="dashboard-topbar-actions">
@@ -217,7 +230,7 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
             </header>
 
             <div className="dashboard-main">
-              {view === 'products' ? <ProductsPage /> : (
+              {view === 'products' ? <ProductsPage /> : view === 'orders' ? <OrdersPage /> : (
                 <>
                   <header className="dashboard-welcome">
                     <div>

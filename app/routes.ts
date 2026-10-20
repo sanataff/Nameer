@@ -7,4 +7,5 @@ export default [
   route('register/cafe', './routes/auth/register-cafe.tsx'),
   route('supplier/dashboard', './routes/supplier/dashboard.tsx'),
   route('supplier/products', './routes/supplier/products.tsx'),
+  route('supplier/orders', './routes/supplier/orders.tsx'),
 ] satisfies RouteConfig
