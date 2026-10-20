@@ -262,6 +262,7 @@ html[dir="rtl"] .role-option {
 }
 
 .auth-switch button,
+.auth-switch a,
 .text-button {
   padding: 0;
   border: 0;

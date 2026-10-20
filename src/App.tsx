@@ -1,4 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router'
 import {
   Bell,
   ChefHat,
@@ -12,7 +13,6 @@ import {
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { ProductsPage } from '@/pages/supplier/products/ProductsPage'
-import { DesignSystemPage } from '@/pages/design-system/DesignSystemPage'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
@@ -23,12 +23,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from '@/components/ui/chart'
 import {
   Field,
   FieldDescription,
@@ -70,23 +64,29 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { TooltipProvider } from '@/components/ui/tooltip'
-import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
 import i18n from '@/i18n'
 import './App.css'
 
 type AccountRole = 'supplier' | 'cafe'
-type Page = 'role' | 'register' | 'login' | 'supplier-dashboard' | 'supplier-products'
+type AppPage = 'role-selection' | 'register' | 'login' | 'supplier-dashboard' | 'supplier-products'
 /** Which screen is open inside the supplier workspace. */
 type SupplierView = 'dashboard' | 'products'
 
-function App() {
+function App({ page, role }: { page: AppPage; role?: AccountRole }) {
   const { t, i18n: translation } = useTranslation()
-  const isDesignSystem = window.location.pathname === '/design-system'
-  const [page, setPage] = useState<Page>('role')
-  const [role, setRole] = useState<AccountRole | null>(null)
+  const navigate = useNavigate()
+  const location = useLocation()
   const [message, setMessage] = useState('')
   const [formError, setFormError] = useState('')
-  const [supplierName, setSupplierName] = useState('')
+  const [supplierName, setSupplierName] = useState(() => {
+    const state = location.state
+    return typeof state === 'object' &&
+      state !== null &&
+      'businessName' in state &&
+      typeof state.businessName === 'string'
+      ? state.businessName
+      : ''
+  })
   const language = translation.resolvedLanguage?.split('-')[0] ?? 'ar'
   const inSupplierWorkspace =
     page === 'supplier-dashboard' || page === 'supplier-products'
@@ -94,7 +94,7 @@ function App() {
   useEffect(() => {
     document.documentElement.lang = language
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr'
-    document.title = isDesignSystem ? 'Nameer | Design System' : `Nameer | ${t(
+    document.title = `Nameer | ${t(
       page === 'login'
         ? 'login.title'
         : page === 'register'
@@ -105,13 +105,10 @@ function App() {
               ? 'supplierDashboard.title'
               : 'roleSelection.title',
     )}`
-  }, [isDesignSystem, language, page, t])
+  }, [language, page, t])
 
   function openRegistration(selectedRole: AccountRole) {
-    setRole(selectedRole)
-    setMessage('')
-    setFormError('')
-    setPage('register')
+    navigate(selectedRole === 'supplier' ? '/register/supplier' : '/register/cafe')
   }
 
   function handleRegister(event: FormEvent<HTMLFormElement>) {
@@ -153,8 +150,6 @@ function App() {
     setMessage(t('login.notConnected'))
   }
 
-  if (isDesignSystem) return <DesignSystemPage />
-
   return (
     <div className={inSupplierWorkspace ? 'supplier-dashboard-page' : 'app-shell'}>
       <Button
@@ -174,13 +169,16 @@ function App() {
           businessName={supplierName}
           view={page === 'supplier-products' ? 'products' : 'dashboard'}
           onNavigate={(nextView) =>
-            setPage(nextView === 'products' ? 'supplier-products' : 'supplier-dashboard')
+            navigate(
+              nextView === 'products' ? '/supplier/products' : '/supplier/dashboard',
+              { state: { businessName: supplierName } },
+            )
           }
         />
       )}
 
       {!inSupplierWorkspace && <main className="auth-page">
-      {page === 'role' && (
+      {page === 'role-selection' && (
         <section className="role-screen" aria-labelledby="role-title">
           <header className="auth-heading">
             <h1 id="role-title">{t('roleSelection.title')}</h1>
@@ -215,9 +213,9 @@ function App() {
 
           <p className="auth-switch">
             {t('common.alreadyHaveAccount')}{' '}
-            <button type="button" onClick={() => { setMessage(''); setPage('login') }}>
+            <Link to="/login">
               {t('common.signIn')}
-            </button>
+            </Link>
           </p>
         </section>
       )}
@@ -501,7 +499,11 @@ function App() {
                 className="auth-submit"
                 type="button"
                 variant="outline"
-                onClick={() => setPage('supplier-dashboard')}
+                onClick={() =>
+                  navigate('/supplier/dashboard', {
+                    state: { businessName: supplierName },
+                  })
+                }
               >
                 {t('supplierDashboard.preview')}
               </Button>
@@ -509,18 +511,14 @@ function App() {
           </form>
 
           <div className="auth-footer">
-            <button
-              className="text-button"
-              type="button"
-              onClick={() => { setMessage(''); setFormError(''); setPage('role') }}
-            >
+            <Link className="text-button" to="/">
               {t('common.backToRoleSelection')}
-            </button>
+            </Link>
             <p className="auth-switch">
               {t('common.alreadyHaveAccount')}{' '}
-              <button type="button" onClick={() => { setMessage(''); setPage('login') }}>
+              <Link to="/login">
                 {t('common.signIn')}
-              </button>
+              </Link>
             </p>
           </div>
         </section>
@@ -565,9 +563,9 @@ function App() {
 
           <p className="auth-switch">
             {t('common.noAccount')}{' '}
-            <button type="button" onClick={() => { setMessage(''); setPage('role') }}>
+            <Link to="/">
               {t('common.signUp')}
-            </button>
+            </Link>
           </p>
         </section>
       )}
@@ -615,13 +613,6 @@ function SupplierDashboard({
     { label: t('supplierDashboard.chartDays.thu'), sales: 67 },
     { label: t('supplierDashboard.chartDays.fri'), sales: 79 },
   ]
-  const salesChartConfig = {
-    sales: {
-      label: t('supplierDashboard.salesOverview'),
-      color: 'var(--primary)',
-    },
-  } satisfies ChartConfig
-
   const requests = [
     { cafe: t('supplierDashboard.sampleCafeOne'), product: t('supplierDashboard.sampleProductOne'), quantity: 24, total: 480 },
     { cafe: t('supplierDashboard.sampleCafeTwo'), product: t('supplierDashboard.sampleProductTwo'), quantity: 12, total: 360 },
@@ -779,24 +770,20 @@ function SupplierDashboard({
                   <span>{revenue}</span>
                   <Badge variant="secondary">{t('supplierDashboard.revenueChange')}</Badge>
                 </div>
-                <ChartContainer
-                  config={salesChartConfig}
+                <div
                   className="dashboard-chart"
                   role="img"
                   aria-label={t('supplierDashboard.salesChartLabel')}
                 >
-                  <BarChart accessibilityLayer data={sales}>
-                    <CartesianGrid vertical={false} />
-                    <XAxis
-                      dataKey="label"
-                      tickLine={false}
-                      axisLine={false}
-                      tickMargin={8}
-                    />
-                    <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
-                    <Bar dataKey="sales" fill="var(--color-sales)" radius={4} />
-                  </BarChart>
-                </ChartContainer>
+                  <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-around', gap: 8, height: '100%', minHeight: 160 }}>
+                    {sales.map(({ label, sales: amount }) => (
+                      <div key={label} style={{ display: 'flex', flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', gap: 8, height: '100%' }}>
+                        <span aria-hidden="true" style={{ width: '100%', height: `${(amount / 100) * 100}%`, minHeight: 4, borderRadius: 4, backgroundColor: 'var(--primary)' }} />
+                        <span aria-hidden="true">{label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </CardContent>
             </Card>
 

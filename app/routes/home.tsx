@@ -1,5 +1,5 @@
-import App from '../../src/App'
+import { RoleSelectionPage } from '../../src/pages/auth/RoleSelectionPage'
 
 export default function HomeRoute() {
-  return <App />
+  return <RoleSelectionPage />
 }
