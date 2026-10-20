@@ -1,13 +1,12 @@
 import  { Sidebar, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarGroupContent, SidebarFooter } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import  { t } from "i18next";
 import { LayoutDashboard, Package, ShoppingBag, CircleDollarSign } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation } from "react-router";
 type SupplierSidebarProps = {
-view: string; 
+view: 'dashboard' | 'products' | 'orders'
 
-  navigateTo: (nextView: 'dashboard' | 'products') => void
+  navigateTo: (nextView: 'dashboard' | 'products' | 'orders') => void
 }
 export function SupplierSidebar({navigateTo, view}:SupplierSidebarProps ){
     function getBusinessName(state: unknown) {
@@ -70,9 +69,10 @@ export function SupplierSidebar({navigateTo, view}:SupplierSidebarProps ){
                     </SidebarMenuItem>
                     <SidebarMenuItem>
                       <SidebarMenuButton
-                        disabled
+                        isActive={view === 'orders'}
                         tooltip={t('supplierDashboard.orders')}
                         aria-label={t('supplierDashboard.orders')}
+                        onClick={() => navigateTo('orders')}
                       >
                         <ShoppingBag aria-hidden="true" />
                         <span>{t('supplierDashboard.orders')}</span>
