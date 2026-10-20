@@ -80,6 +80,13 @@
     "salesOverview": "Sales overview",
     "revenueChange": "+12.5% this month",
     "salesChartLabel": "Sample weekly sales chart",
+    "performanceMetrics": "Performance metrics this month",
+    "totalRevenue": "Total revenue",
+    "totalRevenueNote": "Revenue earned this month",
+    "totalOrders": "Total orders",
+    "totalOrdersNote": "Orders completed this month",
+    "monthlyTarget": "Monthly target",
+    "monthlyTargetNote": "{{percent}}% achieved · {{remaining}} remaining",
     "chartDays": {
       "sat": "Sat",
       "sun": "Sun",

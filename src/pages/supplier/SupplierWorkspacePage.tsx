@@ -1,12 +1,19 @@
 import { useState } from 'react'
-import { Bell, CalendarDays, CircleDollarSign, ImageIcon, LayoutDashboard, MapPin, Package, PackageCheck, ShoppingBag } from 'lucide-react'
+import { Bell, CalendarDays, CircleDollarSign, ImageIcon, MapPin, Package, PackageCheck, ShoppingBag, Target } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
+import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
 import { ProductsPage } from '@/pages/supplier/products/ProductsPage'
 import { AppShell } from '@/components/AppShell'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+  type ChartConfig,
+} from '@/components/ui/chart'
 import {
   Card,
   CardContent,
@@ -24,17 +31,7 @@ import {
 } from '@/components/ui/dialog'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
   SidebarInset,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/sidebar'
@@ -80,15 +77,23 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
   const [nominatedRequestIds, setNominatedRequestIds] = useState<Set<string>>(() => new Set())
   const language = translation.resolvedLanguage?.split('-')[0] ?? 'ar'
   const businessName = getBusinessName(location.state)
+  const monthlyRevenueAmount = 4250
+  const monthlyTargetAmount = 6000
+  const completedOrders = 26
   const revenue = new Intl.NumberFormat(language === 'ar' ? 'ar-SA' : 'en-SA', {
     style: 'currency',
     currency: 'SAR',
     maximumFractionDigits: 0,
-  }).format(4250)
+  }).format(monthlyRevenueAmount)
   const formatMoney = (amount: number) =>
     new Intl.NumberFormat(language === 'ar' ? 'ar-SA' : 'en-SA', {
       maximumFractionDigits: 0,
     }).format(amount)
+  const targetProgress = Math.min(
+    Math.round((monthlyRevenueAmount / monthlyTargetAmount) * 100),
+    100,
+  )
+  const targetRemaining = Math.max(monthlyTargetAmount - monthlyRevenueAmount, 0)
   const currentMonth = new Intl.DateTimeFormat(language === 'ar' ? 'ar-SA' : 'en-SA', {
     month: 'long',
     year: 'numeric',
@@ -131,12 +136,6 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
 
   usePageTitle(t(view === 'products' ? 'supplierProducts.title' : 'supplierDashboard.title'))
 
-  const metrics = [
-    { label: t('supplierDashboard.newRequests'), value: formatMoney(businessRequests.length), icon: ShoppingBag, note: t('supplierDashboard.newRequestsNote') },
-    { label: t('supplierDashboard.products'), value: '12', icon: Package, note: t('supplierDashboard.productsNote') },
-    { label: t('supplierDashboard.monthlyRevenue'), value: revenue, icon: CircleDollarSign, note: t('supplierDashboard.revenueNote') },
-  ]
-
   const sales = [
     { label: t('supplierDashboard.chartDays.sat'), sales: 48 },
     { label: t('supplierDashboard.chartDays.sun'), sales: 73 },
@@ -145,6 +144,36 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
     { label: t('supplierDashboard.chartDays.wed'), sales: 88 },
     { label: t('supplierDashboard.chartDays.thu'), sales: 67 },
     { label: t('supplierDashboard.chartDays.fri'), sales: 79 },
+  ]
+  const salesChartConfig = {
+    sales: {
+      label: t('supplierDashboard.salesOverview'),
+      color: 'var(--primary)',
+    },
+  } satisfies ChartConfig
+  const performanceMetrics = [
+    {
+      label: t('supplierDashboard.totalRevenue'),
+      value: revenue,
+      note: t('supplierDashboard.totalRevenueNote'),
+      icon: CircleDollarSign,
+    },
+    {
+      label: t('supplierDashboard.totalOrders'),
+      value: formatMoney(completedOrders),
+      note: t('supplierDashboard.totalOrdersNote'),
+      icon: ShoppingBag,
+    },
+    {
+      label: t('supplierDashboard.monthlyTarget'),
+      value: `${formatMoney(monthlyTargetAmount)} ${t('supplierDashboard.currency')}`,
+      note: t('supplierDashboard.monthlyTargetNote', {
+        percent: targetProgress,
+        remaining: `${formatMoney(targetRemaining)} ${t('supplierDashboard.currency')}`,
+      }),
+      icon: Target,
+      progress: targetProgress,
+    },
   ]
   const products = [
     { name: t('supplierDashboard.sampleProductOne'), category: t('supplierDashboard.sweets'), price: 20, stock: 18 },
@@ -213,19 +242,62 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
                           <span>{revenue}</span>
                           <Badge variant="secondary">{t('supplierDashboard.revenueChange')}</Badge>
                         </div>
-                        <div
-                          className="dashboard-chart"
-                          role="img"
-                          aria-label={t('supplierDashboard.salesChartLabel')}
-                        >
-                          <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-around', gap: 8, height: '100%', minHeight: 160 }}>
-                            {sales.map(({ label, sales: amount }) => (
-                              <div key={label} style={{ display: 'flex', flex: 1, flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', gap: 8, height: '100%' }}>
-                                <span aria-hidden="true" style={{ width: '100%', height: `${amount}%`, minHeight: 4, borderRadius: 4, backgroundColor: 'var(--primary)' }} />
-                                <span aria-hidden="true">{label}</span>
+                        <div className={`dashboard-chart-layout dashboard-chart-layout-${language}`}>
+                          <ChartContainer
+                            className="dashboard-chart"
+                            role="img"
+                            aria-label={t('supplierDashboard.salesChartLabel')}
+                            config={salesChartConfig}
+                          >
+                            <BarChart accessibilityLayer data={sales}>
+                              <CartesianGrid vertical={false} />
+                              <XAxis
+                                dataKey="label"
+                                tickLine={false}
+                                axisLine={false}
+                                tickMargin={8}
+                              />
+                              <ChartTooltip
+                                cursor={false}
+                                content={
+                                  <ChartTooltipContent
+                                    indicator="dashed"
+                                    formatter={(value) =>
+                                      `${formatMoney(Number(value))} ${t('supplierDashboard.currency')}`
+                                    }
+                                  />
+                                }
+                              />
+                              <Bar dataKey="sales" fill="var(--color-sales)" radius={4} />
+                            </BarChart>
+                          </ChartContainer>
+                          <section
+                            className="dashboard-performance-metrics"
+                            aria-label={t('supplierDashboard.performanceMetrics')}
+                          >
+                            {performanceMetrics.map(({ label, value, note, icon: Icon, progress }) => (
+                              <div className="dashboard-performance-metric" key={label}>
+                                <Icon aria-hidden="true" />
+                                <div className="performance-metric-copy">
+                                  <span className="performance-metric-label">{label}</span>
+                                  <strong className="performance-metric-value">{value}</strong>
+                                  <span className="performance-metric-note">{note}</span>
+                                  {progress !== undefined && (
+                                    <div
+                                      className="target-progress"
+                                      role="progressbar"
+                                      aria-label={label}
+                                      aria-valuemin={0}
+                                      aria-valuemax={100}
+                                      aria-valuenow={progress}
+                                    >
+                                      <span style={{ width: `${progress}%` }} />
+                                    </div>
+                                  )}
+                                </div>
                               </div>
                             ))}
-                          </div>
+                          </section>
                         </div>
                       </CardContent>
                     </Card>

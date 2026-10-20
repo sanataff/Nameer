@@ -80,6 +80,13 @@
     "salesOverview": "ملخص المبيعات",
     "revenueChange": "+12.5% هذا الشهر",
     "salesChartLabel": "مخطط تجريبي لمبيعات الأسبوع",
+    "performanceMetrics": "مؤشرات الأداء لهذا الشهر",
+    "totalRevenue": "إجمالي الإيرادات",
+    "totalRevenueNote": "إيرادات هذا الشهر",
+    "totalOrders": "إجمالي الطلبات",
+    "totalOrdersNote": "الطلبات المكتملة هذا الشهر",
+    "monthlyTarget": "الهدف الشهري",
+    "monthlyTargetNote": "تم تحقيق {{percent}}٪ · المتبقي {{remaining}}",
     "chartDays": {
       "sat": "سبت",
       "sun": "أحد",
