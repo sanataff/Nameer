@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, type FormEvent } from 'react'
 import { Bell, CalendarDays, CircleDollarSign, ImageIcon, MapPin, Package, PackageCheck, ShoppingBag, Target } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
@@ -7,8 +7,12 @@ import { ProductsPage } from '@/pages/supplier/products/ProductsPage'
 import { OrdersPage } from '@/pages/supplier/orders/OrdersPage'
 import { AppShell } from '@/components/AppShell'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle } from '@/components/ui/sheet'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Field, FieldGroup, FieldLabel } from '@/components/ui/field'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 import {
   ChartContainer,
   ChartTooltip,
@@ -56,6 +60,14 @@ type BusinessRequest = {
   unitPrice: number
 }
 
+type BusinessNomination = {
+  details: string
+  unitPrice: number
+  deliveryDays: number
+  deliveryTime: string
+  providesDelivery: boolean
+}
+
 function getBusinessName(state: unknown) {
   if (
     typeof state === 'object' &&
@@ -75,7 +87,7 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
   const location = useLocation()
   
   const [selectedRequest, setSelectedRequest] = useState<BusinessRequest | null>(null)
-  const [nominatedRequestIds, setNominatedRequestIds] = useState<Set<string>>(() => new Set())
+  const [nominations, setNominations] = useState<Map<string, BusinessNomination>>(() => new Map())
   const language = translation.resolvedLanguage?.split('-')[0] ?? 'ar'
   const businessName = getBusinessName(location.state)
   const monthlyRevenueAmount = 4250
@@ -197,6 +209,33 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
           : '/supplier/dashboard',
       { state: { businessName } },
     )
+  }
+
+  function submitNomination(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    if (!selectedRequest) return
+
+    const formData = new FormData(event.currentTarget)
+    const details = String(formData.get('offerDetails') ?? '').trim()
+    if (!details) {
+      const detailsField = event.currentTarget.elements.namedItem('offerDetails')
+      if (detailsField instanceof HTMLTextAreaElement) {
+        detailsField.setCustomValidity(t('supplierDashboard.offerDetailsRequired'))
+        detailsField.reportValidity()
+      }
+      return
+    }
+
+    const nomination: BusinessNomination = {
+      details,
+      unitPrice: Number(formData.get('unitPrice')),
+      deliveryDays: Number(formData.get('deliveryDays')),
+      deliveryTime: String(formData.get('deliveryTime') ?? ''),
+      providesDelivery: formData.get('providesDelivery') === 'on',
+    }
+
+    setNominations((current) => new Map(current).set(selectedRequest.id, nomination))
+    setSelectedRequest(null)
   }
 
   return (
@@ -385,7 +424,7 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
                             </span>
                             <span className="business-request-card-footer">
                               <span className="business-request-open">{t('supplierDashboard.viewRequest')}</span>
-                              {nominatedRequestIds.has(request.id) && (
+                              {nominations.has(request.id) && (
                                 <Badge className="business-request-nominated" variant="secondary">
                                   {t('supplierDashboard.nominationSent')}
                                 </Badge>
@@ -397,23 +436,20 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
                     </div>
                   </section>
 
-                  <Dialog
+                  <Sheet
                     open={selectedRequest !== null}
                     onOpenChange={(open) => {
                       if (!open) setSelectedRequest(null)
                     }}
                   >
-                    <DialogContent
-                      className="business-request-dialog"
-                      closeLabel={t('supplierDashboard.closeDialog')}
-                    >
+                    <SheetContent className="business-request-dialog">
                       {selectedRequest && (
                         <>
-                          <DialogHeader className="business-request-dialog-header">
+                          <SheetHeader className="business-request-dialog-header">
                             <Badge variant="outline">{selectedRequest.business}</Badge>
-                            <DialogTitle>{selectedRequest.title}</DialogTitle>
-                            <DialogDescription>{selectedRequest.description}</DialogDescription>
-                          </DialogHeader>
+                            <SheetTitle>{selectedRequest.title}</SheetTitle>
+                            <SheetDescription>{selectedRequest.description}</SheetDescription>
+                          </SheetHeader>
                           <div className="business-request-details">
                             <div className="business-request-detail">
                               <PackageCheck aria-hidden="true" />
@@ -451,23 +487,82 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
                               </div>
                             </div>
                           </div>
-                          <DialogFooter>
-                            <Button
-                              type="button"
-                              disabled={nominatedRequestIds.has(selectedRequest.id)}
-                              onClick={() => {
-                                setNominatedRequestIds((current) => new Set(current).add(selectedRequest.id))
-                              }}
-                            >
-                              {nominatedRequestIds.has(selectedRequest.id)
-                                ? t('supplierDashboard.nominationSent')
-                                : t('supplierDashboard.nominate')}
-                            </Button>
-                          </DialogFooter>
+                          <form className="business-nomination-form" onSubmit={submitNomination}>
+                            <FieldGroup className="business-nomination-fields">
+                              <Field>
+                                <FieldLabel htmlFor="offer-details">
+                                  {t('supplierDashboard.offerDetails')}
+                                </FieldLabel>
+                                <Textarea
+                                  id="offer-details"
+                                  name="offerDetails"
+                                  placeholder={t('supplierDashboard.offerDetailsPlaceholder')}
+                                  onChange={(event) => event.currentTarget.setCustomValidity('')}
+                                  required
+                                  rows={4}
+                                />
+                              </Field>
+                              <div className="business-nomination-row">
+                                <Field>
+                                  <FieldLabel htmlFor="offer-unit-price">
+                                    {t('supplierDashboard.offerUnitPrice')}
+                                  </FieldLabel>
+                                  <Input
+                                    id="offer-unit-price"
+                                    name="unitPrice"
+                                    type="number"
+                                    min="0.01"
+                                    step="0.01"
+                                    inputMode="decimal"
+                                    required
+                                  />
+                                </Field>
+                                <Field>
+                                  <FieldLabel htmlFor="offer-delivery-days">
+                                    {t('supplierDashboard.offerDeliveryDays')}
+                                  </FieldLabel>
+                                  <Input
+                                    id="offer-delivery-days"
+                                    name="deliveryDays"
+                                    type="number"
+                                    min="1"
+                                    step="1"
+                                    placeholder={t('supplierDashboard.offerDeliveryDaysPlaceholder')}
+                                    required
+                                  />
+                                </Field>
+                              </div>
+                              <Field>
+                                <FieldLabel htmlFor="offer-delivery-time">
+                                  {t('supplierDashboard.offerDeliveryTime')}
+                                </FieldLabel>
+                                <Input
+                                  id="offer-delivery-time"
+                                  name="deliveryTime"
+                                  type="time"
+                                  required
+                                />
+                              </Field>
+                              <label className="business-delivery-option" htmlFor="provides-delivery">
+                                <input id="provides-delivery" name="providesDelivery" type="checkbox" />
+                                <span>
+                                  <strong>{t('supplierDashboard.providesDelivery')}</strong>
+                                  <span>{t('supplierDashboard.providesDeliveryDescription')}</span>
+                                </span>
+                              </label>
+                            </FieldGroup>
+                            <SheetFooter className="business-nomination-footer">
+                              <Button type="submit" disabled={nominations.has(selectedRequest.id)}>
+                                {nominations.has(selectedRequest.id)
+                                  ? t('supplierDashboard.nominationSent')
+                                  : t('supplierDashboard.nominate')}
+                              </Button>
+                            </SheetFooter>
+                          </form>
                         </>
                       )}
-                    </DialogContent>
-                  </Dialog>
+                    </SheetContent>
+                  </Sheet>
                 </>
               )}
             </div>

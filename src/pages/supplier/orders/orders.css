@@ -72,48 +72,9 @@ html[lang="ar"] .orders-eyebrow {
   letter-spacing: 0;
 }
 
-.orders-stats {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.75rem;
-}
 
-.orders-stat [data-slot="card-content"] {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 0.2rem 0.65rem;
-  padding: 0.85rem 0.95rem;
-}
 
-.orders-stat-icon {
-  display: grid;
-  width: 2rem;
-  height: 2rem;
-  grid-column: 2;
-  grid-row: 1 / span 2;
-  place-items: center;
-  border-radius: 0.5rem;
-  background: var(--secondary);
-  color: var(--primary);
-}
 
-.orders-stat-icon svg {
-  width: 1rem;
-  height: 1rem;
-}
-
-.orders-stat-label {
-  color: var(--muted-foreground);
-  font-size: 0.75rem;
-}
-
-.orders-stat strong {
-  font-size: 1.3rem;
-  font-weight: 600;
-  line-height: 1.2;
-  font-variant-numeric: tabular-nums;
-}
 
 .orders-list-section {
   display: flex;
@@ -163,6 +124,67 @@ html[lang="ar"] .orders-eyebrow {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.85rem;
+}
+
+.orders-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 0.9rem;
+}
+
+.orders-column {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.85rem;
+
+}
+
+.orders-column-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.orders-column-heading h3 {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.orders-column-heading > span {
+  display: inline-flex;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  align-items: center;
+  justify-content: center;
+  padding-inline: 0.35rem;
+  border-radius: 999px;
+  background: var(--background);
+  color: var(--muted-foreground);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.orders-column-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.orders-column-empty {
+  display: grid;
+  min-height: 6rem;
+  place-items: center;
+  margin: 0;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-md);
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  text-align: center;
 }
 
 .order-card {
@@ -414,6 +436,10 @@ html[lang="ar"] .orders-eyebrow {
   }
 
   .orders-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .orders-columns {
     grid-template-columns: minmax(0, 1fr);
   }
 }
