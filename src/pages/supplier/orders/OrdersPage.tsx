@@ -32,12 +32,13 @@ import {
 } from '@/components/ui/select'
 import './orders.css'
 
-type OrderFilter = 'all' | OrderStatus | 'active'
+type OrderFilter = 'activePending' | 'all' | OrderStatus | 'active'
 type Feedback = { message: string; tone: 'success' | 'error' }
 
-const FILTERS: OrderFilter[] = ['all', 'pending', 'active', 'completed', 'rejected']
+const FILTERS: OrderFilter[] = ['activePending', 'all', 'pending', 'active', 'completed', 'rejected']
 
 function statusForFilter(filter: OrderFilter, status: OrderStatus) {
+  if (filter === 'activePending') return status === 'pending' || status === 'accepted'
   if (filter === 'all') return true
   if (filter === 'active') return status === 'accepted'
   return filter === status
@@ -55,7 +56,7 @@ export function OrdersPage() {
   const [loading, setLoading] = useState(true)
   const [loadError, setLoadError] = useState(false)
   const [reloadKey, setReloadKey] = useState(0)
-  const [filter, setFilter] = useState<OrderFilter>('all')
+  const [filter, setFilter] = useState<OrderFilter>('activePending')
   const [query, setQuery] = useState('')
   const [selectedOrderId, setSelectedOrderId] = useState<string | null>(null)
   const [declineOrderId, setDeclineOrderId] = useState<string | null>(null)
@@ -149,7 +150,7 @@ export function OrdersPage() {
             <Check data-icon="inline-start" aria-hidden="true" />
             {t('supplierOrders.accept')}
           </Button>
-          <Button type="button" size="sm" variant="outline" onClick={() => setDeclineOrderId(order.id)} disabled={savingOrderId === order.id}>
+          <Button type="button" size="sm" variant='destructive' onClick={() => setDeclineOrderId(order.id)} disabled={savingOrderId === order.id}>
             <X data-icon="inline-start" aria-hidden="true" />
             {t('supplierOrders.decline')}
           </Button>
@@ -167,6 +168,44 @@ export function OrdersPage() {
     return null
   }
 
+  function renderOrderCards(ordersToRender: SupplierOrder[]) {
+    return ordersToRender.map((order) => (
+      <Card className="order-card" key={order.id}>
+        <CardContent>
+          <header className="order-card-header">
+            <div className="order-buyer">
+              <Avatar className="order-avatar">
+                <AvatarFallback>{order.buyer[language].slice(0, 1)}</AvatarFallback>
+              </Avatar>
+              <div>
+                <h3>{order.buyer[language]}</h3>
+                <span>{t('supplierOrders.orderNumber', { id: order.id })}</span>
+              </div>
+            </div>
+            <Badge variant={order.status === 'rejected' ? 'destructive' : 'secondary'} className={`order-status order-status--${order.status}`}>
+              {statusLabel(order.status)}
+            </Badge>
+          </header>
+          <p className="order-product">{order.product[language]}</p>
+          <div className="order-summary">
+            <span>{t('supplierOrders.quantity', { count: numberFormat.format(order.quantity) })}</span>
+            <strong>{formattedTotal(order)}</strong>
+          </div>
+          <div className="order-meta">
+            <span><CalendarDays aria-hidden="true" />{t('supplierOrders.placedOn', { date: formattedDate(order.createdAt) })}</span>
+            <span><MapPin aria-hidden="true" />{order.location[language]}</span>
+          </div>
+          <footer className="order-card-actions">
+            <Button type="button" variant="ghost" size="sm" onClick={() => setSelectedOrderId(order.id)}>
+              {t('supplierOrders.viewDetails')}
+            </Button>
+            <div>{renderOrderActions(order)}</div>
+          </footer>
+        </CardContent>
+      </Card>
+    ))
+  }
+
   return (
     <div className="orders-page">
       <header className="orders-header">
@@ -178,29 +217,11 @@ export function OrdersPage() {
         <Badge variant="secondary">{t('supplierOrders.demoData')}</Badge>
       </header>
 
-      <section className="orders-stats" aria-label={t('supplierOrders.summary')}>
-        {[
-          { key: 'pending', label: t('supplierOrders.stats.pending'), value: counts.pending, icon: Clock3 },
-          { key: 'active', label: t('supplierOrders.stats.active'), value: counts.active, icon: ShoppingBag },
-          { key: 'completed', label: t('supplierOrders.stats.completed'), value: counts.completed, icon: CircleCheck },
-          { key: 'total', label: t('supplierOrders.stats.total'), value: counts.total, icon: PackageCheck },
-        ].map(({ key, label, value, icon: Icon }) => (
-          <Card className="orders-stat" key={key}>
-            <CardContent>
-              <span className="orders-stat-icon" aria-hidden="true"><Icon /></span>
-              <span className="orders-stat-label">{label}</span>
-              <strong>{numberFormat.format(value)}</strong>
-            </CardContent>
-          </Card>
-        ))}
-      </section>
+     
 
       <section className="orders-list-section" aria-labelledby="orders-list-heading">
         <div className="orders-list-heading">
-          <div>
-            <h2 id="orders-list-heading">{t('supplierOrders.listTitle')}</h2>
-            <p>{t('supplierOrders.listDescription')}</p>
-          </div>
+
           <div className="orders-toolbar">
             <label className="orders-search">
               <Search aria-hidden="true" />
@@ -257,45 +278,31 @@ export function OrdersPage() {
             <p>{t(query ? 'supplierOrders.emptySearchDescription' : 'supplierOrders.emptyDescription')}</p>
           </div>
         ) : (
-          <div className="orders-grid">
-            {visibleOrders.map((order) => (
-              <Card className="order-card" key={order.id}>
-                <CardContent>
-                  <header className="order-card-header">
-                    <div className="order-buyer">
-                      <Avatar className="order-avatar">
-                        <AvatarFallback>{order.buyer[language].slice(0, 1)}</AvatarFallback>
-                      </Avatar>
-                      <div>
-                        <h3>{order.buyer[language]}</h3>
-                        <span>{t('supplierOrders.orderNumber', { id: order.id })}</span>
-                      </div>
-                    </div>
-                    <Badge variant={order.status === 'rejected' ? 'destructive' : 'secondary'} className={`order-status order-status--${order.status}`}>
-                      {statusLabel(order.status)}
-                    </Badge>
-                  </header>
-                  <p className="order-product">{order.product[language]}</p>
-                  <div className="order-summary">
-                    <span>{t('supplierOrders.quantity', { count: numberFormat.format(order.quantity) })}</span>
-                    <strong>{formattedTotal(order)}</strong>
-                  </div>
-                  <div className="order-meta">
-                    <span><CalendarDays aria-hidden="true" />{t('supplierOrders.placedOn', { date: formattedDate(order.createdAt) })}</span>
-                    <span><MapPin aria-hidden="true" />{order.location[language]}</span>
-                  </div>
-                  <footer className="order-card-actions">
-                    <Button type="button" variant="ghost" size="sm" onClick={() => setSelectedOrderId(order.id)}>
-                      {t('supplierOrders.viewDetails')}
-                    </Button>
-                    <div>
-                      {renderOrderActions(order)}
-                    </div>
-                  </footer>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+          filter === 'activePending' ? (
+            <div className="orders-columns">
+              {([
+                { status: 'accepted', label: t('supplierOrders.status.accepted') },
+                { status: 'pending', label: t('supplierOrders.status.pending') },
+              ] as const).map(({ status, label }) => {
+                const columnOrders = visibleOrders.filter((order) => order.status === status)
+                return (
+                  <section className="orders-column" key={status} aria-labelledby={`orders-${status}-heading`}>
+                    <header className="orders-column-heading">
+                      <h3 id={`orders-${status}-heading`}>{label}</h3>
+                      <span>{numberFormat.format(columnOrders.length)}</span>
+                    </header>
+                    {columnOrders.length > 0 ? (
+                      <div className="orders-column-list">{renderOrderCards(columnOrders)}</div>
+                    ) : (
+                      <p className="orders-column-empty">{t('supplierOrders.columnEmpty')}</p>
+                    )}
+                  </section>
+                )
+              })}
+            </div>
+          ) : (
+            <div className="orders-grid">{renderOrderCards(visibleOrders)}</div>
+          )
         )}
       </section>
 
