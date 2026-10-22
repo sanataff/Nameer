@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
 import { RecentProductsSection } from '@/pages/supplier/dashboard/RecentProductsSection'
 import { NotificationsPage } from '@/pages/supplier/notifications/NotificationsPage'
+import { ChatPage } from '@/pages/supplier/chat/ChatPage'
 import { ProductsPage } from '@/pages/supplier/products/ProductsPage'
 import { OrdersPage } from '@/pages/supplier/orders/OrdersPage'
 import BusinessRequestList from './orders/BussinessRequestsList'
@@ -22,7 +23,7 @@ import { usePageTitle } from '@/hooks/use-page-title'
 import { SupplierSidebar } from './SupplierSidebar'
 import ChartDashboard from './dashboard/ChartDashboard'
 type SupplierWorkspacePageProps = {
-  view: 'dashboard' | 'products' | 'orders' | 'notifications'
+  view: 'dashboard' | 'products' | 'orders' | 'notifications' | 'chat'
 }
 
 function getBusinessName(state: unknown) {
@@ -54,7 +55,9 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
         ? 'supplierOrders.title'
         : view === 'notifications'
           ? 'supplierNotifications.title'
-        : 'supplierDashboard.title',
+          : view === 'chat'
+            ? 'supplierChat.title'
+            : 'supplierDashboard.title',
   ))
 
 
@@ -66,7 +69,9 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
           ? '/supplier/orders'
           : nextView === 'notifications'
             ? '/supplier/notifications'
-            : '/supplier/dashboard',
+            : nextView === 'chat'
+              ? '/supplier/chat'
+              : '/supplier/dashboard',
       { state: { businessName } },
     )
   }
@@ -74,14 +79,14 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
   return (
     <AppShell variant="supplier">
       <TooltipProvider>
-        <SidebarProvider className="supplier-dashboard-layout" defaultOpen={true}>
+        <SidebarProvider className="supplier-dashboard-layout" defaultOpen={false}>
          <SupplierSidebar navigateTo={navigateTo} view={view} />
 
           <SidebarInset className="supplier-dashboard-content">
             <SupplierHeader view={view} />
 
             <div className="dashboard-main">
-              {view === 'notifications' ? <NotificationsPage /> : view === 'products' ? <ProductsPage /> : view === 'orders' ? <OrdersPage /> : (
+              {view === 'notifications' ? <NotificationsPage /> : view === 'chat' ? <ChatPage /> : view === 'products' ? <ProductsPage /> : view === 'orders' ? <OrdersPage /> : (
                 <>
                   <header className="dashboard-welcome">
                     <div>
