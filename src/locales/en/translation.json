@@ -149,6 +149,17 @@
     "currency": "SAR",
     "unit": "piece"
   },
+  "supplierNotifications": {
+    "title": "Notifications",
+    "newOrderTitle": "New order received",
+    "newOrderDescription": "A new order worth SAR 400 was placed by Rosa Café.",
+    "orderCompletedTitle": "Order completed successfully",
+    "orderCompletedDescription": "Order 102 was completed on October 15, 2023.",
+    "paymentReminderTitle": "Payment reminder sent",
+    "paymentReminderDescription": "A payment reminder for SAR 150 was sent to Al Hanaa Restaurant.",
+    "newRatingTitle": "You received a new rating",
+    "newRatingDescription": "A new rating was submitted by Saada Café."
+  },
   "supplierProducts": {
     "eyebrow": "Catalogue",
     "title": "Products",

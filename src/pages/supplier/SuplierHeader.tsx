@@ -1,12 +1,12 @@
 import { Bell } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { useLocation } from 'react-router'
+import { useLocation, useNavigate } from 'react-router'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 
 type SupplierHeaderProps = {
-  view: 'dashboard' | 'products' | 'orders'
+  view: 'dashboard' | 'products' | 'orders' | 'notifications'
 }
 
 function getBusinessName(state: unknown): string {
@@ -25,6 +25,7 @@ function getBusinessName(state: unknown): string {
 export default function SupplierHeader({ view }: SupplierHeaderProps) {
   const { t } = useTranslation()
   const location = useLocation()
+  const navigate = useNavigate()
   const businessName = getBusinessName(location.state)
 
   return (
@@ -38,7 +39,9 @@ export default function SupplierHeader({ view }: SupplierHeaderProps) {
             ? t('supplierProducts.title')
             : view === 'orders'
               ? t('supplierOrders.title')
-              : t('supplierDashboard.title')}
+              : view === 'notifications'
+                ? t('supplierNotifications.title')
+                : t('supplierDashboard.title')}
         </strong>
       </nav>
       <div className="dashboard-topbar-actions">
@@ -47,6 +50,7 @@ export default function SupplierHeader({ view }: SupplierHeaderProps) {
           size="icon"
           type="button"
           aria-label={t('supplierDashboard.notifications')}
+          onClick={() => navigate('/supplier/notifications', { state: location.state })}
         >
           <Bell aria-hidden="true" />
         </Button>

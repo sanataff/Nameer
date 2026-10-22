@@ -1,12 +1,12 @@
 import  { Sidebar, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarContent, SidebarGroup, SidebarGroupLabel, SidebarGroupContent, SidebarFooter } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { LayoutDashboard, Package, ShoppingBag, CircleDollarSign } from "lucide-react";
+import { LayoutDashboard, Package, ShoppingBag, CircleDollarSign, Bell } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "react-router";
 type SupplierSidebarProps = {
-view: 'dashboard' | 'products' | 'orders'
+view: 'dashboard' | 'products' | 'orders' | 'notifications'
 
-  navigateTo: (nextView: 'dashboard' | 'products' | 'orders') => void
+  navigateTo: (nextView: 'dashboard' | 'products' | 'orders' | 'notifications') => void
 }
 export function SupplierSidebar({navigateTo, view}:SupplierSidebarProps ){
     function getBusinessName(state: unknown) {
@@ -76,6 +76,17 @@ export function SupplierSidebar({navigateTo, view}:SupplierSidebarProps ){
                       >
                         <ShoppingBag aria-hidden="true" />
                         <span>{t('supplierDashboard.orders')}</span>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                    <SidebarMenuItem>
+                      <SidebarMenuButton
+                        isActive={view === 'notifications'}
+                        tooltip={t('supplierNotifications.title')}
+                        aria-label={t('supplierNotifications.title')}
+                        onClick={() => navigateTo('notifications')}
+                      >
+                        <Bell aria-hidden="true" />
+                        <span>{t('supplierNotifications.title')}</span>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                     <SidebarMenuItem>

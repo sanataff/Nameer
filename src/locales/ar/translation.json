@@ -149,6 +149,17 @@
     "currency": "ر.س",
     "unit": "قطعة"
   },
+  "supplierNotifications": {
+    "title": "الإشعارات",
+    "newOrderTitle": "تم تسجيل طلب جديد",
+    "newOrderDescription": "تم تسجيل طلب جديد بقيمة 400 ريال من مقهى روزا.",
+    "orderCompletedTitle": "تم إغلاق الطلب بنجاح",
+    "orderCompletedDescription": "تم إغلاق الطلب رقم 102 بتاريخ 15 أكتوبر 2023.",
+    "paymentReminderTitle": "تم إرسال إشعار للدفع",
+    "paymentReminderDescription": "تم إرسال إشعار دفع بقيمة 150 ريال لمطعم الهناء.",
+    "newRatingTitle": "حصلت على تقييم جديد",
+    "newRatingDescription": "تم تقييم متجرك من قبل مقهى السعادة."
+  },
   "supplierProducts": {
     "eyebrow": "الكتالوج",
     "title": "المنتجات",

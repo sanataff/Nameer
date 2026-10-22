@@ -8,4 +8,5 @@ export default [
   route('supplier/dashboard', './routes/supplier/dashboard.tsx'),
   route('supplier/products', './routes/supplier/products.tsx'),
   route('supplier/orders', './routes/supplier/orders.tsx'),
+  route('supplier/notifications', './routes/supplier/notifications.tsx'),
 ] satisfies RouteConfig
