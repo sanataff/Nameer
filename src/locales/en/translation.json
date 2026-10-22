@@ -59,6 +59,8 @@
     "success": "Your details are valid. Account creation will be available when the service is connected."
   },
   "supplierDashboard": {
+        "orders": "Orders",
+
     "title": "Dashboard",
     "navigation": "Main navigation",
     "notifications": "Notifications",
