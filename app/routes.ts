@@ -9,4 +9,5 @@ export default [
   route('supplier/products', './routes/supplier/products.tsx'),
   route('supplier/orders', './routes/supplier/orders.tsx'),
   route('supplier/notifications', './routes/supplier/notifications.tsx'),
+  route('supplier/chat', './routes/supplier/chat.tsx'),
 ] satisfies RouteConfig

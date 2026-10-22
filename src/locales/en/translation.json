@@ -162,6 +162,33 @@
     "newRatingTitle": "You received a new rating",
     "newRatingDescription": "A new rating was submitted by Saada Café."
   },
+  "supplierChat": {
+    "title": "Conversations",
+    "today": "Today",
+    "you": "You",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Write your message...",
+    "send": "Send message",
+    "emptyConversation": "Start the conversation by sending a message.",
+    "sampleGreeting": "Hello, how can I help you today?",
+    "sampleRequest": "Hi, I would like to request a sample of the product.",
+    "sampleTime": "10:30 AM",
+    "justNow": "Just now",
+    "contacts": {
+      "layaliSweets": "Layali Sweets",
+      "rosaCafe": "Rosa Café",
+      "dallahCafe": "Dallah Café",
+      "sahaRestaurant": "Saha Restaurant",
+      "layaliInitial": "L",
+      "rosaInitial": "R",
+      "dallahInitial": "D",
+      "sahaInitial": "S"
+    },
+    "cities": {
+      "riyadh": "Riyadh",
+      "jeddah": "Jeddah"
+    }
+  },
   "supplierProducts": {
     "eyebrow": "Catalogue",
     "title": "Products",

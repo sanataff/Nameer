@@ -161,6 +161,33 @@
     "newRatingTitle": "حصلت على تقييم جديد",
     "newRatingDescription": "تم تقييم متجرك من قبل مقهى السعادة."
   },
+  "supplierChat": {
+    "title": "المحادثات",
+    "today": "اليوم",
+    "you": "أنت",
+    "messageLabel": "الرسالة",
+    "messagePlaceholder": "اكتب رسالتك...",
+    "send": "إرسال الرسالة",
+    "emptyConversation": "ابدأ المحادثة بإرسال رسالة.",
+    "sampleGreeting": "مرحباً، كيف يمكنني مساعدتك اليوم؟",
+    "sampleRequest": "مرحباً، أود طلب عينة من المنتج.",
+    "sampleTime": "١٠:٣٠ ص",
+    "justNow": "الآن",
+    "contacts": {
+      "layaliSweets": "حلويات ليالي",
+      "rosaCafe": "مقهى روزا",
+      "dallahCafe": "مقهى دلة",
+      "sahaRestaurant": "مطعم ساحة",
+      "layaliInitial": "ل",
+      "rosaInitial": "ر",
+      "dallahInitial": "د",
+      "sahaInitial": "س"
+    },
+    "cities": {
+      "riyadh": "الرياض",
+      "jeddah": "جدة"
+    }
+  },
   "supplierProducts": {
     "eyebrow": "الكتالوج",
     "title": "المنتجات",

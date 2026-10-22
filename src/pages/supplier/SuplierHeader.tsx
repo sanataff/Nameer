@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { SidebarTrigger } from '@/components/ui/sidebar'
 
 type SupplierHeaderProps = {
-  view: 'dashboard' | 'products' | 'orders' | 'notifications'
+  view: 'dashboard' | 'products' | 'orders' | 'notifications' | 'chat'
 }
 
 function getBusinessName(state: unknown): string {
@@ -41,7 +41,9 @@ export default function SupplierHeader({ view }: SupplierHeaderProps) {
               ? t('supplierOrders.title')
               : view === 'notifications'
                 ? t('supplierNotifications.title')
-                : t('supplierDashboard.title')}
+                : view === 'chat'
+                  ? t('supplierChat.title')
+                  : t('supplierDashboard.title')}
         </strong>
       </nav>
       <div className="dashboard-topbar-actions">
