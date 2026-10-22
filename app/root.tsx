@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
   Links,
@@ -36,6 +37,11 @@ export default function Root() {
   const { i18n } = useTranslation()
   const language = i18n.resolvedLanguage?.split('-')[0] ?? 'ar'
   const direction = language === 'ar' ? 'rtl' : 'ltr'
+
+  useEffect(() => {
+    document.documentElement.lang = language
+    document.documentElement.dir = direction
+  }, [direction, language])
 
   return (
     <DirectionProvider direction={direction}>

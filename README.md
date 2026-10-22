@@ -50,20 +50,25 @@ npm run build
 src/
   components/
     ui/          # shadcn/ui components used by the app
+    AppShell.tsx  # Shared page shell and language switch
   lib/           # Shared utilities
-  App.tsx        # Main application UI
-  App.css        # Application-specific styles
+  pages/
+    auth/        # Role selection, login, and registration screens
+    supplier/    # Supplier workspace screens
+  App.css        # Shared application page styles
   index.css      # Global styles and design tokens
 app/
   root.tsx       # HTML document shell and direction provider
   routes.ts      # React Router route configuration
   routes/
     home.tsx     # Home route
+    auth/        # Login and registration routes
+    supplier/    # Supplier dashboard and product routes
 react-router.config.ts
 vite.config.ts
 ```
 
-Routes are configured in `app/routes.ts`. The current index route renders the existing app UI at `/`; add route modules there as the app grows. SPA mode keeps language detection in the browser and serves the built client app for all routes.
+Routes are configured in `app/routes.ts`. Current routes are `/` (account type selection), `/login`, `/register/supplier`, `/register/cafe`, `/supplier/dashboard`, and `/supplier/products`. Add a route module under `app/routes/` and register its URL in `app/routes.ts` when adding a page. SPA mode keeps language detection in the browser and serves the built client app for all routes.
 
 ## Working with shadcn/ui
 
