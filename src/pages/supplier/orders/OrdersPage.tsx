@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { CalendarDays, Check, CircleCheck, Clock3, MapPin, PackageCheck, Search, ShoppingBag, X } from 'lucide-react'
+import { CalendarDays, Check, MapPin, PackageCheck, Search, ShoppingBag, X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import {
   listSupplierOrders,
@@ -77,8 +77,6 @@ export function OrdersPage() {
 
   useEffect(() => {
     let active = true
-    setLoading(true)
-    setLoadError(false)
     listSupplierOrders()
       .then((result) => {
         if (active) setOrders(result)
@@ -267,7 +265,15 @@ export function OrdersPage() {
           <div className="orders-empty" role="alert">
             <h3>{t('supplierOrders.errorTitle')}</h3>
             <p>{t('supplierOrders.loadError')}</p>
-            <Button type="button" variant="outline" onClick={() => setReloadKey((key) => key + 1)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                setLoading(true)
+                setLoadError(false)
+                setReloadKey((key) => key + 1)
+              }}
+            >
               {t('supplierOrders.retry')}
             </Button>
           </div>
