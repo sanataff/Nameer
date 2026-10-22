@@ -1,9 +1,8 @@
 import { useState } from 'react'
-import { CircleDollarSign, ShoppingBag, Target } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
-import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
 import { RecentProductsSection } from '@/pages/supplier/dashboard/RecentProductsSection'
+import { NotificationsPage } from '@/pages/supplier/notifications/NotificationsPage'
 import { ProductsPage } from '@/pages/supplier/products/ProductsPage'
 import { OrdersPage } from '@/pages/supplier/orders/OrdersPage'
 import BusinessRequestList from './orders/BussinessRequestsList'
@@ -15,19 +14,6 @@ import SupplierHeader from './SuplierHeader'
 import { AppShell } from '@/components/AppShell'
 import { Badge } from '@/components/ui/badge'
 import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-  type ChartConfig,
-} from '@/components/ui/chart'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import {
   SidebarInset,
   SidebarProvider,
 } from '@/components/ui/sidebar'
@@ -36,7 +22,7 @@ import { usePageTitle } from '@/hooks/use-page-title'
 import { SupplierSidebar } from './SupplierSidebar'
 import ChartDashboard from './dashboard/ChartDashboard'
 type SupplierWorkspacePageProps = {
-  view: 'dashboard' | 'products' | 'orders'
+  view: 'dashboard' | 'products' | 'orders' | 'notifications'
 }
 
 function getBusinessName(state: unknown) {
@@ -66,6 +52,8 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
       ? 'supplierProducts.title'
       : view === 'orders'
         ? 'supplierOrders.title'
+        : view === 'notifications'
+          ? 'supplierNotifications.title'
         : 'supplierDashboard.title',
   ))
 
@@ -76,7 +64,9 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
         ? '/supplier/products'
         : nextView === 'orders'
           ? '/supplier/orders'
-          : '/supplier/dashboard',
+          : nextView === 'notifications'
+            ? '/supplier/notifications'
+            : '/supplier/dashboard',
       { state: { businessName } },
     )
   }
@@ -85,13 +75,13 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
     <AppShell variant="supplier">
       <TooltipProvider>
         <SidebarProvider className="supplier-dashboard-layout" defaultOpen={true}>
-         <SupplierSidebar navigateTo={navigateTo}  view={view} />
+         <SupplierSidebar navigateTo={navigateTo} view={view} />
 
           <SidebarInset className="supplier-dashboard-content">
             <SupplierHeader view={view} />
 
             <div className="dashboard-main">
-              {view === 'products' ? <ProductsPage /> : view === 'orders' ? <OrdersPage /> : (
+              {view === 'notifications' ? <NotificationsPage /> : view === 'products' ? <ProductsPage /> : view === 'orders' ? <OrdersPage /> : (
                 <>
                   <header className="dashboard-welcome">
                     <div>

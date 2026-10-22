@@ -24,4 +24,6 @@
 
 | C07 | Sana Ammar Taffour | Copilot SDK in VS Code (model unknown) | Improve the supplier business-request sheet spacing and css and add translations | `src/pages/supplier/SupplierWorkspacePage.tsx`, `src/App.css`, `src/locales/en/translation.json`, `src/locales/ar/translation.json`, `AI_USAGE.md` |
 
+| C08 | Sana Ammar Taffour | Copilot SDK in VS Code (model unknown) | Add a bilingual supplier notifications page and wire it into supplier routing and navigation | `app/routes.ts`, `app/routes/supplier/notifications.tsx`, `src/pages/supplier/notifications/NotificationsPage.tsx`, `src/pages/supplier/SupplierWorkspacePage.tsx`, `src/pages/supplier/SuplierHeader.tsx`, `src/pages/supplier/SupplierSidebar.tsx`, `src/App.css`, `src/locales/en/translation.json`, `src/locales/ar/translation.json`, `AI_USAGE.md` |
+
 No AI used: Not reported
