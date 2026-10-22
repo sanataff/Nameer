@@ -89,16 +89,7 @@ export function SupplierSidebar({navigateTo, view}:SupplierSidebarProps ){
                         <span>{t('supplierNotifications.title')}</span>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
-                    <SidebarMenuItem>
-                      <SidebarMenuButton
-                        disabled
-                        tooltip={t('supplierDashboard.monthlyRevenue')}
-                        aria-label={t('supplierDashboard.monthlyRevenue')}
-                      >
-                        <CircleDollarSign aria-hidden="true" />
-                        <span>{t('supplierDashboard.monthlyRevenue')}</span>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
+               
                   </SidebarMenu>
                 </SidebarGroupContent>
               </SidebarGroup>
