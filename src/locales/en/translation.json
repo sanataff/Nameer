@@ -359,5 +359,15 @@
     "description": "Enter your email address and password to continue",
     "submit": "Sign in",
     "notConnected": "Sign-in is not connected to a service yet."
+  },
+  "adminLogin": {
+    "title": "Administrator sign in",
+    "description": "Sign in with your Nameer administrator account.",
+    "portalLabel": "Nameer Admin Portal",
+    "submit": "Sign in to admin",
+    "notConnected": "Administrator authentication is not connected yet. No account was signed in.",
+    "accessNote": "Administrator sign-in will be enabled once authentication is connected.",
+    "visualTitle": "Manage Nameer with confidence",
+    "visualDescription": "A dedicated workspace for Nameer platform administrators."
   }
 }

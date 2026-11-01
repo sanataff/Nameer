@@ -11,6 +11,159 @@
   font-family: Tahoma, "Segoe UI", sans-serif;
 }
 
+.admin-login-page {
+  min-height: 100vh;
+  font-family: Tahoma, "Segoe UI", sans-serif;
+}
+
+html[lang="en"] .admin-login-page {
+  font-family: var(--font-sans);
+}
+
+.admin-login-layout {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.admin-login-form-side {
+  display: grid;
+  place-items: center;
+  padding: clamp(1.5rem, 5vw, 5rem);
+}
+
+.admin-login-card {
+  width: min(100%, 28rem);
+}
+
+.admin-login-card-header {
+  gap: 0.6rem;
+  padding-block: 0.5rem 1.25rem;
+}
+
+.admin-login-eyebrow {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+
+.admin-login-card-header [data-slot="card-title"] {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.admin-login-card-header [data-slot="card-description"] {
+  line-height: 1.7;
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.admin-login-fields {
+  gap: 1rem;
+}
+
+.admin-login-fields [data-slot="input"] {
+  min-height: 2.75rem;
+}
+
+.admin-login-submit {
+  width: 100%;
+  min-height: 2.75rem;
+  font-family: inherit;
+}
+
+.admin-login-card-footer {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.admin-login-card-footer p {
+  margin: 0;
+}
+
+.admin-login-visual {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  place-items: center;
+  padding: 3rem;
+  background: var(--muted);
+}
+
+.admin-login-visual::before,
+.admin-login-visual::after {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  width: min(34vw, 28rem);
+  aspect-ratio: 1;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  content: "";
+}
+
+.admin-login-visual::before {
+  transform: translate(-50%, -50%) scale(1.35);
+}
+
+.admin-login-visual::after {
+  transform: translate(-50%, -50%) scale(1.8);
+}
+
+.admin-login-visual-content {
+  z-index: 1;
+  display: flex;
+  max-width: 24rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.admin-login-brand {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.admin-login-brand span {
+  color: var(--muted-foreground);
+  font-weight: 400;
+}
+
+.admin-login-visual-icon {
+  display: grid;
+  width: 6rem;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--background);
+  color: var(--primary);
+}
+
+.admin-login-visual-icon svg {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.admin-login-visual-content h2 {
+  margin: 0.5rem 0 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.admin-login-visual-description {
+  margin: 0;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+}
+
 html[lang="en"] .auth-page {
   font-family: var(--font-sans);
 }
@@ -102,6 +255,21 @@ html[lang="en"] .auth-page {
   .supplier-register .auth-fields,
   .supplier-register .supplier-details {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 48rem) {
+  .admin-login-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .admin-login-form-side {
+    min-height: 100vh;
+    padding: 5rem 1.25rem 2rem;
+  }
+
+  .admin-login-visual {
+    display: none;
   }
 }
 
