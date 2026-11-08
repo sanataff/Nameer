@@ -6,11 +6,11 @@
 |-------|-------|
 | Team number | 1 |
 | Section | F11 |
-| Current phase | 4 – Front-End |
+| Current phase | 4 â€“ Front-End |
 | Member | Sana Ammar Taffour |
 | Tool/model | OpenCode (DeepSeek V4.1 Flash Free) |
 
-## Phase 4 – Front-End
+## Phase 4 â€“ Front-End
 
 | ID  | Member | Tool (model) | Purpose | Files affected |
 |-----|--------|--------------|---------|----------------|
@@ -27,5 +27,7 @@
 | C08 | Sana Ammar Taffour | Copilot SDK in VS Code (model unknown) | Add a bilingual supplier notifications page and wire it into supplier routing and navigation | `app/routes.ts`, `app/routes/supplier/notifications.tsx`, `src/pages/supplier/notifications/NotificationsPage.tsx`, `src/pages/supplier/SupplierWorkspacePage.tsx`, `src/pages/supplier/SuplierHeader.tsx`, `src/pages/supplier/SupplierSidebar.tsx`, `src/App.css`, `src/locales/en/translation.json`, `src/locales/ar/translation.json`, `AI_USAGE.md` |
 | C09 | Sana Ammar Taffour | Copilot SDK in VS Code (model unknown) | Add a bilingual supplier chat UI with selectable mock conversations and client-side-only message composition | `app/routes.ts`, `app/routes/supplier/chat.tsx`, `src/pages/supplier/chat/ChatPage.tsx`, `src/pages/supplier/SupplierWorkspacePage.tsx`, `src/pages/supplier/SupplierSidebar.tsx`, `src/pages/supplier/SuplierHeader.tsx`, `src/components/ui/message-scroller.tsx`, `src/components/ui/message.tsx`, `src/components/ui/bubble.tsx`, `src/components/ui/marker.tsx`, `src/App.css`, `src/locales/en/translation.json`, `src/locales/ar/translation.json`, `package.json`, `package-lock.json`, `AI_USAGE.md` |
 | C10 | Sana Ammar | Copilot (model unknown) | Explain how AppShell, the React Router app entry, and the legacy App component fit together | `APP_SHELL_AND_APP_EXPLAINED.md`, `AI_USAGE.md` |
+
+| C11 | Sarah Almanjahi | Codex (model not exposed) | Implement responsive Arabic RTL business orders wireframe with shared UI controls, sample orders, search, details/tracking dialogs, in-memory reorder cart, scoped styles, and route; Team 1, F11, Phase 4 | `src/pages/bussiness/BusinessOrdersPage` (empty placeholder renamed to .tsx), `src/pages/bussiness/BusinessOrdersPage.tsx`, `src/pages/bussiness/business-orders.css`, `app/routes/business/orders.tsx`, `app/routes.ts`, `AI_USAGE.md` |
 
 No AI used: Not reported

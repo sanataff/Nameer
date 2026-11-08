@@ -1,0 +1,52 @@
+﻿.business-orders-page { min-height: 100dvh; background: var(--background); color: var(--foreground); font-family: var(--font-sans); }
+.business-orders-header { border-bottom: 2px solid var(--primary); }
+.business-orders-nav { min-height: 60px; padding: 10px clamp(16px, 3.3vw, 48px); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.business-orders-search { display: flex; align-items: center; gap: 8px; width: min(100%, 308px); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 7px 12px; color: var(--muted-foreground); box-shadow: 0 1px 3px var(--border); }
+.business-orders-search:focus-within { outline: 2px solid var(--ring); outline-offset: 2px; }
+.business-orders-search input { width: 100%; min-width: 0; outline: none; color: var(--foreground); font: inherit; font-size: 14px; }
+.business-orders-nav-actions { display: flex; align-items: center; gap: 24px; }
+.business-orders-nav-actions > button { position: relative; }
+.business-cart-count { position: absolute; inset-block-start: -4px; inset-inline-end: -3px; border-radius: 50%; background: var(--primary); color: var(--primary-foreground); min-width: 18px; font-size: 11px; }
+.business-orders-main { display: grid; grid-template-columns: repeat(2, minmax(0, 352px)); gap: 60px; padding: 78px clamp(20px, 3.8vw, 56px) 64px; justify-content: start; outline: none; }
+.business-orders-section { min-width: 0; }
+.business-orders-section h2 { margin: 0 0 28px; font-size: clamp(23px, 2.25vw, 30px); font-weight: 500; line-height: 1.5; }
+.business-orders-list { display: flex; flex-direction: column; gap: 16px; }
+.business-order-card { border-radius: var(--radius-xl); background: var(--muted); padding: 14px 16px 16px; }
+.business-order-card time { display: block; font-size: 11px; color: var(--muted-foreground); margin-bottom: 12px; }
+.business-order-body { display: grid; grid-template-columns: 98px minmax(0, 1fr) auto; align-items: center; gap: 16px; }
+.business-order-logo { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; width: 98px; height: 98px; border-radius: var(--radius-md); background: var(--nameer-brand-800); color: var(--nameer-brand-50); }
+.business-order-logo-mark { display: grid; place-items: center; width: 51px; height: 51px; border: 1px solid currentColor; border-radius: 50%; }
+.business-order-logo-mark svg { width: 34px; height: 34px; stroke-width: 1; }
+.business-order-logo > span:last-child { font-family: Georgia, serif; font-size: 10px; letter-spacing: 1px; }
+.business-order-info { min-width: 0; align-self: stretch; display: flex; flex-direction: column; align-items: start; gap: 4px; }
+.business-order-info h3 { font-size: 17px; font-weight: 600; margin: 0; }
+.business-order-info p { font-size: 14px; margin: 0; }
+.business-order-details { margin-top: auto; padding-top: 12px; font-size: 13px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; white-space: nowrap; }
+.business-order-details:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; border-radius: 2px; }
+.business-order-action { grid-column: 3; }
+.business-orders-empty { padding-block: 24px; color: var(--muted-foreground); }
+.business-order-summary { display: flex; flex-direction: column; gap: 12px; }
+.business-order-summary > div { display: flex; justify-content: space-between; gap: 16px; }
+.business-order-summary dt { color: var(--muted-foreground); }
+.business-orders-skip { position: absolute; inset-inline-start: 16px; top: -100px; padding: 8px; background: var(--background); }
+.business-orders-skip:focus { top: 8px; z-index: 10; }
+@media (max-width: 900px) {
+  .business-orders-main { gap: 24px; padding-top: 48px; }
+  .business-order-body { grid-template-columns: 80px minmax(0, 1fr); gap: 12px; }
+  .business-order-logo { width: 80px; height: 80px; }
+  .business-order-action { grid-column: 2; justify-self: start; }
+}
+@media (max-width: 640px) {
+  .business-orders-nav { flex-wrap: wrap; gap: 12px; }
+  .business-orders-nav-actions { gap: 16px; }
+  .business-orders-search { order: 3; width: 100%; }
+  .business-orders-main { grid-template-columns: minmax(0, 1fr); gap: 36px; padding: 32px 16px; }
+  .business-orders-section h2 { margin-bottom: 20px; }
+  .business-order-body { grid-template-columns: 80px minmax(0, 1fr) auto; gap: 10px; }
+  .business-order-action { grid-column: 3; }
+}
+@media (max-width: 360px) {
+  .business-order-body { grid-template-columns: 72px minmax(0, 1fr); }
+  .business-order-logo { width: 72px; height: 80px; }
+  .business-order-action { grid-column: 2; }
+}
