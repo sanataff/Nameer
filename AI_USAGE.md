@@ -6,11 +6,11 @@
 |-------|-------|
 | Team number | 1 |
 | Section | F11 |
-| Current phase | 4 â€“ Front-End |
+| Current phase | 4 أ¢â‚¬â€œ Front-End |
 | Member | Sana Ammar Taffour |
 | Tool/model | OpenCode (DeepSeek V4.1 Flash Free) |
 
-## Phase 4 â€“ Front-End
+## Phase 4 أ¢â‚¬â€œ Front-End
 
 | ID  | Member | Tool (model) | Purpose | Files affected |
 |-----|--------|--------------|---------|----------------|
@@ -29,5 +29,9 @@
 | C10 | Sana Ammar | Copilot (model unknown) | Explain how AppShell, the React Router app entry, and the legacy App component fit together | `APP_SHELL_AND_APP_EXPLAINED.md`, `AI_USAGE.md` |
 
 | C11 | Sarah Almanjahi | Codex (model not exposed) | Implement responsive Arabic RTL business orders wireframe with shared UI controls, sample orders, search, details/tracking dialogs, in-memory reorder cart, scoped styles, and route; Team 1, F11, Phase 4 | `src/pages/bussiness/BusinessOrdersPage` (empty placeholder renamed to .tsx), `src/pages/bussiness/BusinessOrdersPage.tsx`, `src/pages/bussiness/business-orders.css`, `app/routes/business/orders.tsx`, `app/routes.ts`, `AI_USAGE.md` |
+
+| C12 | Sarah Almanjahi | Codex (model not exposed) | Implement responsive Arabic sample shopping cart in existing folder with separate components, parent-managed quantities/removal, dynamic totals, header, search, empty states and explicit unavailable-checkout dialog; no shared Navbar or checkout route exists on disk | `src/pages/bussiness/shoppingCart/ShoppingCartPage.tsx`, `src/pages/bussiness/shoppingCart/CartNavbar.tsx`, `src/pages/bussiness/shoppingCart/CartItem.tsx`, `src/pages/bussiness/shoppingCart/CartItemList.tsx`, `src/pages/bussiness/shoppingCart/QuantitySelector.tsx`, `src/pages/bussiness/shoppingCart/OrderSummary.tsx`, `src/pages/bussiness/shoppingCart/cart-data.ts`, `src/pages/bussiness/shoppingCart/shopping-cart.css`, `app/routes/business/cart.tsx`, `app/routes.ts`, `AI_USAGE.md` |
+
+| C13 | Sarah Almanjahi | Codex (model not exposed) | Fix the orders-page Cart icon to navigate to the existing /business/cart route using React Router useNavigate instead of opening a cart dialog; preserve existing button design and badge | `src/pages/bussiness/BusinessOrdersPage.tsx`, `AI_USAGE.md` |
 
 No AI used: Not reported
