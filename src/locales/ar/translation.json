@@ -97,6 +97,9 @@
       "thu": "خمي",
       "fri": "جمع"
     },
+  "orderspage":{
+    "layla" : "مقهى ليلى"
+  },
     "businessRequests": "طلبات الأعمال",
     "businessRequestsDescription": "منشورات تبحث عن موردين — اختر طلباً لمعرفة التفاصيل.",
     "viewRequest": "عرض التفاصيل",
