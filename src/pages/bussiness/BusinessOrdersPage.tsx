@@ -1,4 +1,5 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router'
 import { CupSoda, MessageCircle, Search, ShoppingBag, ShoppingCart, UserRound } from 'lucide-react'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
@@ -51,6 +52,7 @@ function OrderCard({ order, onDetails, onAction }: {
 }
 
 export default function BusinessOrdersPage() {
+  const navigate = useNavigate()
   usePageTitle('طلباتك')
   const [query, setQuery] = useState('')
   const [cart, setCart] = useState<Order[]>([])
@@ -93,9 +95,7 @@ export default function BusinessOrdersPage() {
             </label>
             <div className="business-orders-nav-actions">
               <Button variant="ghost" size="icon-lg" aria-label={`السلة، ${cart.length} طلب`}
-                onClick={() => setPanel({ title: 'السلة', description: cart.length
-                  ? `عدد الطلبات التجريبية: ${cart.length}، الإجمالي: ${priceFormat.format(cart.reduce((total, order) => total + order.price, 0))} ريال. لا تتوفر عملية دفع في هذا العرض.`
-                  : 'السلة فارغة. يمكنك إضافة طلب سابق باستخدام إعادة الطلب.' })}>
+                onClick={() => navigate('/business/cart')}>
                 <ShoppingCart />{cart.length > 0 && <span className="business-cart-count">{cart.length}</span>}
               </Button>
               <Button variant="ghost" size="icon-lg" aria-label="الرسائل"
