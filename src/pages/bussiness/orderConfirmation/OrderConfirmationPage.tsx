@@ -25,17 +25,16 @@ export default function OrderConfirmationPage() {
         <CartNavbar query={query} onQueryChange={setQuery} onPanel={(title, description) => setPanel({ title, description })} />
         <main className="confirmation-main">
           {submittedOrder ? <>
-            <h1>تم استلام طلبك بنجاح!</h1>
+            <h1>تم تأكيد تفاصيل طلبك</h1>
             <div className="confirmation-panel">
               <OrderTracking />
               <OrderDetails items={submittedOrder.items} query={query} />
               <ContactUs onContact={() => navigate('/business/chat')} />
-              <p className="confirmation-demo-note">تأكيد تجريبي فقط؛ لم يتم حفظ طلب حقيقي أو تحصيل مبلغ. مراحل التتبع للعرض فقط.</p>
               <Button className="confirmation-home" size="lg" render={<Link to="/" />}>العودة إلى الصفحة الرئيسية</Button>
             </div>
           </> : <div className="confirmation-panel">
             <h1>لا يوجد طلب مؤكد لعرضه</h1>
-            <p>أكمل خطوات الطلب من السلة أولاً. بيانات التأكيد التجريبي لا تبقى بعد تحديث الصفحة.</p>
+            <p>أكمل خطوات الطلب من السلة أولاً. تفاصيل التأكيد لا تبقى بعد تحديث الصفحة.</p>
             <Button render={<Link to="/business/cart" />}>العودة إلى السلة</Button>
           </div>}
         </main>

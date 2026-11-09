@@ -42,4 +42,8 @@
 
 | C17 | Sarah Almanjahi | Codex (model not exposed) | Move Arabic orderspage translation from supplierDashboard to the root to match the English structure and existing orderspage.layla lookup; validate JSON and key location | `src/locales/ar/translation.json`, `AI_USAGE.md` |
 
+| C18 | Sarah Almanjahi | Codex (model not exposed) | Replace visible demo wording across business UI with professional labels; remove payment disclaimer paragraph and saved-address suffix; clarify confirmation reviews details without real order/payment/delivery; retain sample data, internal identifiers and all simulation logic | `src/pages/bussiness/checkout/CustomerInfo.tsx`, `src/pages/bussiness/checkout/CheckoutPage.tsx`, `src/pages/bussiness/checkout/PaymentMethod.tsx`, `src/pages/bussiness/BusinessOrdersPage.tsx`, `src/pages/bussiness/shoppingCart/CartNavbar.tsx`, `src/pages/bussiness/chat/BusinessChatPage.tsx`, `src/pages/bussiness/orderConfirmation/OrderConfirmationPage.tsx`, `src/pages/bussiness/orderConfirmation/OrderTracking.tsx`, `AI_USAGE.md` |
+
+| C19 | Sarah Almanjahi | Codex (model not exposed) | Remove the requested visible confirmation note; leave simulation logic unchanged | `src/pages/bussiness/orderConfirmation/OrderConfirmationPage.tsx`, `AI_USAGE.md` |
+
 No AI used: Not reported

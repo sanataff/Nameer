@@ -26,7 +26,7 @@ export default function BusinessChatPage() {
         <CartNavbar query={query} onQueryChange={setQuery} onPanel={(title, description) => setPanel({ title, description })} />
         <main className="business-chat-main">
           <Button variant="outline" render={<Link to="/business/order-confirmation" />}>العودة إلى تأكيد الطلب</Button>
-          <p className="business-chat-note">محادثة تجريبية حول طلبك من {contacts.map((contact) => contact.name).join('، ')}. الرسائل محلية ولا تُرسل إلى متجر حقيقي وتُمسح عند مغادرة الصفحة.</p>
+          <p className="business-chat-note">محادثة حول طلبك من {contacts.map((contact) => contact.name).join('، ')}. الرسائل محفوظة مؤقتاً في هذه الصفحة ولا تُرسل إلى المتجر، وتُمسح عند مغادرتها.</p>
           {contacts.length
             ? <ChatPanel contacts={contacts} viewer="customer" contactQuery={query} />
             : <p role="status">لا يوجد طلب مؤكد. أكمل الطلب من <Link to="/business/cart">سلة التسوق</Link> أولاً.</p>}

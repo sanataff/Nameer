@@ -22,7 +22,7 @@ export default function CheckoutPage() {
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
   // MOCK ADDRESS: new addresses exist only for this checkout session.
-  const [addresses, setAddresses] = useState<Address[]>([{ id: 'demo-address', label: 'السعودية - الظهران - الحزام الأكاديمي - الشباب (عنوان تجريبي)' }])
+  const [addresses, setAddresses] = useState<Address[]>([{ id: 'demo-address', label: 'السعودية - الظهران - الحزام الأكاديمي - الشباب' }])
   const [address, setAddress] = useState('')
   const [payment, setPayment] = useState<Payment | ''>('')
   const [error, setError] = useState('')

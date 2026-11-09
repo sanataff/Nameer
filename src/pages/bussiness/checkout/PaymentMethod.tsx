@@ -1,4 +1,4 @@
-﻿import { Wallet } from 'lucide-react'
+import { Wallet } from 'lucide-react'
 import type { Payment } from './checkout-types'
 
 export function PaymentMethod({ selected, onSelect }: { selected: Payment | ''; onSelect: (value: Payment) => void }) {
@@ -9,7 +9,6 @@ export function PaymentMethod({ selected, onSelect }: { selected: Payment | ''; 
         <label className="checkout-option"><input type="radio" name="payment" checked={selected === 'mada'} onChange={() => onSelect('mada')} />مدى</label>
         <label className="checkout-option"><input type="radio" name="payment" checked={selected === 'cash'} onChange={() => onSelect('cash')} />الدفع عند الاستلام</label>
       </fieldset>
-      <p className="checkout-demo-note">خيارات تجريبية فقط؛ لن تُطلب بيانات بطاقة ولن تتم أي عملية دفع.</p>
     </section>
   )
 }

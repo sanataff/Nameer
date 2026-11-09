@@ -11,7 +11,7 @@ export function CartNavbar({ onPanel, query, onQueryChange }: Props) {
     <header className="shopping-cart-header">
       <nav aria-label="التنقل الرئيسي">
         <Button variant="ghost" size="icon-lg" aria-label="الملف الشخصي"
-          onClick={() => onPanel('الملف الشخصي', 'حساب تجريبي لعرض سلة التسوق.')}>
+          onClick={() => onPanel('الملف الشخصي', 'معلومات الحساب.')}>
           <Avatar><AvatarFallback><UserRound /></AvatarFallback></Avatar>
         </Button>
         <label className="shopping-cart-search">
@@ -22,7 +22,7 @@ export function CartNavbar({ onPanel, query, onQueryChange }: Props) {
         <div className="shopping-cart-nav-actions">
           <Button variant="ghost" size="icon-lg" render={<Link to="/business/cart" aria-current={location.pathname === '/business/cart' ? 'page' : undefined} aria-label="سلة التسوق" />}><ShoppingCart /></Button>
           <Button variant="ghost" size="icon-lg" aria-label="الرسائل"
-            onClick={() => onPanel('الرسائل', 'لا توجد رسائل في هذا العرض التجريبي.')}><MessageCircle /></Button>
+            onClick={() => onPanel('الرسائل', 'لا توجد رسائل حالياً.')}><MessageCircle /></Button>
           <Button size="lg" render={<Link to="/business/orders" />}><ShoppingBag data-icon="inline-start" />طلبــاتك</Button>
         </div>
       </nav>

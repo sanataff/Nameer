@@ -1,6 +1,6 @@
-﻿import { Check, Package } from 'lucide-react'
+import { Check, Package } from 'lucide-react'
 
-const stages = ['تم استلام طلبك', 'طلبك قيد التجهيز', 'طلبك بالطريق', 'تم تسليم الطلب']
+const stages = ['تمت مراجعة تفاصيل الطلب', 'طلبك قيد التجهيز', 'طلبك بالطريق', 'تم تسليم الطلب']
 
 export function OrderTracking() {
   return (

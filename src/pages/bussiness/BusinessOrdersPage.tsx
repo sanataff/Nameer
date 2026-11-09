@@ -39,7 +39,7 @@ function OrderCard({ order, onDetails, onAction }: {
       </span>
     </div>
       <div className="business-order-body">
-        <div className="business-order-logo" role="img" aria-label="شعار تجريبي لمقهى ليلى">
+        <div className="business-order-logo" role="img" aria-label="شعار مقهى ليلى">
           <span className="business-order-logo-mark"><CupSoda aria-hidden="true" /></span>
           <span lang="en">Creme Cake</span>
         </div>
@@ -78,7 +78,7 @@ export default function BusinessOrdersPage() {
     setCart((current) => [...current, order])
     setPanel({
       title: 'إعادة الطلب',
-      description: 'تمت إضافة نسخة تجريبية من الطلب إلى السلة. لن يتم إرسال طلب أو تحصيل مبلغ.',
+      description: 'تمت إضافة الطلب إلى السلة. لم يتم إرسال طلب أو تحصيل مبلغ.',
       order,
     })
   }
@@ -90,7 +90,7 @@ export default function BusinessOrdersPage() {
         <header className="business-orders-header">
           <nav className="business-orders-nav" aria-label="التنقل الرئيسي">
             <Button variant="ghost" size="icon-lg" aria-label="الملف الشخصي"
-              onClick={() => setPanel({ title: 'الملف الشخصي', description: 'حساب تجريبي لعرض واجهة طلبات الأعمال.' })}>
+              onClick={() => setPanel({ title: 'الملف الشخصي', description: 'معلومات حساب الأعمال.' })}>
               <Avatar><AvatarFallback><UserRound aria-hidden="true" /></AvatarFallback></Avatar>
             </Button>
             <label className="business-orders-search">
@@ -104,7 +104,7 @@ export default function BusinessOrdersPage() {
                 <ShoppingCart />{cart.length > 0 && <span className="business-cart-count">{cart.length}</span>}
               </Button>
               <Button variant="ghost" size="icon-lg" aria-label="الرسائل"
-                onClick={() => setPanel({ title: 'الرسائل', description: 'لا توجد رسائل في هذا العرض التجريبي.' })}>
+                onClick={() => setPanel({ title: 'الرسائل', description: 'لا توجد رسائل حالياً.' })}>
                 <MessageCircle />
               </Button>
               <Button size="lg" render={<a href="#business-orders" aria-current="page" />}>
@@ -125,9 +125,9 @@ export default function BusinessOrdersPage() {
                 <div className="business-orders-list">
                   {orders.map((order) => (
                     <OrderCard key={order.id} order={order}
-                      onDetails={() => setPanel({ title: 'تفاصيل الطلب', description: 'بيانات طلب تجريبية للعرض فقط.', order })}
+                      onDetails={() => setPanel({ title: 'تفاصيل الطلب', description: 'تفاصيل الطلب.', order })}
                       onAction={() => active
-                        ? setPanel({ title: 'تتبع الطلب', description: 'قيد التجهيز — سيتم تحديث الحالة عند تسليم الطلب للمندوب. هذه حالة تجريبية وليست تتبعاً مباشراً.', order })
+                        ? setPanel({ title: 'تتبع الطلب', description: 'حالة التوصيل غير متاحة حالياً. لا يتوفر تتبع مباشر للطلب.', order })
                         : reorder(order)} />
                   ))}
                   {orders.length === 0 && <p className="business-orders-empty" role="status">لا توجد طلبات مطابقة لبحثك.</p>}
