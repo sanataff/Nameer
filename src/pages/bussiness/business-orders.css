@@ -7,7 +7,7 @@
 .business-orders-nav-actions { display: flex; align-items: center; gap: 24px; }
 .business-orders-nav-actions > button { position: relative; }
 .business-cart-count { position: absolute; inset-block-start: -4px; inset-inline-end: -3px; border-radius: 50%; background: var(--primary); color: var(--primary-foreground); min-width: 18px; font-size: 11px; }
-.business-orders-main { display: grid; grid-template-columns: repeat(2, minmax(0, 352px)); gap: 60px; padding: 78px clamp(20px, 3.8vw, 56px) 64px; justify-content: start; outline: none; }
+.business-orders-main { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; max-width: 1200px; margin: 0 auto; padding: 48px 24px 64px; outline: none; }
 .business-orders-section { min-width: 0; }
 .business-orders-section h2 { margin: 0 0 28px; font-size: clamp(23px, 2.25vw, 30px); font-weight: 500; line-height: 1.5; }
 .business-orders-list { display: flex; flex-direction: column; gap: 16px; }
