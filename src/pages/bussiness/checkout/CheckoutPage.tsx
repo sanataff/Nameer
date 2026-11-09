@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { Button } from '@/components/ui/button'
 import { DirectionProvider } from '@/components/ui/direction'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -18,7 +18,8 @@ import './checkout.css'
 
 export default function CheckoutPage() {
   usePageTitle('إتمام الطلب')
-  const { items } = useCart()
+  const { items, setSubmittedOrder } = useCart()
+  const navigate = useNavigate()
   const [query, setQuery] = useState('')
   // MOCK ADDRESS: new addresses exist only for this checkout session.
   const [addresses, setAddresses] = useState<Address[]>([{ id: 'demo-address', label: 'السعودية - الظهران - الحزام الأكاديمي - الشباب (عنوان تجريبي)' }])
@@ -35,6 +36,13 @@ export default function CheckoutPage() {
     if (!payment) { setError('يرجى اختيار طريقة الدفع.'); return }
     setError('')
     setSubmitted(true)
+    // Snapshot the validated order so later cart edits do not change this receipt.
+    setSubmittedOrder({
+      items: items.map((item) => ({ ...item })),
+      address: addresses.find((saved) => saved.id === address)!.label,
+      payment,
+    })
+    navigate('/business/order-confirmation', { replace: true })
   }
 
   return (
@@ -43,13 +51,7 @@ export default function CheckoutPage() {
         <CartNavbar query={query} onQueryChange={setQuery} onPanel={(title, description) => setPanel({ title, description })} />
         <main className="checkout-main">
           <OrderSummary items={items} query={query} />
-          {submitted
-            ? <section className="checkout-panel checkout-confirmation" role="status">
-                <h2>تم تأكيد الطلب التجريبي بنجاح</h2>
-                <p>هذه محاكاة فقط. لم يتم حفظ طلب حقيقي أو تحصيل أي مبلغ. بقيت السلة كما هي.</p>
-                <Button render={<Link to="/business/cart" />}>العودة إلى السلة</Button>
-              </section>
-            : !items.length
+          {!items.length
               ? <section className="checkout-panel"><p>سلة التسوق فارغة.</p><Button render={<Link to="/business/cart" />}>العودة إلى السلة</Button></section>
               : <div className="checkout-panel">
                   <CustomerInfo />
