@@ -12,6 +12,7 @@ import { ContactUs } from './ContactUs'
 import '@fontsource-variable/noto-sans-arabic'
 import '../shoppingCart/shopping-cart.css'
 import './order-confirmation.css'
+import { Check } from 'lucide-react'
 
 export default function OrderConfirmationPage() {
   usePageTitle('تأكيد الطلب')
@@ -25,7 +26,13 @@ export default function OrderConfirmationPage() {
         <CartNavbar query={query} onQueryChange={setQuery} onPanel={(title, description) => setPanel({ title, description })} />
         <main className="confirmation-main">
           {submittedOrder ? <>
-            <h1>تم تأكيد تفاصيل طلبك</h1>
+          <div className="confirmation-success">
+            <div className="confirmation-success-icon">
+              <Check size={32} />
+            </div>
+            <h1>تم تأكيد طلبك بنجاح!</h1>
+            <p>شكرًا لطلبك، يمكنك متابعة حالة طلبك أدناه.</p>
+          </div>
             <div className="confirmation-panel">
               <OrderTracking />
               <OrderDetails items={submittedOrder.items} query={query} />
