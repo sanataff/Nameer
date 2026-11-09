@@ -1,17 +1,19 @@
-﻿import { useState } from 'react'
+import { useState } from 'react'
+import { useNavigate } from 'react-router'
 import { DirectionProvider } from '@/components/ui/direction'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { CartNavbar } from './CartNavbar'
 import { CartItemList } from './CartItemList'
 import { OrderSummary } from './OrderSummary'
-import { sampleCart } from './cart-data'
+import { useCart } from './cart-context'
 import '@fontsource-variable/noto-sans-arabic'
 import './shopping-cart.css'
 
 export default function ShoppingCartPage() {
   usePageTitle('سلة التسوق')
-  const [items, setItems] = useState(sampleCart)
+  const { items, setItems } = useCart()
+  const navigate = useNavigate()
   const [query, setQuery] = useState('')
   const [panel, setPanel] = useState<{ title: string; description: string } | null>(null)
   const visibleItems = items.filter((item) => item.name.includes(query.trim()))
@@ -35,10 +37,7 @@ export default function ShoppingCartPage() {
                     onRemove={(id) => setItems((current) => current.filter((item) => item.id !== id))} />}
             </div>
             {/* The summary includes the entire cart, even while search filters the list. */}
-            <OrderSummary items={items} onCheckout={() => setPanel({
-              title: 'إتمام الطلب',
-              description: 'صفحة إتمام الطلب غير متوفرة بعد. لم يتم إرسال طلب أو تحصيل أي مبلغ.',
-            })} />
+            <OrderSummary items={items} onCheckout={() => navigate('/business/checkout')} />
           </div>
         </main>
         <Dialog open={panel !== null} onOpenChange={(open) => { if (!open) setPanel(null) }}>
