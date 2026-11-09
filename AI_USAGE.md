@@ -4,11 +4,11 @@
 
 | Field | Value |
 |-------|-------|
-| Team number | 1 |
-| Section | F11 |
+| Team number | 01 |
+| Section | F-11 |
 | Current phase | 4 – Front-End |
-| Member | Sana Ammar Taffour |
-| Tool/model | OpenCode (DeepSeek V4.1 Flash Free) |
+| Member | Jood Alharthi |
+| Tool/model | Copilot SDK in VS Code (model unknown) |
 
 ## Phase 4 – Front-End
 
@@ -27,5 +27,19 @@
 | C08 | Sana Ammar Taffour | Copilot SDK in VS Code (model unknown) | Add a bilingual supplier notifications page and wire it into supplier routing and navigation | `app/routes.ts`, `app/routes/supplier/notifications.tsx`, `src/pages/supplier/notifications/NotificationsPage.tsx`, `src/pages/supplier/SupplierWorkspacePage.tsx`, `src/pages/supplier/SuplierHeader.tsx`, `src/pages/supplier/SupplierSidebar.tsx`, `src/App.css`, `src/locales/en/translation.json`, `src/locales/ar/translation.json`, `AI_USAGE.md` |
 | C09 | Sana Ammar Taffour | Copilot SDK in VS Code (model unknown) | Add a bilingual supplier chat UI with selectable mock conversations and client-side-only message composition | `app/routes.ts`, `app/routes/supplier/chat.tsx`, `src/pages/supplier/chat/ChatPage.tsx`, `src/pages/supplier/SupplierWorkspacePage.tsx`, `src/pages/supplier/SupplierSidebar.tsx`, `src/pages/supplier/SuplierHeader.tsx`, `src/components/ui/message-scroller.tsx`, `src/components/ui/message.tsx`, `src/components/ui/bubble.tsx`, `src/components/ui/marker.tsx`, `src/App.css`, `src/locales/en/translation.json`, `src/locales/ar/translation.json`, `package.json`, `package-lock.json`, `AI_USAGE.md` |
 | C10 | Sana Ammar | Copilot (model unknown) | Explain how AppShell, the React Router app entry, and the legacy App component fit together | `APP_SHELL_AND_APP_EXPLAINED.md`, `AI_USAGE.md` |
+| C11 | Jood Alharthi | Copilot SDK in VS Code (model unknown) | Build a responsive Arabic dessert marketplace page with local search, category filters, and visual-only actions | `src/pages/bussiness/HomePage-Cafes.tsx`, `src/App.css`, `AI_USAGE.md` |
+| C12 | Jood Alharthi | Copilot SDK in VS Code (model unknown) | Register the dessert marketplace at `/business/cafes` using the existing page component | `app/routes.ts`, `app/routes/business/cafes.tsx`, `AI_USAGE.md` |
+| C13 | Jood Alharthi | Copilot SDK in VS Code (model unknown) | Refactor the dessert marketplace into a page folder with focused components and page-specific styling | `src/pages/bussiness/HomePage-Cafes/index.tsx`, `src/pages/bussiness/HomePage-Cafes/vendors.ts`, `src/pages/bussiness/HomePage-Cafes/MarketplaceHeader.tsx`, `src/pages/bussiness/HomePage-Cafes/HeroSection.tsx`, `src/pages/bussiness/HomePage-Cafes/NoticeBanner.tsx`, `src/pages/bussiness/HomePage-Cafes/CategoryTabs.tsx`, `src/pages/bussiness/HomePage-Cafes/VendorCard.tsx`, `src/pages/bussiness/HomePage-Cafes/VendorGrid.tsx`, `src/pages/bussiness/HomePage-Cafes/MarketplaceFooter.tsx`, `src/pages/bussiness/HomePage-Cafes/HomePage-Cafes.css`, `src/pages/bussiness/HomePage-Cafes.tsx` (removed), `AI_USAGE.md` |
+| C14 | Jood Alharthi | Copilot SDK in VS Code (model unknown) | Move the marketplace page and all page-specific files into the requested `HomePage` folder and update its route import | `src/pages/bussiness/HomePage-Cafes/` (moved to `src/pages/bussiness/HomePage/`), `app/routes/business/cafes.tsx`, `AI_USAGE.md` |
+| C15 | Jood Alharthi | Copilot SDK in VS Code (model unknown) | Create an Arabic RTL local-provider proposal page with static request details, client-side form feedback, and a registered route | `src/pages/business/proposeToLocalProvider/index.tsx`, `src/pages/business/proposeToLocalProvider/ProposalNavbar.tsx`, `src/pages/business/proposeToLocalProvider/RequestSummaryCard.tsx`, `src/pages/business/proposeToLocalProvider/ProposalForm.tsx`, `src/pages/business/proposeToLocalProvider/proposeToLocalProvider.css`, `app/routes.ts`, `app/routes/business/propose-to-local-provider.tsx`, `AI_USAGE.md` |
+| C16 | Jood Alharthi | Copilot SDK in VS Code (model unknown) | Move the proposal route component into its page folder and point the existing router to it | `src/pages/business/proposeToLocalProvider/route.tsx`, `app/routes/business/propose-to-local-provider.tsx` (removed), `app/routes.ts`, `AI_USAGE.md` |
+| C17 | Jood Alharthi | Copilot SDK in VS Code (model unknown) | Align the proposal page route-wrapper placement with the HomePageCafes routing structure | `app/routes/business/propose-to-local-provider.tsx`, `src/pages/business/proposeToLocalProvider/route.tsx` (removed), `app/routes.ts`, `AI_USAGE.md` |
+| C18 | Jood Alharthi | Copilot SDK in VS Code (model unknown) | Add an RTL Arabic provider-request success page inside the supplied existing folder and register its route | `src/pages/bussiness/proposeToLocalProviderSuccess/index.tsx`, `src/pages/bussiness/proposeToLocalProviderSuccess/SuccessNavbar.tsx`, `src/pages/bussiness/proposeToLocalProviderSuccess/SuccessMessage.tsx`, `src/pages/bussiness/proposeToLocalProviderSuccess/proposeToLocalProviderSuccess.css`, `app/routes.ts`, `AI_USAGE.md` |
+| C19 | Jood Alharthi | Copilot SDK in VS Code (model unknown) | Add React Router wrapper modules under `app/routes/business` for the existing business pages and point the registered URLs to them | `app/routes/business/browse-products.tsx`, `app/routes/business/home-page-cafes.tsx`, `app/routes/business/propose-to-local-provider-success.tsx`, `app/routes.ts`, `AI_USAGE.md` |
+| C20 | Jood Alharthi | Copilot SDK in VS Code (model unknown) | Remove the redundant cafes route wrapper while preserving its URL through the existing HomePageCafes wrapper | `app/routes/business/cafes.tsx` (removed), `app/routes.ts`, `AI_USAGE.md` |
+| C21 | Jood Alharthi | Copilot SDK in VS Code (model unknown) | Connect the cafes, proposal, success, and marketplace pages with working client-side navigation | `src/pages/bussiness/HomePageCafes/VendorCard.tsx`, `src/pages/bussiness/HomePageCafes/HomePage-Cafes.css`, `src/pages/bussiness/propose to local provider/index.tsx`, `src/pages/bussiness/proposeToLocalProviderSuccess/SuccessMessage.tsx`, `AI_USAGE.md` |
+| C22 | Jood Alharthi | Copilot SDK in VS Code (model unknown) | Make business route wrappers explicitly import each page's index module to ensure reliable route-to-page resolution | `app/routes/business/home-page-cafes.tsx`, `app/routes/business/propose-to-local-provider.tsx`, `app/routes/business/propose-to-local-provider-success.tsx`, `AI_USAGE.md` |
+| C23 | Jood Alharthi | Copilot SDK in VS Code (model unknown) | Remove the animated dessert decorations from the business marketplace hero | `src/pages/bussiness/HomePageCafes/HeroSection.tsx`, `src/pages/bussiness/HomePageCafes/HomePage-Cafes.css`, `AI_USAGE.md` |
+| C24 | Jood Alharthi | Copilot SDK in VS Code (model unknown) | Clarify the previous homepage-decoration entry and record the AI usage log correction | `AI_USAGE.md` |
 
 No AI used: Not reported
