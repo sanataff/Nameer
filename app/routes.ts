@@ -5,6 +5,7 @@ export default [
   route('business', './routes/business/cart-layout.tsx', [
     route('cart', './routes/business/cart.tsx'),
     route('checkout', './routes/business/checkout.tsx'),
+    route('chat', './routes/business/chat.tsx'),
     route('order-confirmation', './routes/business/order-confirmation.tsx'),
   ]),
   route('business/orders', './routes/business/orders.tsx'),

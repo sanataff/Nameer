@@ -1,5 +1,5 @@
-﻿import { useState } from 'react'
-import { Link } from 'react-router'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router'
 import { Button } from '@/components/ui/button'
 import { DirectionProvider } from '@/components/ui/direction'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -16,6 +16,7 @@ import './order-confirmation.css'
 export default function OrderConfirmationPage() {
   usePageTitle('تأكيد الطلب')
   const { submittedOrder } = useCart()
+  const navigate = useNavigate()
   const [query, setQuery] = useState('')
   const [panel, setPanel] = useState<{ title: string; description: string } | null>(null)
   return (
@@ -28,7 +29,7 @@ export default function OrderConfirmationPage() {
             <div className="confirmation-panel">
               <OrderTracking />
               <OrderDetails items={submittedOrder.items} query={query} />
-              <ContactUs onContact={() => setPanel({ title: 'تواصل معنا', description: 'خدمة التواصل غير متصلة بعد في هذا العرض التجريبي. لم يتم إرسال أي رسالة.' })} />
+              <ContactUs onContact={() => navigate('/business/chat')} />
               <p className="confirmation-demo-note">تأكيد تجريبي فقط؛ لم يتم حفظ طلب حقيقي أو تحصيل مبلغ. مراحل التتبع للعرض فقط.</p>
               <Button className="confirmation-home" size="lg" render={<Link to="/" />}>العودة إلى الصفحة الرئيسية</Button>
             </div>
