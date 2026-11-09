@@ -34,4 +34,6 @@
 
 | C13 | Sarah Almanjahi | Codex (model not exposed) | Fix the orders-page Cart icon to navigate to the existing /business/cart route using React Router useNavigate instead of opening a cart dialog; preserve existing button design and badge | `src/pages/bussiness/BusinessOrdersPage.tsx`, `AI_USAGE.md` |
 
+| C14 | Sarah Almanjahi | Codex (model not exposed) | Add responsive frontend-only Arabic checkout, reuse CartNavbar, share in-memory cart across nested routes, calculate live totals, add/select addresses, select payment, validate and confirm simulation without payment or order-history integration | `src/pages/bussiness/checkout/CheckoutPage.tsx`, `src/pages/bussiness/checkout/OrderSummary.tsx`, `src/pages/bussiness/checkout/CustomerInfo.tsx`, `src/pages/bussiness/checkout/DeliveryAddress.tsx`, `src/pages/bussiness/checkout/PaymentMethod.tsx`, `src/pages/bussiness/checkout/PlaceOrderButton.tsx`, `src/pages/bussiness/checkout/checkout-types.ts`, `src/pages/bussiness/checkout/checkout.css`, `src/pages/bussiness/shoppingCart/CartLayout.tsx`, `src/pages/bussiness/shoppingCart/cart-context.ts`, `src/pages/bussiness/shoppingCart/ShoppingCartPage.tsx`, `src/pages/bussiness/shoppingCart/CartNavbar.tsx`, `app/routes/business/cart-layout.tsx`, `app/routes/business/checkout.tsx`, `app/routes.ts`, `AI_USAGE.md` |
+
 No AI used: Not reported
