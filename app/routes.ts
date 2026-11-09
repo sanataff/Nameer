@@ -7,7 +7,7 @@ export default [
   route('business/cafes', './routes/business/home-page-cafes.tsx', {
     id: 'legacy-business-cafes',
   }),
-  route('business/account-settings', '../src/pages/bussiness/accountSettings/index.tsx'),
+  route('business/account-settings', './routes/business/account-settings.tsx'),
   route('business/browse-products', './routes/business/browse-products.tsx'),
   route('business/home-page-cafes', './routes/business/home-page-cafes.tsx'),
   route('business/propose-to-local-provider', './routes/business/propose-to-local-provider.tsx'),

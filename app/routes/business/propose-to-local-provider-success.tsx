@@ -1,4 +1,4 @@
-import ProposeToLocalProviderSuccessPage from '@/pages/bussiness/proposeToLocalProviderSuccess/index'
+import ProposeToLocalProviderSuccessPage from '../../../src/pages/bussiness/proposeToLocalProviderSuccess'
 
 export default function ProposeToLocalProviderSuccessRoute() {
   return <ProposeToLocalProviderSuccessPage />
