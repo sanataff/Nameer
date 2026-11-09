@@ -40,4 +40,6 @@
 
 | C16 | Sarah Almanjahi | Codex (model not exposed) | Extract supplier chat UI into shared role-aware ChatPanel; preserve supplier demo; connect confirmation Contact Us to business chat using order business names as local conversation keys without supplier IDs or backend; retain cart/confirmation route context | `src/components/chat/ChatPanel.tsx`, `src/pages/supplier/chat/ChatPage.tsx`, `src/pages/bussiness/chat/BusinessChatPage.tsx`, `src/pages/bussiness/chat/business-chat.css`, `src/pages/bussiness/orderConfirmation/OrderConfirmationPage.tsx`, `app/routes/business/chat.tsx`, `app/routes.ts`, `AI_USAGE.md` |
 
+| C17 | Sarah Almanjahi | Codex (model not exposed) | Move Arabic orderspage translation from supplierDashboard to the root to match the English structure and existing orderspage.layla lookup; validate JSON and key location | `src/locales/ar/translation.json`, `AI_USAGE.md` |
+
 No AI used: Not reported
