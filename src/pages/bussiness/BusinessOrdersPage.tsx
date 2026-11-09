@@ -32,7 +32,12 @@ function OrderCard({ order, onDetails, onAction }: {
 
   return (
     <article className="business-order-card" aria-label={`طلب رقم ${order.id}`}>
+    <div className="business-order-top">
       <time dateTime={order.date}>{dateFormat.format(new Date(order.date))}</time>
+       <span className={`business-order-status ${order.active ? 'active' : 'completed'}`}>
+    {order.active ? 'قيد التنفيذ' : 'مكتمل'}
+      </span>
+    </div>
       <div className="business-order-body">
         <div className="business-order-logo" role="img" aria-label="شعار تجريبي لمقهى ليلى">
           <span className="business-order-logo-mark"><CupSoda aria-hidden="true" /></span>

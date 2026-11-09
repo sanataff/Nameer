@@ -51,3 +51,30 @@
   .business-order-logo { width: 72px; height: 80px; }
   .business-order-action { grid-column: 2; }
 }
+.business-order-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.business-order-top time {
+  margin-bottom: 0;
+}
+
+.business-order-status {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
+.business-order-status.active {
+  background: #fff3db;
+  color: #926000;
+}
+
+.business-order-status.completed {
+  background: #e7f5e9;
+  color: #287a40;
+}
