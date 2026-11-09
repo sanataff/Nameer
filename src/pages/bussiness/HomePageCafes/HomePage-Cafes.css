@@ -138,6 +138,9 @@
 
 .marketplace-orders-button,
 .marketplace-browse-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid var(--marketplace-caramel-dark);
   border-radius: 0.75rem;
   background: var(--marketplace-caramel-dark);
@@ -145,6 +148,7 @@
   cursor: pointer;
   font: inherit;
   font-weight: 700;
+  text-decoration: none;
   transition: background 180ms ease, border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
@@ -272,76 +276,6 @@
   background: #f3e5d6;
   color: var(--marketplace-caramel-dark);
   font-size: 1.1rem;
-}
-
-.marketplace-hero-art {
-  position: absolute;
-  inset-block: 0;
-  inset-inline-start: 5%;
-  display: grid;
-  width: min(40%, 23rem);
-  place-items: center;
-}
-
-.marketplace-hero-art::before {
-  position: absolute;
-  width: 15rem;
-  aspect-ratio: 1;
-  border: 1px solid rgb(183 122 64 / 16%);
-  border-radius: 50%;
-  background: rgb(255 255 255 / 20%);
-  box-shadow: 0 0 0 1.6rem rgb(255 255 255 / 23%), 0 0 0 3.2rem rgb(183 122 64 / 5%);
-  content: "";
-}
-
-.marketplace-hero-dessert {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  width: 10.5rem;
-  aspect-ratio: 1;
-  place-items: center;
-  border: 1px solid rgb(255 255 255 / 80%);
-  border-radius: 50%;
-  background: linear-gradient(145deg, #fffaf3, #f3dfc9);
-  box-shadow: 0 18px 38px rgb(114 76 41 / 17%);
-  font-size: 6rem;
-  transform: rotate(-8deg);
-  animation: marketplace-float 5s ease-in-out infinite;
-}
-
-.marketplace-hero-cookie {
-  position: absolute;
-  z-index: 2;
-  inset-block-end: 2.6rem;
-  inset-inline-start: 0.8rem;
-  display: grid;
-  width: 4.5rem;
-  aspect-ratio: 1;
-  place-items: center;
-  border: 1px solid white;
-  border-radius: 50%;
-  background: #fff8f0;
-  box-shadow: 0 10px 24px rgb(114 76 41 / 14%);
-  font-size: 2.5rem;
-  animation: marketplace-float 4s ease-in-out 0.4s infinite;
-}
-
-.marketplace-hero-sparkle {
-  position: absolute;
-  color: #bd8a5e;
-}
-
-.marketplace-hero-sparkle-one {
-  inset-block-start: 3rem;
-  inset-inline-start: 2.8rem;
-  font-size: 1.5rem;
-}
-
-.marketplace-hero-sparkle-two {
-  inset-block-end: 3.3rem;
-  inset-inline-end: 1.8rem;
-  font-size: 2rem;
 }
 
 .marketplace-vendors {
@@ -789,17 +723,6 @@
   outline: 0;
 }
 
-@keyframes marketplace-float {
-  0%,
-  100% {
-    translate: 0 0;
-  }
-
-  50% {
-    translate: 0 -7px;
-  }
-}
-
 @media (max-width: 62rem) {
   .marketplace-header-inner {
     gap: 1.25rem;
@@ -853,31 +776,6 @@
     padding: 1.5rem;
   }
 
-  .marketplace-hero-art {
-    inset-inline-start: -4%;
-    width: 46%;
-    opacity: 0.82;
-  }
-
-  .marketplace-hero-art::before {
-    width: 10rem;
-  }
-
-  .marketplace-hero-dessert {
-    width: 7.5rem;
-    font-size: 4.25rem;
-  }
-
-  .marketplace-hero-cookie {
-    width: 3.3rem;
-    inset-block-end: 2.2rem;
-    font-size: 1.8rem;
-  }
-
-  .marketplace-hero-copy {
-    max-width: 70%;
-  }
-
   .marketplace-vendors {
     padding-block-start: 2.5rem;
   }
@@ -912,26 +810,6 @@
   .marketplace-hero {
     min-height: 15rem;
     padding: 1.2rem;
-  }
-
-  .marketplace-hero-copy {
-    max-width: 76%;
-  }
-
-  .marketplace-hero-art {
-    inset-inline-start: -8%;
-    width: 42%;
-  }
-
-  .marketplace-hero-dessert {
-    width: 6rem;
-    font-size: 3.5rem;
-  }
-
-  .marketplace-hero-cookie {
-    width: 2.8rem;
-    inset-inline-start: 0.4rem;
-    font-size: 1.55rem;
   }
 
   .marketplace-section-heading {

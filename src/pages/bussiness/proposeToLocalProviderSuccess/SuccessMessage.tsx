@@ -12,7 +12,7 @@ export default function SuccessMessage() {
       <span className="proposal-success-eyebrow">شكراً لثقتك بنا</span>
       <h1 id="success-title">تم استلام طلبك بنجاح!</h1>
       <p>الرجاء الاطلاع على البريد الإلكتروني لمتابعة تحديثات الطلب</p>
-      <Link className="proposal-success-home-button" to="/">
+      <Link className="proposal-success-home-button" to="/business/home-page-cafes">
         العودة إلى الصفحة الرئيسية
       </Link>
       <span className="proposal-success-reference">

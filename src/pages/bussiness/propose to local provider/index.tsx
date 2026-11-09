@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router'
 import ProposalForm from './ProposalForm'
 import ProposalNavbar from './ProposalNavbar'
 import RequestSummaryCard from './RequestSummaryCard'
@@ -6,6 +7,7 @@ import './proposeToLocalProvider.css'
 
 export default function ProposeToLocalProviderPage() {
   const [feedback, setFeedback] = useState('')
+  const navigate = useNavigate()
 
   return (
     <div className="proposal-page" dir="rtl" lang="ar">
@@ -33,7 +35,9 @@ export default function ProposeToLocalProviderPage() {
 
         <div className="proposal-layout">
           <RequestSummaryCard />
-          <ProposalForm onSubmit={() => setFeedback('تم إرسال عرضك بنجاح إلى مقهى روما.')} />
+          <ProposalForm
+            onSubmit={() => navigate('/business/propose-to-local-provider/success')}
+          />
         </div>
 
         <footer className="proposal-footer">

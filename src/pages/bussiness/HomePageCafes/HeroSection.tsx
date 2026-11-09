@@ -15,12 +15,6 @@ export default function HeroSection() {
           <span>لحظات حلوة تبدأ من هنا</span>
         </div>
       </div>
-      <div className="marketplace-hero-art" aria-hidden="true">
-        <span className="marketplace-hero-sparkle marketplace-hero-sparkle-one">✦</span>
-        <span className="marketplace-hero-sparkle marketplace-hero-sparkle-two">✧</span>
-        <span className="marketplace-hero-dessert">🧁</span>
-        <span className="marketplace-hero-cookie">🍪</span>
-      </div>
     </section>
   )
 }

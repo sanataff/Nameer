@@ -4,7 +4,9 @@ export default [
   index('./routes/home.tsx'),
   route('login', './routes/auth/login.tsx'),
   route('admin/login', './routes/admin/login.tsx'),
-  route('business/cafes', './routes/business/cafes.tsx'),
+  route('business/cafes', './routes/business/home-page-cafes.tsx', {
+    id: 'legacy-business-cafes',
+  }),
   route('business/browse-products', './routes/business/browse-products.tsx'),
   route('business/home-page-cafes', './routes/business/home-page-cafes.tsx'),
   route('business/propose-to-local-provider', './routes/business/propose-to-local-provider.tsx'),

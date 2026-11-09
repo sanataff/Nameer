@@ -1,4 +1,5 @@
 import { Clock3, Heart, ShoppingBag, Star } from 'lucide-react'
+import { Link } from 'react-router'
 import type { DessertVendor } from './vendors'
 
 type VendorCardProps = {
@@ -63,13 +64,12 @@ export default function VendorCard({
           </span>
         </div>
         <div className="marketplace-vendor-buttons">
-          <button
+          <Link
             className="marketplace-browse-button"
-            type="button"
-            onClick={() => onNotice(`قريباً: تصفح منتجات ${vendor.name}`)}
+            to="/business/browse-products"
           >
             تصفح المنتجات
-          </button>
+          </Link>
           <button
             className="marketplace-contact-button"
             type="button"
