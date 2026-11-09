@@ -7,6 +7,7 @@ export default [
   route('business/cafes', './routes/business/cafes.tsx'),
   route('business/propose-to-local-provider', './routes/business/propose-to-local-provider.tsx'),
   route('business/propose-to-local-provider/success', '../src/pages/bussiness/proposeToLocalProviderSuccess/index.tsx'),
+  route('bussiness/Browse products', '../src/pages/bussiness/Browse products/index.tsx'),
   route('register/supplier', './routes/auth/register-supplier.tsx'),
   route('register/cafe', './routes/auth/register-cafe.tsx'),
   route('supplier/dashboard', './routes/supplier/dashboard.tsx'),
