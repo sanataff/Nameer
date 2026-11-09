@@ -10,7 +10,7 @@ import '@fontsource-variable/noto-sans-arabic'
 import './business-orders.css'
 import { Translation, useTranslation } from 'react-i18next'
 type Order = { id: string; date: string; business: string; price: number; active: boolean }
-type Panel = { title: string; description: string; order?: Order }
+type Panel = { title: string; description: string; order?: Order; type?: 'tracking' }
 
 // MOCK DATA: frontend demonstration only; no orders are submitted or charged.
 
@@ -127,7 +127,7 @@ export default function BusinessOrdersPage() {
                     <OrderCard key={order.id} order={order}
                       onDetails={() => setPanel({ title: 'تفاصيل الطلب', description: 'تفاصيل الطلب.', order })}
                       onAction={() => active
-                        ? setPanel({ title: 'تتبع الطلب', description: 'حالة التوصيل غير متاحة حالياً. لا يتوفر تتبع مباشر للطلب.', order })
+                        ? setPanel({  type: 'tracking', title: 'تتبع الطلب', description: 'حالة طلبك الحالية', order })
                         : reorder(order)} />
                   ))}
                   {orders.length === 0 && <p className="business-orders-empty" role="status">لا توجد طلبات مطابقة لبحثك.</p>}
@@ -143,6 +143,25 @@ export default function BusinessOrdersPage() {
               <DialogTitle>{panel?.title}</DialogTitle>
               <DialogDescription>{panel?.description}</DialogDescription>
             </DialogHeader>
+            {panel?.type === 'tracking' && (
+  <div className="business-tracking">
+    {[
+      'تم استلام الطلب',
+      'قيد التجهيز',
+      'الطلب بالطريق',
+      'تم تسليم الطلب'
+    ].map((step, index) => (
+      <div className="business-tracking-step" key={step}>
+        <span
+          className={`business-tracking-dot ${index <= 1 ? 'completed' : ''}`}
+        >
+          {index <= 1 ? '✓' : '○'}
+        </span>
+        <span>{step}</span>
+      </div>
+    ))}
+  </div>
+        )}
             {panel?.order && (
               <dl className="business-order-summary">
                 <div><dt>رقم الطلب</dt><dd>{panel.order.id}</dd></div>

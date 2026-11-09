@@ -78,3 +78,32 @@
   background: #e7f5e9;
   color: #287a40;
 }
+.business-tracking {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 16px 0;
+}
+
+.business-tracking-step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.business-tracking-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
+
+.business-tracking-dot.completed {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
