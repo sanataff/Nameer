@@ -7,6 +7,7 @@ import { ChatPage } from '@/pages/supplier/chat/ChatPage'
 import { ProductsPage } from '@/pages/supplier/products/ProductsPage'
 import { OrdersPage } from '@/pages/supplier/orders/OrdersPage'
 import BusinessRequestList from './orders/BussinessRequestsList'
+import VerificationPage from './orders/VerificationPage'
 import NominationSheet, {
   type BusinessNomination,
   type BusinessRequest,
@@ -45,6 +46,7 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
   const location = useLocation()
   const [selectedRequest, setSelectedRequest] = useState<BusinessRequest | null>(null)
   const [nominations, setNominations] = useState<Map<string, BusinessNomination>>(() => new Map())
+  const [showVerificationPage, setShowVerificationPage] = useState(false)
   const language = translation.resolvedLanguage?.split('-')[0] ?? 'ar'
   const businessName = getBusinessName(location.state)
  
@@ -60,6 +62,9 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
             : 'supplierDashboard.title',
   ))
 
+  if (showVerificationPage) {
+    return <VerificationPage onReturnHome={() => setShowVerificationPage(false)} />
+  }
 
   function navigateTo(nextView: SupplierWorkspacePageProps['view']) {
     navigate(
@@ -119,6 +124,7 @@ export function SupplierWorkspacePage({ view }: SupplierWorkspacePageProps) {
                     onSubmit={(requestId, nomination) => {
                       setNominations((current) => new Map(current).set(requestId, nomination))
                       setSelectedRequest(null)
+                      setShowVerificationPage(true)
                     }}
                   />
                 </>
