@@ -2,7 +2,6 @@
   min-height: 100vh;
   background: var(--muted);
   color: var(--foreground);
-  font-family: Tahoma, "Segoe UI", sans-serif;
 }
 
 html[lang="en"] .admin-dashboard-page {
