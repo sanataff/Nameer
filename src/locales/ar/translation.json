@@ -511,5 +511,28 @@
     "notFound": "تعذر العثور على طلب خدمة العملاء هذا.",
     "empty": "لا توجد طلبات تطابق البحث.",
     "demoNote": "تُحفظ الطلبات التجريبية في هذا المتصفح فقط."
+  },
+  "adminControlPanel": {
+    "title": "لوحة التحكم",
+    "portalLabel": "بوابة مشرفي Nameer",
+    "navigation": "التنقل الرئيسي",
+    "toggleNavigation": "تبديل قائمة التنقل",
+    "home": "لوحة التحكم",
+    "overview": "نظرة عامة على المنصة",
+    "demoData": "بيانات تجريبية",
+    "stats": {
+      "verifiedStores": "إجمالي المتاجر الموثقة",
+      "currentOrders": "الطلبات الجارية اليوم",
+      "pendingVerifications": "طلبات التوثيق المعلقة",
+      "openTickets": "تذاكر الدعم المفتوحة"
+    },
+    "recentStores": "أحدث المتاجر المسجلة",
+    "columns": {
+      "name": "اسم المتجر",
+      "type": "النوع",
+      "registered": "تاريخ التسجيل",
+      "status": "الحالة"
+    },
+    "verified": "موثق"
   }
 }

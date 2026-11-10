@@ -8,7 +8,6 @@ import {
   type UserRole,
   type UserStatus,
 } from '@/api/users'
-import { AppShell } from '@/components/AppShell'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -157,8 +156,7 @@ export function StoreVerificationPage() {
   }
 
   return (
-    <AppShell>
-      <main className="store-verification-page">
+      <div className="store-verification-page">
         <div className="store-verification-content">
           <header className="store-verification-header">
             <div className="store-verification-heading">
@@ -337,7 +335,6 @@ export function StoreVerificationPage() {
             {toast.message}
           </div>
         )}
-      </main>
-    </AppShell>
+      </div>
   )
 }

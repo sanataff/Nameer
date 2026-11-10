@@ -16,7 +16,6 @@ import {
   type ManagedUser,
   type UserStatus,
 } from '@/api/users'
-import { AppShell } from '@/components/AppShell'
 import { Badge } from '@/components/ui/badge'
 import { Button, buttonVariants } from '@/components/ui/button'
 import {
@@ -284,8 +283,7 @@ export function AdminUsersPage() {
   }
 
   return (
-    <AppShell>
-      <main className="admin-users-page">
+      <div className="admin-users-page">
       <div className="admin-users-content">
         <header className="admin-users-header">
           <div className="admin-users-heading">
@@ -663,7 +661,6 @@ export function AdminUsersPage() {
           {toast.message}
         </div>
       )}
-      </main>
-    </AppShell>
+      </div>
   )
 }

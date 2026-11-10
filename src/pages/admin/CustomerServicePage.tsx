@@ -18,7 +18,6 @@ import {
   type CustomerServiceRequest,
 } from '@/api/customer-service'
 import { listUsers, type ManagedUser } from '@/api/users'
-import { AppShell } from '@/components/AppShell'
 import { Badge } from '@/components/ui/badge'
 import { Button, buttonVariants } from '@/components/ui/button'
 import {
@@ -250,8 +249,7 @@ export function CustomerServicePage() {
   )
 
   return (
-    <AppShell>
-      <main className="customer-service-page">
+      <div className="customer-service-page">
         <div className="customer-service-content">
           {customerServiceHeader}
           {loading ? (
@@ -579,7 +577,6 @@ export function CustomerServicePage() {
             </>
           )}
         </div>
-      </main>
-    </AppShell>
+      </div>
   )
 }

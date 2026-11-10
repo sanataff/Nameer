@@ -512,5 +512,28 @@
     "notFound": "This customer request could not be found.",
     "empty": "No requests match your search.",
     "demoNote": "Example requests are stored in this browser only."
+  },
+  "adminControlPanel": {
+    "title": "Control panel",
+    "portalLabel": "Nameer Admin Portal",
+    "navigation": "Admin navigation",
+    "toggleNavigation": "Toggle navigation",
+    "home": "Control panel",
+    "overview": "Platform overview",
+    "demoData": "Demo data",
+    "stats": {
+      "verifiedStores": "Total verified stores",
+      "currentOrders": "Orders today",
+      "pendingVerifications": "Pending verification requests",
+      "openTickets": "Open support tickets"
+    },
+    "recentStores": "Recently registered stores",
+    "columns": {
+      "name": "Store name",
+      "type": "Type",
+      "registered": "Registration date",
+      "status": "Status"
+    },
+    "verified": "Verified"
   }
 }
