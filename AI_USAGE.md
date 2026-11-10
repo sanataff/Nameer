@@ -7,7 +7,7 @@
 | Team number | 1 |
 | Section | F11 |
 | Current phase | 4 – Front-End |
-| Member | Sana Ammar Taffour |
+| Member | Irina Saleem |
 | Tool/model | OpenCode (DeepSeek V4.1 Flash Free) |
 
 ## Phase 4 – Front-End
@@ -26,5 +26,7 @@
 
 | C08 | Sana Ammar Taffour | Copilot SDK in VS Code (model unknown) | Add a bilingual supplier notifications page and wire it into supplier routing and navigation | `app/routes.ts`, `app/routes/supplier/notifications.tsx`, `src/pages/supplier/notifications/NotificationsPage.tsx`, `src/pages/supplier/SupplierWorkspacePage.tsx`, `src/pages/supplier/SuplierHeader.tsx`, `src/pages/supplier/SupplierSidebar.tsx`, `src/App.css`, `src/locales/en/translation.json`, `src/locales/ar/translation.json`, `AI_USAGE.md` |
 | C09 | Sana Ammar Taffour | Copilot SDK in VS Code (model unknown) | Add a bilingual supplier chat UI with selectable mock conversations and client-side-only message composition | `app/routes.ts`, `app/routes/supplier/chat.tsx`, `src/pages/supplier/chat/ChatPage.tsx`, `src/pages/supplier/SupplierWorkspacePage.tsx`, `src/pages/supplier/SupplierSidebar.tsx`, `src/pages/supplier/SuplierHeader.tsx`, `src/components/ui/message-scroller.tsx`, `src/components/ui/message.tsx`, `src/components/ui/bubble.tsx`, `src/components/ui/marker.tsx`, `src/App.css`, `src/locales/en/translation.json`, `src/locales/ar/translation.json`, `package.json`, `package-lock.json`, `AI_USAGE.md` |
+| C10 | Irina Saleem | Copilot SDK in VS Code (model unknown) | Add a bilingual administrator sign-in page at `/admin/login`, reuse shadcn form components, and document that authentication is not connected | `app/routes/admin/login.tsx`, `app/routes.ts`, `src/pages/auth/AdminLoginPage.tsx`, `src/App.css`, `src/locales/en/translation.json`, `src/locales/ar/translation.json`, `README.md`, `AI_USAGE.md` |
+| C11 | Irina Saleem | Copilot SDK in VS Code (model unknown) | Add bilingual admin user management, connect registrations to browser-local demo records, and document the new admin route | `app/routes/admin/users.tsx`, `app/routes.ts`, `src/api/users.ts`, `src/pages/admin/AdminUsersPage.tsx`, `src/pages/admin/users.css`, `src/pages/auth/RegistrationPage.tsx`, `src/components/ui/toggle.tsx`, `src/components/ui/toggle-group.tsx`, `src/locales/en/translation.json`, `src/locales/ar/translation.json`, `README.md`, `AI_USAGE.md` |
 
 No AI used: Not reported

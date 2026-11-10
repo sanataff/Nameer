@@ -56,7 +56,9 @@
     "postalCode": "Postal code",
     "shortAddress": "Short address",
     "passwordMismatch": "The passwords do not match.",
-    "success": "Your details are valid. Account creation will be available when the service is connected."
+    "success": "Your account has been saved for administrator review (demo mode).",
+    "emailExists": "An account with this email address already exists.",
+    "saveError": "Your account could not be saved. Please try again."
   },
   "supplierDashboard": {
         "orders": "Orders",
@@ -369,5 +371,58 @@
     "accessNote": "Administrator sign-in will be enabled once authentication is connected.",
     "visualTitle": "Manage Nameer with confidence",
     "visualDescription": "A dedicated workspace for Nameer platform administrators."
+  },
+  "adminUsers": {
+    "title": "User management",
+    "portalLabel": "Nameer Admin Portal",
+    "demoData": "Demo data",
+    "demoNote": "Example users are stored in this browser only. Newly registered accounts appear as unverified.",
+    "filtersLabel": "Filter users by status",
+    "filters": {
+      "all": "All",
+      "active": "Active",
+      "unverified": "Unverified",
+      "banned": "Blocked"
+    },
+    "searchPlaceholder": "Search users",
+    "columns": {
+      "name": "User name",
+      "role": "Type",
+      "email": "Email address",
+      "phone": "Phone number",
+      "joined": "Joined",
+      "status": "Status",
+      "actions": "User actions"
+    },
+    "roles": {
+      "supplier": "Supplier",
+      "cafe": "Café"
+    },
+    "status": {
+      "active": "Active",
+      "unverified": "Unverified",
+      "banned": "Blocked"
+    },
+    "actions": {
+      "viewUser": "View {{name}}",
+      "editUser": "Edit {{name}}",
+      "banUser": "Block {{name}}",
+      "unbanUser": "Unblock {{name}}"
+    },
+    "empty": "No users match your search.",
+    "loadError": "Users could not be loaded.",
+    "retry": "Try again",
+    "detailsTitle": "User details",
+    "detailsDescription": "Account information and current status.",
+    "editTitle": "Edit user",
+    "editDescription": "Update this account's profile information.",
+    "save": "Save changes",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "saveError": "Changes could not be saved. Please try again.",
+    "emailExists": "A user with this email address already exists.",
+    "updateSuccess": "User details updated.",
+    "banSuccess": "User blocked.",
+    "unbanSuccess": "User unblocked."
   }
 }
