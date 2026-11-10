@@ -2,6 +2,13 @@ import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Ban, CircleCheck, Eye, Pencil, RefreshCw, Search, Store, UsersRound } from 'lucide-react'
 import {
+  CUSTOMER_REQUESTS_STORAGE_KEY,
+  CUSTOMER_REQUESTS_UPDATED_EVENT,
+  listCustomerServiceRequests,
+  type CustomerRequestStatus,
+  type CustomerServiceRequest,
+} from '@/api/customer-service'
+import {
   listUsers,
   setUserStatus,
   updateUser,
@@ -57,8 +64,10 @@ export function AdminUsersPage() {
   const locale = language === 'ar' ? 'ar-SA' : 'en-SA'
 
   const [users, setUsers] = useState<ManagedUser[]>([])
+  const [requests, setRequests] = useState<CustomerServiceRequest[]>([])
   const [loading, setLoading] = useState(true)
   const [loadError, setLoadError] = useState(false)
+  const [requestLoadError, setRequestLoadError] = useState(false)
   const [reloadKey, setReloadKey] = useState(0)
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState<StatusFilter>('all')
@@ -79,13 +88,25 @@ export function AdminUsersPage() {
 
   useEffect(() => {
     let active = true
-    listUsers()
-      .then((data) => {
-        if (active) setUsers(data)
-      })
-      .catch(() => {
-        if (active) setLoadError(true)
-      })
+    Promise.all([
+      listUsers()
+        .then((data) => {
+          if (active) setUsers(data)
+        })
+        .catch(() => {
+          if (active) setLoadError(true)
+        }),
+      listCustomerServiceRequests()
+        .then((data) => {
+          if (active) {
+            setRequests(data)
+            setRequestLoadError(false)
+          }
+        })
+        .catch(() => {
+          if (active) setRequestLoadError(true)
+        }),
+    ])
       .finally(() => {
         if (active) setLoading(false)
       })
@@ -96,14 +117,34 @@ export function AdminUsersPage() {
 
   useEffect(() => {
     function handleStorage(event: StorageEvent) {
-      if (event.key !== USERS_STORAGE_KEY && event.key !== null) return
+      if (
+        event.key !== USERS_STORAGE_KEY &&
+        event.key !== CUSTOMER_REQUESTS_STORAGE_KEY &&
+        event.key !== null
+      ) {
+        return
+      }
       setLoading(true)
       setLoadError(false)
+      setRequestLoadError(false)
       setReloadKey((key) => key + 1)
     }
 
+    function handleRequestUpdate() {
+      listCustomerServiceRequests()
+        .then((data) => {
+          setRequests(data)
+          setRequestLoadError(false)
+        })
+        .catch(() => setRequestLoadError(true))
+    }
+
     window.addEventListener('storage', handleStorage)
-    return () => window.removeEventListener('storage', handleStorage)
+    window.addEventListener(CUSTOMER_REQUESTS_UPDATED_EVENT, handleRequestUpdate)
+    return () => {
+      window.removeEventListener('storage', handleStorage)
+      window.removeEventListener(CUSTOMER_REQUESTS_UPDATED_EVENT, handleRequestUpdate)
+    }
   }, [])
 
   useEffect(() => {
@@ -222,6 +263,26 @@ export function AdminUsersPage() {
     )
   }
 
+  function latestRequestForUser(userId: string) {
+    return requests
+      .filter((request) => request.userId === userId)
+      .sort((left, right) => right.createdAt.localeCompare(left.createdAt))[0]
+  }
+
+  function requestStatusBadge(status: CustomerRequestStatus) {
+    const variant =
+      status === 'closed'
+        ? 'secondary'
+        : status === 'reviewing'
+          ? 'outline'
+          : 'default'
+    return (
+      <Badge variant={variant}>
+        {t(`customerService.status.${status}`)}
+      </Badge>
+    )
+  }
+
   return (
     <AppShell>
       <main className="admin-users-page">
@@ -241,6 +302,12 @@ export function AdminUsersPage() {
             >
               <Store data-icon="inline-start" />
               {t('storeVerification.openPage')}
+            </a>
+            <a
+              className={buttonVariants({ variant: 'outline', size: 'sm' })}
+              href="/admin/customer-service"
+            >
+              {t('customerService.title')}
             </a>
             <Badge variant="outline">{t('adminUsers.demoData')}</Badge>
           </div>
@@ -300,6 +367,7 @@ export function AdminUsersPage() {
                 <TableHead>{t('adminUsers.columns.phone')}</TableHead>
                 <TableHead>{t('adminUsers.columns.joined')}</TableHead>
                 <TableHead>{t('adminUsers.columns.status')}</TableHead>
+                <TableHead>{t('adminUsers.columns.customerRequest')}</TableHead>
                 <TableHead className="admin-users-actions-heading">
                   <span className="sr-only">{t('adminUsers.columns.actions')}</span>
                 </TableHead>
@@ -309,7 +377,7 @@ export function AdminUsersPage() {
               {loading &&
                 Array.from({ length: 4 }, (_, index) => (
                   <TableRow key={`loading-${index}`}>
-                    {Array.from({ length: 8 }, (_, cellIndex) => (
+                    {Array.from({ length: 9 }, (_, cellIndex) => (
                       <TableCell key={`loading-${index}-${cellIndex}`}>
                         <Skeleton className="h-5 w-20" />
                       </TableCell>
@@ -318,7 +386,7 @@ export function AdminUsersPage() {
                 ))}
               {!loading && loadError && (
                 <TableRow>
-                  <TableCell className="admin-users-message" colSpan={8}>
+                  <TableCell className="admin-users-message" colSpan={9}>
                     <p role="alert">{t('adminUsers.loadError')}</p>
                     <Button
                       type="button"
@@ -327,6 +395,7 @@ export function AdminUsersPage() {
                       onClick={() => {
                         setLoading(true)
                         setLoadError(false)
+                        setRequestLoadError(false)
                         setReloadKey((key) => key + 1)
                       }}
                     >
@@ -338,7 +407,7 @@ export function AdminUsersPage() {
               )}
               {!loading && !loadError && filteredUsers.length === 0 && (
                 <TableRow>
-                  <TableCell className="admin-users-message" colSpan={8}>
+                  <TableCell className="admin-users-message" colSpan={9}>
                     {t('adminUsers.empty')}
                   </TableCell>
                 </TableRow>
@@ -364,6 +433,30 @@ export function AdminUsersPage() {
                       {dateFormat.format(new Date(user.joinedAt))}
                     </TableCell>
                     <TableCell>{statusBadge(user.status)}</TableCell>
+                    <TableCell>
+                      {requestLoadError ? (
+                        <span className="admin-users-no-request" role="alert">
+                          {t('customerService.loadError')}
+                        </span>
+                      ) : (
+                        (() => {
+                          const latestRequest = latestRequestForUser(user.id)
+                          return latestRequest ? (
+                            <a
+                              className="admin-users-request-status"
+                              href={`/admin/customer-service/${encodeURIComponent(latestRequest.id)}`}
+                            >
+                              {requestStatusBadge(latestRequest.status)}
+                              <span dir="ltr">#{latestRequest.id}</span>
+                            </a>
+                          ) : (
+                            <span className="admin-users-no-request">
+                              {t('adminUsers.noCustomerRequest')}
+                            </span>
+                          )
+                        })()
+                      )}
+                    </TableCell>
                     <TableCell>
                       <div className="admin-users-row-actions">
                         <Button
@@ -456,6 +549,27 @@ export function AdminUsersPage() {
               <div>
                 <dt>{t('adminUsers.columns.status')}</dt>
                 <dd>{statusBadge(viewingUser.status)}</dd>
+              </div>
+              <div>
+                <dt>{t('adminUsers.columns.customerRequest')}</dt>
+                <dd>
+                  {requestLoadError
+                    ? t('customerService.loadError')
+                    : (() => {
+                        const latestRequest = latestRequestForUser(viewingUser.id)
+                        return latestRequest ? (
+                          <a
+                            className="admin-users-request-status"
+                            href={`/admin/customer-service/${encodeURIComponent(latestRequest.id)}`}
+                          >
+                            {requestStatusBadge(latestRequest.status)}
+                            <span dir="ltr">#{latestRequest.id}</span>
+                          </a>
+                        ) : (
+                          t('adminUsers.noCustomerRequest')
+                        )
+                      })()}
+                </dd>
               </div>
             </dl>
           )}

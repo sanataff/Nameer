@@ -393,6 +393,7 @@
       "phone": "Phone number",
       "joined": "Joined",
       "status": "Status",
+      "customerRequest": "Customer request",
       "actions": "User actions"
     },
     "roles": {
@@ -416,6 +417,7 @@
     "retry": "Try again",
     "detailsTitle": "User details",
     "detailsDescription": "Account information and current status.",
+    "noCustomerRequest": "No requests",
     "editTitle": "Edit user",
     "editDescription": "Update this account's profile information.",
     "save": "Save changes",
@@ -454,5 +456,61 @@
     "rejectSuccess": "Store application rejected.",
     "updateError": "Could not update this application. Please try again.",
     "empty": "No store applications match your search."
+  },
+  "customerService": {
+    "title": "Customer service",
+    "description": "Review customer requests, update their status, and follow up on each case.",
+    "userManagement": "User management",
+    "statusSummary": "Customer request status summary",
+    "filtersLabel": "Filter customer requests by status",
+    "filters": {
+      "all": "All requests",
+      "open": "Open",
+      "reviewing": "Under review",
+      "closed": "Closed"
+    },
+    "status": {
+      "open": "Open",
+      "reviewing": "Under review",
+      "closed": "Closed"
+    },
+    "priorities": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "searchPlaceholder": "Search by ticket, customer, or subject",
+    "tableTitle": "Customer requests",
+    "tableDescription": "Select a request to review its full details and update its status.",
+    "columns": {
+      "ticket": "Ticket number",
+      "requester": "Sender",
+      "subject": "Subject",
+      "priority": "Priority",
+      "createdAt": "Created",
+      "status": "Status",
+      "actions": "Request actions"
+    },
+    "openRequest": "Open request",
+    "detailsTitle": "Request #{{id}}",
+    "ticketNumber": "Ticket #{{id}}",
+    "backToRequests": "All customer requests",
+    "requestDetails": "Request details",
+    "requestDetailsDescription": "Customer message and case information.",
+    "category": "Category",
+    "priority": "Priority",
+    "createdAt": "Created",
+    "message": "Customer message",
+    "requester": "Customer",
+    "requesterDescription": "Contact details for this request.",
+    "requesterUnavailable": "Customer record unavailable",
+    "updateStatus": "Update status",
+    "updateStatusDescription": "The latest status also appears in user management.",
+    "statusUpdated": "Request status updated.",
+    "updateError": "Could not update this request. Please try again.",
+    "loadError": "Customer requests could not be loaded.",
+    "notFound": "This customer request could not be found.",
+    "empty": "No requests match your search.",
+    "demoNote": "Example requests are stored in this browser only."
   }
 }

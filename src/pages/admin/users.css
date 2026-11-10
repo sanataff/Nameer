@@ -103,7 +103,7 @@ html[lang="en"] .admin-users-page {
 }
 
 .admin-users-table {
-  min-width: 66rem;
+  min-width: 72rem;
 }
 
 .admin-users-table thead {
@@ -150,6 +150,26 @@ html[lang="en"] .admin-users-page {
   display: flex;
   align-items: center;
   gap: 0.15rem;
+}
+
+.admin-users-request-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.admin-users-request-status:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2rem;
+}
+
+.admin-users-request-status span,
+.admin-users-no-request {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .admin-users-message {

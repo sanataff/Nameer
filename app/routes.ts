@@ -6,6 +6,8 @@ export default [
   route('admin/login', './routes/admin/login.tsx'),
   route('admin/users', './routes/admin/users.tsx'),
   route('admin/store-verification', './routes/admin/store-verification.tsx'),
+  route('admin/customer-service', './routes/admin/customer-service.tsx'),
+  route('admin/customer-service/:requestId', './routes/admin/customer-service-request.tsx'),
   route('register/supplier', './routes/auth/register-supplier.tsx'),
   route('register/cafe', './routes/auth/register-cafe.tsx'),
   route('supplier/dashboard', './routes/supplier/dashboard.tsx'),
