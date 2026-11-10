@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
+import { createRegisteredUser, UserEmailAlreadyExistsError } from '@/api/users'
 import { AppShell } from '@/components/AppShell'
 import { Button } from '@/components/ui/button'
 import {
@@ -33,10 +34,11 @@ export function RegistrationPage({ role }: RegistrationPageProps) {
   const [message, setMessage] = useState('')
   const [formError, setFormError] = useState('')
   const [supplierName, setSupplierName] = useState('')
+  const [submitting, setSubmitting] = useState(false)
 
   usePageTitle(t('registration.title'))
 
-  function handleRegister(event: FormEvent<HTMLFormElement>) {
+  async function handleRegister(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setFormError('')
     const formData = new FormData(event.currentTarget)
@@ -64,9 +66,26 @@ export function RegistrationPage({ role }: RegistrationPageProps) {
       return
     }
 
-    setMessage(t('registration.success'))
-    if (role === 'supplier') {
-      setSupplierName(String(formData.get('businessName') ?? '').trim())
+    setSubmitting(true)
+    const name = String(formData.get('businessName') ?? '').trim()
+    try {
+      await createRegisteredUser({
+        name,
+        email: String(formData.get('email') ?? '').trim(),
+        phone: String(formData.get('phone') ?? '').trim(),
+        role,
+      })
+      setMessage(t('registration.success'))
+      if (role === 'supplier') setSupplierName(name)
+    } catch (error) {
+      setMessage('')
+      setFormError(
+        error instanceof UserEmailAlreadyExistsError
+          ? t('registration.emailExists')
+          : t('registration.saveError'),
+      )
+    } finally {
+      setSubmitting(false)
     }
   }
 
@@ -337,7 +356,7 @@ export function RegistrationPage({ role }: RegistrationPageProps) {
             {formError && <p className="form-feedback form-error" role="alert">{formError}</p>}
             {message && <p className="form-feedback" role="status">{message}</p>}
 
-            <Button className="auth-submit" type="submit">
+            <Button className="auth-submit" type="submit" disabled={submitting}>
               {t('common.createAccount')}
             </Button>
             {role === 'supplier' && message && !formError && (
