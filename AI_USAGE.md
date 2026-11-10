@@ -8,7 +8,7 @@
 | Section | F11 |
 | Current phase | 4 – Front-End |
 | Member | Irina Saleem |
-| Tool/model | VS Code - Copilot |
+| Tool/model | Copilot SDK in VS Code (model unspecified) |
 
 ## Phase 4 – Front-End
 
@@ -29,5 +29,6 @@
 | C13 | Irina Saleem | VS Code - Copilot | Add bilingual customer-service request listing and per-request detail pages, persist request status changes in browser-local demo data, and surface each user's latest request status in user management | `app/routes.ts`, `app/routes/admin/customer-service.tsx`, `app/routes/admin/customer-service-request.tsx`, `src/api/customer-service.ts`, `src/pages/admin/CustomerServicePage.tsx`, `src/pages/admin/customer-service.css`, `src/pages/admin/AdminUsersPage.tsx`, `src/pages/admin/users.css`, `src/locales/en/translation.json`, `src/locales/ar/translation.json`, `README.md`, `AI_USAGE.md` |
 | C14 | Irina Saleem | VS Code - Copilot | Record follow-up documentation confirming the customer-service page's shadcn UI, unique ticket detail routes, bilingual content, persisted statuses, synchronization with user management, and verification | `AI_USAGE.md` |
 | C15 | Irina Saleem | VS Code - Copilot | Build the bilingual `/admin` control panel from the supplied reference and add shared icon navigation across admin pages | `app/routes.ts`, `app/routes/admin/layout.tsx`, `app/routes/admin/dashboard.tsx`, `src/pages/admin/AdminLayout.tsx`, `src/pages/admin/AdminSidebar.tsx`, `src/pages/admin/AdminControlPanelPage.tsx`, `src/pages/admin/admin-layout.css`, `src/pages/admin/control-panel.css`, `src/pages/admin/AdminUsersPage.tsx`, `src/pages/admin/StoreVerificationPage.tsx`, `src/pages/admin/CustomerServicePage.tsx`, `src/locales/ar/translation.json`, `src/locales/en/translation.json`, `AI_USAGE.md` |
+| C16 | Irina Saleem | Copilot SDK in VS Code (model unspecified) | Add a bilingual administrator chat portal with supplier/business filters, unread-first recent sorting, profile details matching user management, and client-side demo messaging | `app/routes.ts`, `app/routes/admin/chat.tsx`, `src/pages/admin/AdminChatPage.tsx`, `src/pages/admin/admin-chat.css`, `src/pages/admin/AdminSidebar.tsx`, `src/locales/en/translation.json`, `src/locales/ar/translation.json`, `README.md`, `AI_USAGE.md` |
 
 No AI used: Not reported

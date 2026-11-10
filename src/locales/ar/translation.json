@@ -534,5 +534,31 @@
       "status": "الحالة"
     },
     "verified": "موثق"
+  },
+  "adminChat": {
+    "title": "محادثات المشرف",
+    "filterLabel": "تصفية المحادثات حسب نوع الحساب",
+    "filters": {
+      "all": "الكل",
+      "supplier": "الأسر المنتجة",
+      "cafe": "المنشآت"
+    },
+    "searchPlaceholder": "ابحث عن مستخدم",
+    "empty": "لا يوجد مستخدمون يطابقون البحث.",
+    "unreadCount": "{{count}} غير مقروءة",
+    "viewProfile": "عرض الملف الشخصي",
+    "today": "اليوم",
+    "you": "المشرف",
+    "messageLabel": "الرسالة",
+    "messagePlaceholder": "اكتب رسالة...",
+    "send": "إرسال الرسالة",
+    "emptyConversation": "ابدأ المحادثة بإرسال رسالة.",
+    "selectConversation": "اختر مستخدماً لفتح المحادثة.",
+    "noMessages": "لا توجد رسائل بعد",
+    "sampleSupplierMessage": "مرحباً، لدي استفسار حول توثيق متجري.",
+    "sampleAdminReply": "مرحباً، يمكنني مساعدتك. سأراجع حسابك.",
+    "sampleBusinessMessage": "هل يمكنكم مساعدتي في تحديث الطلب؟",
+    "sampleTime": "١٠:٣٠ ص",
+    "justNow": "الآن"
   }
 }

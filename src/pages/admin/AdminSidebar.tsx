@@ -1,6 +1,7 @@
 import {
   Headset,
   LayoutDashboard,
+  MessageCircle,
   Store,
   UsersRound,
   type LucideIcon,
@@ -41,6 +42,11 @@ export function AdminSidebar() {
       href: '/admin/users',
       label: t('adminUsers.title'),
       icon: UsersRound,
+    },
+    {
+      href: '/admin/chat',
+      label: t('adminChat.title'),
+      icon: MessageCircle,
     },
     {
       href: '/admin/store-verification',

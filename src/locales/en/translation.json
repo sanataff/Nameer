@@ -535,5 +535,31 @@
       "status": "Status"
     },
     "verified": "Verified"
+  },
+  "adminChat": {
+    "title": "Admin chat",
+    "filterLabel": "Filter conversations by account type",
+    "filters": {
+      "all": "All",
+      "supplier": "Suppliers",
+      "cafe": "Businesses"
+    },
+    "searchPlaceholder": "Search users",
+    "empty": "No users match your search.",
+    "unreadCount": "{{count}} unread",
+    "viewProfile": "View profile",
+    "today": "Today",
+    "you": "Admin",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Write a message...",
+    "send": "Send message",
+    "emptyConversation": "Start the conversation by sending a message.",
+    "selectConversation": "Select a user to open a conversation.",
+    "noMessages": "No messages yet",
+    "sampleSupplierMessage": "Hello, I have a question about my store verification.",
+    "sampleAdminReply": "Hello, I can help you with that. I will review your account.",
+    "sampleBusinessMessage": "Could you help me with an order update?",
+    "sampleTime": "10:30 AM",
+    "justNow": "Just now"
   }
 }

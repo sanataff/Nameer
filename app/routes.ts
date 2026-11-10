@@ -7,6 +7,7 @@ export default [
   route('admin', './routes/admin/layout.tsx', [
     index('./routes/admin/dashboard.tsx'),
     route('users', './routes/admin/users.tsx'),
+    route('chat', './routes/admin/chat.tsx'),
     route('store-verification', './routes/admin/store-verification.tsx'),
     route('customer-service', './routes/admin/customer-service.tsx'),
     route('customer-service/:requestId', './routes/admin/customer-service-request.tsx'),
