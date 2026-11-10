@@ -1224,6 +1224,43 @@ html[lang="en"] .supplier-dashboard-page {
   padding: 0.5rem 1.5rem 1.25rem;
 }
 
+.nomination-confirmation-page {
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  padding: 32vh 1rem 2rem;
+  background: var(--background);
+  text-align: center;
+}
+
+.nomination-confirmation-content {
+  display: flex;
+  width: min(100%, 36rem);
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.nomination-confirmation-content h1 {
+  margin: 0;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.nomination-confirmation-content p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.nomination-confirmation-button {
+  min-width: 10.25rem;
+  min-height: 2rem;
+  margin-top: 3rem;
+  font-size: 0.75rem;
+}
+
 .business-nomination-fields {
   gap: 1rem;
 }
