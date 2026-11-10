@@ -382,6 +382,7 @@
       "all": "All",
       "active": "Active",
       "unverified": "Unverified",
+      "rejected": "Rejected",
       "banned": "Blocked"
     },
     "searchPlaceholder": "Search users",
@@ -401,6 +402,7 @@
     "status": {
       "active": "Active",
       "unverified": "Unverified",
+      "rejected": "Rejected",
       "banned": "Blocked"
     },
     "actions": {
@@ -424,5 +426,33 @@
     "updateSuccess": "User details updated.",
     "banSuccess": "User blocked.",
     "unbanSuccess": "User unblocked."
+  },
+  "storeVerification": {
+    "title": "Store verification",
+    "description": "Review supplier and café applications before they join Nameer.",
+    "openPage": "Store verification",
+    "demoNote": "Example application data is stored in this browser only.",
+    "filtersLabel": "Filter store applications",
+    "filters": {
+      "all": "All",
+      "supplier": "Suppliers",
+      "cafe": "Cafés",
+      "unverified": "Under review"
+    },
+    "searchPlaceholder": "Search stores",
+    "columns": {
+      "name": "Store name",
+      "type": "Type",
+      "registered": "Registration date",
+      "actions": "Review actions"
+    },
+    "approve": "Approve",
+    "reject": "Reject",
+    "approveUser": "Approve {{name}}",
+    "rejectUser": "Reject {{name}}",
+    "approveSuccess": "Store application approved.",
+    "rejectSuccess": "Store application rejected.",
+    "updateError": "Could not update this application. Please try again.",
+    "empty": "No store applications match your search."
   }
 }

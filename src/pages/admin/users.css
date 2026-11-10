@@ -25,6 +25,13 @@ html[lang="en"] .admin-users-page {
   gap: 1rem;
 }
 
+.admin-users-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
 .admin-users-heading h1 {
   margin: 0.4rem 0 0;
   font-size: clamp(1.75rem, 3vw, 2.35rem);

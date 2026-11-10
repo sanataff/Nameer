@@ -68,7 +68,7 @@ react-router.config.ts
 vite.config.ts
 ```
 
-Routes are configured in `app/routes.ts`. Current routes are `/` (account type selection), `/login`, `/admin/login` (administrator sign-in UI; authentication is not connected), `/admin/users` (administrator user management with browser-local demo data), `/register/supplier`, `/register/cafe`, `/supplier/dashboard`, and `/supplier/products`. Add a route module under `app/routes/` and register its URL in `app/routes.ts` when adding a page. SPA mode keeps language detection in the browser and serves the built client app for all routes.
+Routes are configured in `app/routes.ts`. Current routes are `/` (account type selection), `/login`, `/admin/login` (administrator sign-in UI; authentication is not connected), `/admin/users` (administrator user management with browser-local demo data), `/admin/store-verification` (supplier and café application review), `/register/supplier`, `/register/cafe`, `/supplier/dashboard`, and `/supplier/products`. Approvals, rejections, and user-management status changes share the same browser-local records. Add a route module under `app/routes/` and register its URL in `app/routes.ts` when adding a page. SPA mode keeps language detection in the browser and serves the built client app for all routes.
 
 ## Working with shadcn/ui
 

@@ -6,7 +6,7 @@
  */
 
 export type UserRole = 'supplier' | 'cafe'
-export type UserStatus = 'active' | 'unverified' | 'banned'
+export type UserStatus = 'active' | 'unverified' | 'rejected' | 'banned'
 
 export interface LocalizedName {
   en: string
@@ -37,7 +37,7 @@ export interface UserRegistration {
   role: UserRole
 }
 
-const STORAGE_KEY = 'nameer:admin-users:v1'
+export const USERS_STORAGE_KEY = 'nameer:admin-users:v1'
 
 const SEED_USERS: ManagedUser[] = [
   {
@@ -127,6 +127,7 @@ function isManagedUser(value: unknown): value is ManagedUser {
     'status' in value &&
     (value.status === 'active' ||
       value.status === 'unverified' ||
+      value.status === 'rejected' ||
       value.status === 'banned')
   )
 }
@@ -136,7 +137,7 @@ function cloneUsers(users: ManagedUser[]): ManagedUser[] {
 }
 
 function readStoredUsers(): ManagedUser[] {
-  const stored = window.localStorage.getItem(STORAGE_KEY)
+  const stored = window.localStorage.getItem(USERS_STORAGE_KEY)
   if (!stored) return cloneUsers(SEED_USERS)
 
   const parsed: unknown = JSON.parse(stored)
@@ -147,7 +148,7 @@ function readStoredUsers(): ManagedUser[] {
 }
 
 function writeStoredUsers(users: ManagedUser[]) {
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(users))
+  window.localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users))
 }
 
 function assertUniqueEmail(email: string, exceptId?: string) {

@@ -381,6 +381,7 @@
       "all": "الكل",
       "active": "نشط",
       "unverified": "غير موثّق",
+      "rejected": "مرفوض",
       "banned": "محظور"
     },
     "searchPlaceholder": "ابحث عن مستخدم",
@@ -400,6 +401,7 @@
     "status": {
       "active": "نشط",
       "unverified": "غير موثّق",
+      "rejected": "مرفوض",
       "banned": "محظور"
     },
     "actions": {
@@ -423,5 +425,33 @@
     "updateSuccess": "تم تحديث بيانات المستخدم.",
     "banSuccess": "تم حظر المستخدم.",
     "unbanSuccess": "تم إلغاء حظر المستخدم."
+  },
+  "storeVerification": {
+    "title": "توثيق المتاجر",
+    "description": "راجع طلبات الأسر المنتجة والمقاهي قبل انضمامها إلى Nameer.",
+    "openPage": "توثيق المتاجر",
+    "demoNote": "تُحفظ بيانات الطلبات التجريبية في هذا المتصفح فقط.",
+    "filtersLabel": "تصفية طلبات المتاجر",
+    "filters": {
+      "all": "الكل",
+      "supplier": "الأسر المنتجة",
+      "cafe": "الكافيهات",
+      "unverified": "قيد المراجعة"
+    },
+    "searchPlaceholder": "ابحث عن متجر",
+    "columns": {
+      "name": "اسم المتجر",
+      "type": "النوع",
+      "registered": "تاريخ التسجيل",
+      "actions": "إجراءات المراجعة"
+    },
+    "approve": "قبول",
+    "reject": "رفض",
+    "approveUser": "قبول {{name}}",
+    "rejectUser": "رفض {{name}}",
+    "approveSuccess": "تم قبول طلب المتجر.",
+    "rejectSuccess": "تم رفض طلب المتجر.",
+    "updateError": "تعذر تحديث هذا الطلب. يرجى المحاولة مرة أخرى.",
+    "empty": "لا توجد طلبات متاجر تطابق البحث."
   }
 }

@@ -1,16 +1,17 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Ban, CircleCheck, Eye, Pencil, RefreshCw, Search, UsersRound } from 'lucide-react'
+import { Ban, CircleCheck, Eye, Pencil, RefreshCw, Search, Store, UsersRound } from 'lucide-react'
 import {
   listUsers,
   setUserStatus,
   updateUser,
+  USERS_STORAGE_KEY,
   type ManagedUser,
   type UserStatus,
 } from '@/api/users'
 import { AppShell } from '@/components/AppShell'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -94,6 +95,18 @@ export function AdminUsersPage() {
   }, [reloadKey])
 
   useEffect(() => {
+    function handleStorage(event: StorageEvent) {
+      if (event.key !== USERS_STORAGE_KEY && event.key !== null) return
+      setLoading(true)
+      setLoadError(false)
+      setReloadKey((key) => key + 1)
+    }
+
+    window.addEventListener('storage', handleStorage)
+    return () => window.removeEventListener('storage', handleStorage)
+  }, [])
+
+  useEffect(() => {
     if (!toast) return
     const timer = window.setTimeout(() => setToast(null), 3200)
     return () => window.clearTimeout(timer)
@@ -110,6 +123,7 @@ export function AdminUsersPage() {
       all: users.length,
       active: users.filter((user) => user.status === 'active').length,
       unverified: users.filter((user) => user.status === 'unverified').length,
+      rejected: users.filter((user) => user.status === 'rejected').length,
       banned: users.filter((user) => user.status === 'banned').length,
     }),
     [users],
@@ -196,7 +210,11 @@ export function AdminUsersPage() {
 
   function statusBadge(status: UserStatus) {
     const variant =
-      status === 'banned' ? 'destructive' : status === 'active' ? 'secondary' : 'outline'
+      status === 'banned' || status === 'rejected'
+        ? 'destructive'
+        : status === 'active'
+          ? 'secondary'
+          : 'outline'
     return (
       <Badge variant={variant}>
         {t(`adminUsers.status.${status}`)}
@@ -216,7 +234,16 @@ export function AdminUsersPage() {
             </p>
             <h1>{t('adminUsers.title')}</h1>
           </div>
-          <Badge variant="outline">{t('adminUsers.demoData')}</Badge>
+          <div className="admin-users-header-actions">
+            <a
+              className={buttonVariants({ variant: 'outline', size: 'sm' })}
+              href="/admin/store-verification"
+            >
+              <Store data-icon="inline-start" />
+              {t('storeVerification.openPage')}
+            </a>
+            <Badge variant="outline">{t('adminUsers.demoData')}</Badge>
+          </div>
         </header>
 
         <section className="admin-users-toolbar" aria-label={t('adminUsers.filtersLabel')}>
@@ -233,13 +260,14 @@ export function AdminUsersPage() {
                 value === 'all' ||
                 value === 'active' ||
                 value === 'unverified' ||
+                value === 'rejected' ||
                 value === 'banned'
               ) {
                 setFilter(value)
               }
             }}
           >
-            {(['all', 'active', 'unverified', 'banned'] as const).map((status) => (
+            {(['all', 'active', 'unverified', 'rejected', 'banned'] as const).map((status) => (
               <ToggleGroupItem key={status} value={status}>
                 {t(`adminUsers.filters.${status}`)}
                 <span className="admin-users-filter-count">

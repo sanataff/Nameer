@@ -8,7 +8,7 @@
 | Section | F11 |
 | Current phase | 4 – Front-End |
 | Member | Irina Saleem |
-| Tool/model | OpenCode (DeepSeek V4.1 Flash Free) |
+| Tool/model | VS Code - Copilot |
 
 ## Phase 4 – Front-End
 
@@ -28,5 +28,6 @@
 | C09 | Sana Ammar Taffour | Copilot SDK in VS Code (model unknown) | Add a bilingual supplier chat UI with selectable mock conversations and client-side-only message composition | `app/routes.ts`, `app/routes/supplier/chat.tsx`, `src/pages/supplier/chat/ChatPage.tsx`, `src/pages/supplier/SupplierWorkspacePage.tsx`, `src/pages/supplier/SupplierSidebar.tsx`, `src/pages/supplier/SuplierHeader.tsx`, `src/components/ui/message-scroller.tsx`, `src/components/ui/message.tsx`, `src/components/ui/bubble.tsx`, `src/components/ui/marker.tsx`, `src/App.css`, `src/locales/en/translation.json`, `src/locales/ar/translation.json`, `package.json`, `package-lock.json`, `AI_USAGE.md` |
 | C10 | Irina Saleem | Copilot SDK in VS Code (model unknown) | Add a bilingual administrator sign-in page at `/admin/login`, reuse shadcn form components, and document that authentication is not connected | `app/routes/admin/login.tsx`, `app/routes.ts`, `src/pages/auth/AdminLoginPage.tsx`, `src/App.css`, `src/locales/en/translation.json`, `src/locales/ar/translation.json`, `README.md`, `AI_USAGE.md` |
 | C11 | Irina Saleem | Copilot SDK in VS Code (model unknown) | Add bilingual admin user management, connect registrations to browser-local demo records, and document the new admin route | `app/routes/admin/users.tsx`, `app/routes.ts`, `src/api/users.ts`, `src/pages/admin/AdminUsersPage.tsx`, `src/pages/admin/users.css`, `src/pages/auth/RegistrationPage.tsx`, `src/components/ui/toggle.tsx`, `src/components/ui/toggle-group.tsx`, `src/locales/en/translation.json`, `src/locales/ar/translation.json`, `README.md`, `AI_USAGE.md` |
+| C12 | Irina Saleem | VS Code - Copilot | Add the bilingual store-verification page at `/admin/store-verification`, approve or reject applications in shared browser-local user records, and expose updated statuses in user management | `app/routes.ts`, `app/routes/admin/store-verification.tsx`, `src/api/users.ts`, `src/pages/admin/StoreVerificationPage.tsx`, `src/pages/admin/store-verification.css`, `src/pages/admin/AdminUsersPage.tsx`, `src/pages/admin/users.css`, `src/locales/en/translation.json`, `src/locales/ar/translation.json`, `README.md`, `AI_USAGE.md` |
 
 No AI used: Not reported
