@@ -1,0 +1,291 @@
+.customer-service-page {
+  min-height: 100vh;
+  padding: clamp(1.25rem, 3vw, 2.75rem);
+  color: var(--foreground);
+  font-family: Tahoma, "Segoe UI", sans-serif;
+}
+
+html[lang="en"] .customer-service-page {
+  font-family: var(--font-sans);
+}
+
+.customer-service-content {
+  display: flex;
+  width: min(100%, 88rem);
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-inline: auto;
+}
+
+.customer-service-header,
+.customer-service-header-actions,
+.customer-service-detail-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.customer-service-header-actions {
+  align-items: center;
+}
+
+.customer-service-heading h1 {
+  margin: 0.4rem 0 0;
+  font-size: clamp(1.75rem, 3vw, 2.35rem);
+  font-weight: 650;
+  letter-spacing: -0.035em;
+}
+
+.customer-service-description {
+  margin: 0.55rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.customer-service-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+
+.customer-service-eyebrow svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.customer-service-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.customer-service-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+}
+
+.customer-service-filters {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.customer-service-filter-count {
+  min-width: 1.15rem;
+  margin-inline-start: 0.15rem;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.customer-service-search {
+  position: relative;
+  display: flex;
+  width: min(100%, 20rem);
+  min-width: 13rem;
+  align-items: center;
+}
+
+.customer-service-search > svg {
+  position: absolute;
+  inset-inline-start: 0.75rem;
+  width: 1rem;
+  height: 1rem;
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+
+.customer-service-search [data-slot="input"] {
+  padding-inline-start: 2.35rem;
+}
+
+.customer-service-table-card {
+  overflow: hidden;
+}
+
+.customer-service-table-content {
+  padding-inline: 0;
+}
+
+.customer-service-table {
+  min-width: 60rem;
+}
+
+.customer-service-table thead {
+  background: color-mix(in oklch, var(--muted) 55%, transparent);
+}
+
+.customer-service-table th {
+  height: 3.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 550;
+}
+
+.customer-service-table td {
+  height: 4.25rem;
+  font-size: 0.8125rem;
+}
+
+.customer-service-table tbody tr:hover {
+  background: color-mix(in oklch, var(--muted) 42%, transparent);
+}
+
+.customer-service-ticket-id {
+  font-variant-numeric: tabular-nums;
+}
+
+.customer-service-requester-name {
+  min-width: 10rem;
+  font-weight: 550;
+}
+
+.customer-service-empty,
+.customer-service-message {
+  height: 12rem !important;
+  color: var(--muted-foreground);
+  text-align: center !important;
+  white-space: normal !important;
+}
+
+.customer-service-message [data-slot="button"],
+.customer-service-message > a {
+  margin-block-start: 0.65rem;
+}
+
+.customer-service-loading {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.customer-service-footnote,
+.customer-service-muted {
+  margin: -0.5rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.customer-service-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.customer-service-detail-heading {
+  align-items: center;
+  padding-block: 0.75rem;
+}
+
+.customer-service-detail-heading h2 {
+  margin: 0.5rem 0 0;
+  font-size: clamp(1.3rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+}
+
+.customer-service-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(17rem, 1fr);
+  align-items: start;
+  gap: 1rem;
+}
+
+.customer-service-request-content,
+.customer-service-side-column,
+.customer-service-status-control {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.customer-service-side-column {
+  gap: 1rem;
+}
+
+.customer-service-metadata {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0;
+}
+
+.customer-service-metadata > div {
+  display: grid;
+  grid-template-columns: minmax(7rem, 0.7fr) minmax(0, 1.3fr);
+  align-items: start;
+  gap: 1rem;
+}
+
+.customer-service-metadata dt {
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+
+.customer-service-metadata dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.8125rem;
+}
+
+.customer-service-requester {
+  gap: 1rem;
+}
+
+.customer-service-description-block h3 {
+  margin: 0 0 0.65rem;
+  font-size: 0.875rem;
+  font-weight: 550;
+}
+
+.customer-service-description-block p {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+.customer-service-feedback {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+}
+
+.customer-service-feedback--error {
+  color: var(--destructive);
+}
+
+@media (max-width: 48rem) {
+  .customer-service-page {
+    padding: 4.5rem 1rem 1.5rem;
+  }
+
+  .customer-service-content {
+    gap: 1.1rem;
+  }
+
+  .customer-service-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .customer-service-toolbar {
+    align-items: stretch;
+  }
+
+  .customer-service-search {
+    width: 100%;
+  }
+
+  .customer-service-detail-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
