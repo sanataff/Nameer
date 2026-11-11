@@ -6,11 +6,14 @@
 |-------|-------|
 | Team number | 1 |
 | Section | F11 |
+| Current phase | 4 أ¢â‚¬â€œ Front-End |
+| Member | Sana Ammar Taffour |
+| Tool/model | OpenCode (DeepSeek V4.1 Flash Free) |
 | Current phase | 4 – Front-End |
 | Member | Irina Saleem |
 | Tool/model | Copilot SDK in VS Code (model unspecified) |
 
-## Phase 4 – Front-End
+## Phase 4 أ¢â‚¬â€œ Front-End
 
 | ID  | Member | Tool (model) | Purpose | Files affected |
 |-----|--------|--------------|---------|----------------|
@@ -32,5 +35,23 @@
 | C16 | Irina Saleem | Copilot SDK in VS Code (model unspecified) | Add a bilingual administrator chat portal with supplier/business filters, unread-first recent sorting, profile details matching user management, and client-side demo messaging | `app/routes.ts`, `app/routes/admin/chat.tsx`, `src/pages/admin/AdminChatPage.tsx`, `src/pages/admin/admin-chat.css`, `src/pages/admin/AdminSidebar.tsx`, `src/locales/en/translation.json`, `src/locales/ar/translation.json`, `README.md`, `AI_USAGE.md` |
 | C17 | Sana Ammar | Copilot SDK in VS Code (model unspecified) | Add a bilingual supplier nomination confirmation page and return-to-dashboard flow | `src/pages/supplier/orders/VerificationPage.tsx`, `src/pages/supplier/SupplierWorkspacePage.tsx`, `src/App.css`, `src/locales/en/translation.json`, `src/locales/ar/translation.json`, `AI_USAGE.md` |
 | C10 | Sana Ammar | Copilot (model unknown) | Explain how AppShell, the React Router app entry, and the legacy App component fit together | `APP_SHELL_AND_APP_EXPLAINED.md`, `AI_USAGE.md` |
+
+| C11 | Sarah Almanjahi | Codex (model not exposed) | Implement responsive Arabic RTL business orders wireframe with shared UI controls, sample orders, search, details/tracking dialogs, in-memory reorder cart, scoped styles, and route; Team 1, F11, Phase 4 | `src/pages/bussiness/BusinessOrdersPage` (empty placeholder renamed to .tsx), `src/pages/bussiness/BusinessOrdersPage.tsx`, `src/pages/bussiness/business-orders.css`, `app/routes/business/orders.tsx`, `app/routes.ts`, `AI_USAGE.md` |
+
+| C12 | Sarah Almanjahi | Codex (model not exposed) | Implement responsive Arabic sample shopping cart in existing folder with separate components, parent-managed quantities/removal, dynamic totals, header, search, empty states and explicit unavailable-checkout dialog; no shared Navbar or checkout route exists on disk | `src/pages/bussiness/shoppingCart/ShoppingCartPage.tsx`, `src/pages/bussiness/shoppingCart/CartNavbar.tsx`, `src/pages/bussiness/shoppingCart/CartItem.tsx`, `src/pages/bussiness/shoppingCart/CartItemList.tsx`, `src/pages/bussiness/shoppingCart/QuantitySelector.tsx`, `src/pages/bussiness/shoppingCart/OrderSummary.tsx`, `src/pages/bussiness/shoppingCart/cart-data.ts`, `src/pages/bussiness/shoppingCart/shopping-cart.css`, `app/routes/business/cart.tsx`, `app/routes.ts`, `AI_USAGE.md` |
+
+| C13 | Sarah Almanjahi | Codex (model not exposed) | Fix the orders-page Cart icon to navigate to the existing /business/cart route using React Router useNavigate instead of opening a cart dialog; preserve existing button design and badge | `src/pages/bussiness/BusinessOrdersPage.tsx`, `AI_USAGE.md` |
+
+| C14 | Sarah Almanjahi | Codex (model not exposed) | Add responsive frontend-only Arabic checkout, reuse CartNavbar, share in-memory cart across nested routes, calculate live totals, add/select addresses, select payment, validate and confirm simulation without payment or order-history integration | `src/pages/bussiness/checkout/CheckoutPage.tsx`, `src/pages/bussiness/checkout/OrderSummary.tsx`, `src/pages/bussiness/checkout/CustomerInfo.tsx`, `src/pages/bussiness/checkout/DeliveryAddress.tsx`, `src/pages/bussiness/checkout/PaymentMethod.tsx`, `src/pages/bussiness/checkout/PlaceOrderButton.tsx`, `src/pages/bussiness/checkout/checkout-types.ts`, `src/pages/bussiness/checkout/checkout.css`, `src/pages/bussiness/shoppingCart/CartLayout.tsx`, `src/pages/bussiness/shoppingCart/cart-context.ts`, `src/pages/bussiness/shoppingCart/ShoppingCartPage.tsx`, `src/pages/bussiness/shoppingCart/CartNavbar.tsx`, `app/routes/business/cart-layout.tsx`, `app/routes/business/checkout.tsx`, `app/routes.ts`, `AI_USAGE.md` |
+
+| C15 | Sarah Almanjahi | Codex (model not exposed) | Navigate validated checkout to responsive RTL order confirmation; snapshot actual cart/address/payment in shared memory; reuse Navbar; add four-stage tracking with first stage completed, product images/totals, honest contact placeholder, homepage link and missing-order state; frontend simulation only | `src/pages/bussiness/orderConfirmation/OrderConfirmationPage.tsx`, `src/pages/bussiness/orderConfirmation/OrderTracking.tsx`, `src/pages/bussiness/orderConfirmation/OrderDetails.tsx`, `src/pages/bussiness/orderConfirmation/ContactUs.tsx`, `src/pages/bussiness/orderConfirmation/order-confirmation.css`, `src/pages/bussiness/checkout/CheckoutPage.tsx`, `src/pages/bussiness/shoppingCart/cart-context.ts`, `src/pages/bussiness/shoppingCart/CartLayout.tsx`, `app/routes/business/order-confirmation.tsx`, `app/routes.ts`, `AI_USAGE.md` |
+
+| C16 | Sarah Almanjahi | Codex (model not exposed) | Extract supplier chat UI into shared role-aware ChatPanel; preserve supplier demo; connect confirmation Contact Us to business chat using order business names as local conversation keys without supplier IDs or backend; retain cart/confirmation route context | `src/components/chat/ChatPanel.tsx`, `src/pages/supplier/chat/ChatPage.tsx`, `src/pages/bussiness/chat/BusinessChatPage.tsx`, `src/pages/bussiness/chat/business-chat.css`, `src/pages/bussiness/orderConfirmation/OrderConfirmationPage.tsx`, `app/routes/business/chat.tsx`, `app/routes.ts`, `AI_USAGE.md` |
+
+| C17 | Sarah Almanjahi | Codex (model not exposed) | Move Arabic orderspage translation from supplierDashboard to the root to match the English structure and existing orderspage.layla lookup; validate JSON and key location | `src/locales/ar/translation.json`, `AI_USAGE.md` |
+
+| C18 | Sarah Almanjahi | Codex (model not exposed) | Replace visible demo wording across business UI with professional labels; remove payment disclaimer paragraph and saved-address suffix; clarify confirmation reviews details without real order/payment/delivery; retain sample data, internal identifiers and all simulation logic | `src/pages/bussiness/checkout/CustomerInfo.tsx`, `src/pages/bussiness/checkout/CheckoutPage.tsx`, `src/pages/bussiness/checkout/PaymentMethod.tsx`, `src/pages/bussiness/BusinessOrdersPage.tsx`, `src/pages/bussiness/shoppingCart/CartNavbar.tsx`, `src/pages/bussiness/chat/BusinessChatPage.tsx`, `src/pages/bussiness/orderConfirmation/OrderConfirmationPage.tsx`, `src/pages/bussiness/orderConfirmation/OrderTracking.tsx`, `AI_USAGE.md` |
+
+| C19 | Sarah Almanjahi | Codex (model not exposed) | Remove the requested visible confirmation note; leave simulation logic unchanged | `src/pages/bussiness/orderConfirmation/OrderConfirmationPage.tsx`, `AI_USAGE.md` |
 
 No AI used: Not reported
