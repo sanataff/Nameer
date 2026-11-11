@@ -1,0 +1,3 @@
+﻿.business-chat-main { max-width: 1240px; padding: 32px 24px 48px; margin-inline: auto; }
+.business-chat-note { color: var(--muted-foreground); font-size: 13px; line-height: 1.8; margin: 16px 0; }
+@media (max-width: 640px) { .business-chat-main { padding: 24px 16px; } }
