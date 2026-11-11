@@ -170,6 +170,7 @@ html[lang="en"] .auth-page {
   position: absolute;
   inset-block-start: 1.25rem;
   inset-inline-end: 1.25rem;
+  margin-left: -8px;
   z-index: 40;
   font-family: inherit;
 }
