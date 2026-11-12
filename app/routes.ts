@@ -11,6 +11,25 @@ export default [
   route('business/orders', './routes/business/orders.tsx'),
   route('login', './routes/auth/login.tsx'),
   route('admin/login', './routes/admin/login.tsx'),
+  route('business/cafes', './routes/business/home-page-cafes.tsx', {
+    id: 'legacy-business-cafes',
+  }),
+  route('business/account-settings', './routes/business/account-settings.tsx'),
+  route('bussiness/accountSettings', './routes/business/account-settings.tsx', {
+    id: 'legacy-bussiness-account-settings',
+  }),
+  route('business/browse-products', './routes/business/browse-products.tsx', {
+    id: 'business-browse-products',
+  }),
+  route('business/home-page-cafes', './routes/business/home-page-cafes.tsx'),
+  route('bussiness/HomePageCafes', './routes/business/home-page-cafes.tsx', {
+    id: 'legacy-bussiness-home-page-cafes',
+  }),
+  route('business/propose-to-local-provider', './routes/business/propose-to-local-provider.tsx'),
+  route('business/propose-to-local-provider/success', './routes/business/propose-to-local-provider-success.tsx'),
+  route('bussiness/Browse products', './routes/business/browse-products.tsx', {
+    id: 'legacy-bussiness-browse-products',
+  }),
   route('admin', './routes/admin/layout.tsx', [
     index('./routes/admin/dashboard.tsx'),
     route('users', './routes/admin/users.tsx'),

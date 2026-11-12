@@ -1,0 +1,431 @@
+.account-settings-page {
+  --settings-caramel: #b77a40;
+  --settings-caramel-dark: #85522d;
+  --settings-ink: #332920;
+  --settings-muted: #81776f;
+  min-width: 48rem;
+  min-height: 100vh;
+  background: #fff;
+  color: var(--settings-ink);
+  font-family: "Noto Sans Arabic Variable", Tahoma, sans-serif;
+}
+
+.account-settings-navbar {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: 20;
+  border-block-end: 2px solid var(--settings-caramel);
+  background: rgb(255 255 255 / 96%);
+  backdrop-filter: blur(14px);
+}
+
+.account-settings-navbar-inner {
+  display: grid;
+  width: min(100% - 3rem, 78rem);
+  min-height: 5rem;
+  grid-template-columns: auto minmax(12rem, 1fr) auto;
+  align-items: center;
+  gap: clamp(1rem, 4vw, 3.5rem);
+  margin-inline: auto;
+}
+
+.account-settings-avatar,
+.account-settings-nav-icon {
+  display: grid;
+  flex: none;
+  place-items: center;
+  border: 1px solid #e8d4c0;
+  border-radius: 50%;
+  background: #f7eee5;
+  color: var(--settings-caramel-dark);
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.account-settings-avatar {
+  width: 2.7rem;
+  aspect-ratio: 1;
+}
+
+.account-settings-avatar svg,
+.account-settings-nav-icon svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.account-settings-avatar:hover,
+.account-settings-nav-icon:hover {
+  border-color: #d7b18b;
+  background: #fbf5ef;
+  transform: translateY(-1px);
+}
+
+.account-settings-search {
+  display: flex;
+  width: min(100%, 35rem);
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.7rem;
+  justify-self: center;
+  border: 1px solid #ece8e3;
+  border-radius: 0.85rem;
+  background: #faf9f7;
+  padding-inline: 0.9rem;
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.account-settings-search:focus-within {
+  border-color: #c99a6e;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgb(183 122 64 / 11%);
+}
+
+.account-settings-search > svg {
+  width: 1rem;
+  flex: none;
+  color: #91857b;
+}
+
+.account-settings-search input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--settings-ink);
+  font: inherit;
+  font-size: 0.85rem;
+}
+
+.account-settings-search input::placeholder {
+  color: #968c82;
+}
+
+.account-settings-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.account-settings-nav-icon {
+  border-color: transparent;
+  background: transparent;
+  color: #594b3d;
+}
+
+.account-settings-orders-button {
+  min-height: 2.55rem;
+  margin-inline-start: 0.25rem;
+  border-color: var(--settings-caramel-dark);
+  border-radius: 0.75rem;
+  background: var(--settings-caramel-dark);
+  color: #fff;
+  padding-inline: 1.1rem;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.account-settings-orders-button:hover {
+  background: #704224;
+}
+
+.account-settings-main {
+  width: min(100% - 3rem, 78rem);
+  margin-inline: auto;
+  padding-block: 2.25rem 4rem;
+}
+
+.account-settings-column {
+  display: flex;
+  width: min(100%, 43rem);
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.15rem;
+  margin-inline-end: auto;
+}
+
+.account-settings-heading {
+  display: flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-block-end: 0.35rem;
+}
+
+.account-settings-heading h1 {
+  margin: 0;
+  color: #33271f;
+  font-size: clamp(1.55rem, 3vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.account-settings-back {
+  display: grid;
+  width: 2.65rem;
+  aspect-ratio: 1;
+  place-items: center;
+  border: 1px solid #eadaca;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--settings-caramel-dark);
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.account-settings-back svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.account-settings-back:hover {
+  border-color: #d7b18b;
+  background: #fbf5ef;
+  transform: translateX(2px);
+}
+
+.account-settings-notice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid #edddcb;
+  border-radius: 0.85rem;
+  background: #fcf7f1;
+  color: var(--settings-caramel-dark);
+  padding: 0.75rem 1rem;
+  font-size: 0.85rem;
+}
+
+.account-settings-notice button {
+  display: grid;
+  width: 1.7rem;
+  aspect-ratio: 1;
+  flex: none;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.2rem;
+}
+
+.account-settings-notice button:hover {
+  background: rgb(133 82 45 / 8%);
+}
+
+.account-settings-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.account-settings-card[data-slot="card"] {
+  gap: 0;
+  border: 1px solid #eeece9;
+  border-radius: 1rem;
+  background: #faf9f7;
+  box-shadow: 0 8px 24px rgb(44 34 25 / 4%);
+  padding-block: 0;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.account-settings-card[data-slot="card"]:hover {
+  border-color: #e4d7c9;
+  box-shadow: 0 12px 28px rgb(44 34 25 / 7%);
+  transform: translateY(-1px);
+}
+
+.account-settings-card-header[data-slot="card-header"] {
+  min-height: 4.2rem;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding: 1rem 1.25rem 0.75rem;
+}
+
+.account-settings-card-title[data-slot="card-title"] {
+  color: var(--settings-ink);
+  font-size: 1.05rem;
+  font-weight: 750;
+}
+
+.account-settings-edit-button,
+.account-settings-download-button {
+  color: #846b55;
+}
+
+.account-settings-edit-button:hover,
+.account-settings-download-button:hover {
+  background: #f1e7dc;
+  color: var(--settings-caramel-dark);
+}
+
+.account-settings-card-content[data-slot="card-content"] {
+  padding: 0 1.25rem 1.25rem;
+}
+
+.account-settings-business-name {
+  margin: 0 0 0.85rem;
+  color: #43362b;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.account-settings-detail-list {
+  display: grid;
+  gap: 0.72rem;
+  margin: 0;
+}
+
+.account-settings-detail {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.7rem;
+  color: #655b52;
+  font-size: 0.86rem;
+}
+
+.account-settings-detail > svg {
+  width: 1rem;
+  height: 1rem;
+  flex: none;
+  color: #a17b58;
+  stroke-width: 1.8;
+}
+
+.account-settings-detail dd {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.account-settings-detail a {
+  color: inherit;
+  text-decoration-color: #c8b6a4;
+  text-underline-offset: 3px;
+}
+
+.account-settings-detail a:hover {
+  color: var(--settings-caramel-dark);
+}
+
+.account-settings-payment-method {
+  display: flex;
+  min-height: 3.1rem;
+  align-items: center;
+  gap: 0.8rem;
+  color: #554a40;
+  font-size: 0.9rem;
+}
+
+.account-settings-payment-icon {
+  display: grid;
+  width: 2.5rem;
+  aspect-ratio: 1;
+  flex: none;
+  place-items: center;
+  border: 1px solid #eadaca;
+  border-radius: 0.75rem;
+  background: #fff;
+  color: var(--settings-caramel-dark);
+}
+
+.account-settings-payment-icon svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.account-settings-mada-mark {
+  color: #43362b;
+  font-family: Arial, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+}
+
+.account-settings-invoices[data-slot="card-content"] {
+  padding: 0 1.25rem 0.35rem;
+}
+
+.account-settings-invoice-separator[data-slot="separator"] {
+  background: #eae5df;
+}
+
+.account-settings-invoice {
+  display: flex;
+  min-height: 4.2rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.account-settings-invoice-copy {
+  display: grid;
+  min-width: 0;
+  gap: 0.3rem;
+}
+
+.account-settings-invoice-copy strong {
+  overflow-wrap: anywhere;
+  color: #493d33;
+  font-size: 0.86rem;
+  font-weight: 650;
+}
+
+.account-settings-invoice-copy time {
+  color: var(--settings-muted);
+  font-size: 0.77rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.account-settings-download-button {
+  flex: none;
+}
+
+.account-settings-download-button svg {
+  color: var(--settings-caramel-dark);
+}
+
+.account-settings-logout {
+  min-height: 2.85rem;
+  align-self: flex-start;
+  border-color: #c99a6e;
+  border-radius: 0.75rem;
+  background: #fff;
+  color: var(--settings-caramel-dark);
+  padding-inline: 1.35rem;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.account-settings-logout:hover {
+  border-color: var(--settings-caramel-dark);
+  background: #fbf5ef;
+  color: #704224;
+}
+
+.account-settings-page a:focus-visible,
+.account-settings-page button:focus-visible,
+.account-settings-page input:focus-visible {
+  outline: 3px solid rgb(183 122 64 / 38%);
+  outline-offset: 3px;
+}
+
+.account-settings-search input:focus-visible {
+  outline: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .account-settings-page *,
+  .account-settings-page *::before,
+  .account-settings-page *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
