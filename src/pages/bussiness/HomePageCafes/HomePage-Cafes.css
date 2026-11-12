@@ -16,6 +16,7 @@
   border-block-end: 2px solid var(--marketplace-caramel);
   background: rgb(255 255 255 / 96%);
   backdrop-filter: blur(14px);
+  box-shadow: 0 1px 3px rgb(52 37 25 / 4%);
 }
 
 .marketplace-header-inner {
@@ -137,7 +138,8 @@
 }
 
 .marketplace-orders-button,
-.marketplace-browse-button {
+.marketplace-browse-button,
+.marketplace-hero-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -159,7 +161,8 @@
 }
 
 .marketplace-orders-button:hover,
-.marketplace-browse-button:hover {
+.marketplace-browse-button:hover,
+.marketplace-hero-cta:hover {
   border-color: #704224;
   background: #704224;
   box-shadow: 0 5px 14px rgb(103 66 36 / 16%);
@@ -182,6 +185,7 @@
   color: var(--marketplace-caramel-dark);
   padding: 0.65rem 0.8rem;
   font-size: 0.85rem;
+  animation: marketplace-enter 220ms ease-out both;
 }
 
 .marketplace-notice > svg {
@@ -210,15 +214,18 @@
   border: 1px solid #f1e7dc;
   border-radius: 1.5rem;
   background:
-    radial-gradient(ellipse at 82% 55%, rgb(245 218 188 / 72%), transparent 29%),
+    radial-gradient(ellipse at 14% 55%, rgb(245 218 188 / 38%), transparent 34%),
     linear-gradient(110deg, #fffdfb 0%, #fff 47%, #fbf4ec 100%);
+  box-shadow: 0 6px 20px rgb(52 37 25 / 3%);
   margin-block-start: 2.35rem;
   padding: clamp(1.75rem, 5vw, 4rem);
+  animation: marketplace-enter 460ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
 .marketplace-hero-copy {
   position: relative;
   z-index: 1;
+  width: min(100%, 38rem);
 }
 
 .marketplace-eyebrow,
@@ -243,39 +250,34 @@
 }
 
 .marketplace-hero h1 {
-  margin: 0.85rem 0 0.2rem;
+  margin: 0.9rem 0 0.35rem;
   color: #38281d;
-  font-size: clamp(2.5rem, 5vw, 3.65rem);
-  font-weight: 800;
-  letter-spacing: -0.045em;
+  font-size: clamp(2.2rem, 4.7vw, 3.35rem);
+  font-weight: 750;
+  letter-spacing: -0.035em;
   line-height: 1.25;
 }
 
 .marketplace-hero-copy > p {
+  max-width: 34rem;
   margin: 0;
   color: #72665d;
   font-size: clamp(1rem, 2vw, 1.2rem);
   line-height: 1.8;
 }
 
-.marketplace-hero-promise {
+.marketplace-hero-cta {
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  margin-block-start: 1.2rem;
-  color: #8c7561;
-  font-size: 0.8rem;
+  min-height: 2.8rem;
+  margin-block-start: 1.35rem;
+  padding-inline: 1.1rem;
+  font-size: 0.85rem;
 }
 
-.marketplace-promise-icon {
-  display: grid;
-  width: 1.5rem;
-  aspect-ratio: 1;
-  place-items: center;
-  border-radius: 50%;
-  background: #f3e5d6;
-  color: var(--marketplace-caramel-dark);
-  font-size: 1.1rem;
+.marketplace-hero-cta svg {
+  width: 1rem;
 }
 
 .marketplace-vendors {
@@ -287,6 +289,7 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
+  animation: marketplace-enter 420ms 50ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
 .marketplace-section-kicker {
@@ -295,6 +298,7 @@
 }
 
 .marketplace-section-heading h2 {
+  scroll-margin-top: 6rem;
   margin: 0.35rem 0 0;
   color: #33261e;
   font-size: clamp(1.5rem, 3vw, 1.9rem);
@@ -323,6 +327,7 @@
   flex-wrap: wrap;
   gap: 0.55rem;
   margin-block: 1.55rem 1.3rem;
+  animation: marketplace-enter 420ms 90ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 
 .marketplace-category {
@@ -366,14 +371,27 @@
   border: 1px solid #eee9e4;
   border-radius: 1rem;
   background: #fff;
-  box-shadow: 0 4px 18px rgb(52 37 25 / 4%);
+  box-shadow: 0 2px 8px rgb(52 37 25 / 3%);
   transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+  animation: marketplace-enter 440ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
 }
 
 .marketplace-vendor-card:hover {
   border-color: #e3c9ae;
-  box-shadow: 0 14px 32px rgb(52 37 25 / 10%);
-  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgb(52 37 25 / 7%);
+  transform: translateY(-2px);
+}
+
+.marketplace-vendor-card:nth-child(3n + 1) {
+  animation-delay: 110ms;
+}
+
+.marketplace-vendor-card:nth-child(3n + 2) {
+  animation-delay: 160ms;
+}
+
+.marketplace-vendor-card:nth-child(3n) {
+  animation-delay: 210ms;
 }
 
 .marketplace-vendor-artwork {
@@ -409,32 +427,18 @@
   inset-inline-end: -1.5rem;
 }
 
-.artwork-cake {
-  background: linear-gradient(140deg, #f6e1d4, #eac7b2);
-}
-
-.artwork-maamoul {
-  background: linear-gradient(140deg, #f4e7ca, #e4c990);
-}
-
-.artwork-croissant {
-  background: linear-gradient(140deg, #f4e0b5, #e4bd7c);
-}
-
-.artwork-cheesecake {
-  background: linear-gradient(140deg, #f3e3da, #eac8b5);
-}
-
-.artwork-cupcake {
-  background: linear-gradient(140deg, #f6dce1, #eab9c5);
-}
-
-.artwork-cookies {
-  background: linear-gradient(140deg, #e9dfd0, #cdb596);
+.marketplace-vendor-image {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .marketplace-artwork-tag {
   position: absolute;
+  z-index: 1;
   inset-block-start: 0.85rem;
   inset-inline-end: 0.85rem;
   border: 1px solid rgb(255 255 255 / 62%);
@@ -447,30 +451,9 @@
   backdrop-filter: blur(8px);
 }
 
-.marketplace-artwork-sun {
-  position: absolute;
-  width: 8rem;
-  aspect-ratio: 1;
-  border: 1px solid rgb(255 255 255 / 60%);
-  border-radius: 50%;
-  background: rgb(255 255 255 / 25%);
-  box-shadow: 0 0 0 1rem rgb(255 255 255 / 12%);
-}
-
-.marketplace-dessert-emoji {
-  position: relative;
-  filter: drop-shadow(0 12px 10px rgb(83 55 31 / 18%));
-  font-size: 5.5rem;
-  line-height: 1;
-  transition: transform 220ms ease;
-}
-
-.marketplace-vendor-card:hover .marketplace-dessert-emoji {
-  transform: scale(1.08) rotate(-3deg);
-}
-
 .marketplace-favorite {
   position: absolute;
+  z-index: 1;
   inset-block-end: 0.8rem;
   inset-inline-start: 0.8rem;
   width: 2.25rem;
@@ -714,13 +697,26 @@
 }
 
 .marketplace-page button:focus-visible,
-.marketplace-page input:focus-visible {
+.marketplace-page input:focus-visible,
+.marketplace-hero-cta:focus-visible {
   outline: 3px solid rgb(183 122 64 / 38%);
   outline-offset: 3px;
 }
 
 .marketplace-search input:focus-visible {
   outline: 0;
+}
+
+@keyframes marketplace-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @media (max-width: 62rem) {
@@ -770,7 +766,7 @@
   }
 
   .marketplace-hero {
-    min-height: 16rem;
+    min-height: 16.5rem;
     border-radius: 1.15rem;
     margin-block-start: 1.25rem;
     padding: 1.5rem;
@@ -808,7 +804,7 @@
   }
 
   .marketplace-hero {
-    min-height: 15rem;
+    min-height: 16rem;
     padding: 1.2rem;
   }
 

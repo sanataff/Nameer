@@ -1,19 +1,15 @@
-import { Sparkles } from 'lucide-react'
+import { ArrowDown } from 'lucide-react'
 
 export default function HeroSection() {
   return (
     <section className="marketplace-hero" aria-labelledby="marketplace-title">
       <div className="marketplace-hero-copy">
-        <span className="marketplace-eyebrow">
-          <Sparkles aria-hidden="true" />
-          حلويات مختارة بعناية
-        </span>
-        <h1 id="marketplace-title">يا هلا!</h1>
-        <p>تصفح آخر المنشورات والعروض</p>
-        <div className="marketplace-hero-promise">
-          <span className="marketplace-promise-icon" aria-hidden="true">♡</span>
-          <span>لحظات حلوة تبدأ من هنا</span>
-        </div>
+        <h1 id="marketplace-title">اكتشف متاجر التوريد</h1>
+        <p>تعرّف على المخابز ومحلات الحلويات للاسر المنتجة واستكشف تشكيلاتها في مكان واحد.</p>
+        <a className="marketplace-hero-cta" href="#vendors-title">
+          تصفح المتاجر
+          <ArrowDown aria-hidden="true" />
+        </a>
       </div>
     </section>
   )
