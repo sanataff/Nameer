@@ -1,4 +1,7 @@
 {
+  "orderspage": {
+    "layla": "مقهى ليلى"
+  },
   "language": {
     "switchTo": "English"
   },
@@ -56,7 +59,9 @@
     "postalCode": "الرمز البريدي",
     "shortAddress": "العنوان المختصر",
     "passwordMismatch": "كلمتا المرور غير متطابقتين.",
-    "success": "تم التحقق من البيانات. سيكتمل إنشاء الحساب عند ربط الخدمة."
+    "success": "تم حفظ حسابك لمراجعته من المشرف (وضع تجريبي).",
+    "emailExists": "يوجد حساب مسجل بهذا البريد الإلكتروني بالفعل.",
+    "saveError": "تعذر حفظ الحساب. يرجى المحاولة مرة أخرى."
   },
   "supplierDashboard": {
     "orders": "الطلبات",
@@ -109,6 +114,11 @@
     "targetUnitPrice": "السعر المستهدف للوحدة",
     "nominate": "رشّح نشاطك لهذا الطلب",
     "nominationSent": "تم تسجيل الترشيح (معاينة)",
+    "nominationConfirmation": {
+      "title": "تم تقديم عرضك!",
+      "description": "الرجاء الاطلاع على البريد الإلكتروني لمتابعة التحديثات",
+      "returnHome": "العودة إلى الصفحة الرئيسية"
+    },
     "offerDetails": "تفاصيل العرض",
     "offerDetailsPlaceholder": "اكتب تفاصيل قدرتك على تلبية الطلب...",
     "offerDetailsRequired": "يرجى إدخال تفاصيل العرض.",
@@ -368,5 +378,195 @@
     "accessNote": "سيتم تفعيل تسجيل دخول المشرفين بعد ربط خدمة المصادقة.",
     "visualTitle": "أدر Nameer بثقة",
     "visualDescription": "مساحة مخصصة لمشرفي منصة Nameer."
+  },
+  "adminUsers": {
+    "title": "إدارة المستخدمين",
+    "portalLabel": "بوابة مشرفي Nameer",
+    "demoData": "بيانات تجريبية",
+    "demoNote": "تُحفظ بيانات المستخدمين التجريبية في هذا المتصفح فقط. تظهر الحسابات الجديدة بحالة غير موثّق.",
+    "filtersLabel": "تصفية المستخدمين حسب الحالة",
+    "filters": {
+      "all": "الكل",
+      "active": "نشط",
+      "unverified": "غير موثّق",
+      "rejected": "مرفوض",
+      "banned": "محظور"
+    },
+    "searchPlaceholder": "ابحث عن مستخدم",
+    "columns": {
+      "name": "اسم المستخدم",
+      "role": "النوع",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "joined": "تاريخ الانضمام",
+      "status": "الحالة",
+      "customerRequest": "طلب خدمة العملاء",
+      "actions": "إجراءات المستخدم"
+    },
+    "roles": {
+      "supplier": "أسرة منتجة",
+      "cafe": "كافيه"
+    },
+    "status": {
+      "active": "نشط",
+      "unverified": "غير موثّق",
+      "rejected": "مرفوض",
+      "banned": "محظور"
+    },
+    "actions": {
+      "viewUser": "عرض {{name}}",
+      "editUser": "تعديل {{name}}",
+      "banUser": "حظر {{name}}",
+      "unbanUser": "إلغاء حظر {{name}}"
+    },
+    "empty": "لا يوجد مستخدمون يطابقون البحث.",
+    "loadError": "تعذر تحميل المستخدمين.",
+    "retry": "أعد المحاولة",
+    "detailsTitle": "تفاصيل المستخدم",
+    "detailsDescription": "معلومات الحساب وحالته الحالية.",
+    "noCustomerRequest": "لا توجد طلبات",
+    "editTitle": "تعديل المستخدم",
+    "editDescription": "تحديث معلومات الحساب.",
+    "save": "حفظ التغييرات",
+    "saving": "جارٍ الحفظ...",
+    "cancel": "إلغاء",
+    "saveError": "تعذر حفظ التغييرات. يرجى المحاولة مرة أخرى.",
+    "emailExists": "يوجد مستخدم مسجل بهذا البريد الإلكتروني بالفعل.",
+    "updateSuccess": "تم تحديث بيانات المستخدم.",
+    "banSuccess": "تم حظر المستخدم.",
+    "unbanSuccess": "تم إلغاء حظر المستخدم."
+  },
+  "storeVerification": {
+    "title": "توثيق المتاجر",
+    "description": "راجع طلبات الأسر المنتجة والمقاهي قبل انضمامها إلى Nameer.",
+    "openPage": "توثيق المتاجر",
+    "demoNote": "تُحفظ بيانات الطلبات التجريبية في هذا المتصفح فقط.",
+    "filtersLabel": "تصفية طلبات المتاجر",
+    "filters": {
+      "all": "الكل",
+      "supplier": "الأسر المنتجة",
+      "cafe": "الكافيهات",
+      "unverified": "قيد المراجعة"
+    },
+    "searchPlaceholder": "ابحث عن متجر",
+    "columns": {
+      "name": "اسم المتجر",
+      "type": "النوع",
+      "registered": "تاريخ التسجيل",
+      "actions": "إجراءات المراجعة"
+    },
+    "approve": "قبول",
+    "reject": "رفض",
+    "approveUser": "قبول {{name}}",
+    "rejectUser": "رفض {{name}}",
+    "approveSuccess": "تم قبول طلب المتجر.",
+    "rejectSuccess": "تم رفض طلب المتجر.",
+    "updateError": "تعذر تحديث هذا الطلب. يرجى المحاولة مرة أخرى.",
+    "empty": "لا توجد طلبات متاجر تطابق البحث."
+  },
+  "customerService": {
+    "title": "خدمة العملاء",
+    "description": "راجع طلبات العملاء وحدّث حالتها وتابع تفاصيل كل طلب.",
+    "userManagement": "إدارة المستخدمين",
+    "statusSummary": "ملخص حالات طلبات العملاء",
+    "filtersLabel": "تصفية طلبات العملاء حسب الحالة",
+    "filters": {
+      "all": "كل الطلبات",
+      "open": "مفتوحة",
+      "reviewing": "قيد المراجعة",
+      "closed": "مغلقة"
+    },
+    "status": {
+      "open": "مفتوحة",
+      "reviewing": "قيد المراجعة",
+      "closed": "مغلقة"
+    },
+    "priorities": {
+      "high": "عالية",
+      "medium": "متوسطة",
+      "low": "منخفضة"
+    },
+    "searchPlaceholder": "ابحث برقم التذكرة أو العميل أو الموضوع",
+    "tableTitle": "طلبات العملاء",
+    "tableDescription": "اختر طلباً لمراجعة تفاصيله وتحديث حالته.",
+    "columns": {
+      "ticket": "رقم التذكرة",
+      "requester": "المرسل",
+      "subject": "الموضوع",
+      "priority": "الأولوية",
+      "createdAt": "تاريخ الإنشاء",
+      "status": "الحالة",
+      "actions": "إجراءات الطلب"
+    },
+    "openRequest": "فتح الطلب",
+    "detailsTitle": "الطلب رقم {{id}}",
+    "ticketNumber": "التذكرة رقم {{id}}",
+    "backToRequests": "كل طلبات العملاء",
+    "requestDetails": "تفاصيل الطلب",
+    "requestDetailsDescription": "رسالة العميل ومعلومات الحالة.",
+    "category": "الفئة",
+    "priority": "الأولوية",
+    "createdAt": "تاريخ الإنشاء",
+    "message": "رسالة العميل",
+    "requester": "العميل",
+    "requesterDescription": "بيانات التواصل المرتبطة بالطلب.",
+    "requesterUnavailable": "بيانات العميل غير متاحة",
+    "updateStatus": "تحديث الحالة",
+    "updateStatusDescription": "ستظهر الحالة الأحدث أيضاً في إدارة المستخدمين.",
+    "statusUpdated": "تم تحديث حالة الطلب.",
+    "updateError": "تعذر تحديث الطلب. يرجى المحاولة مرة أخرى.",
+    "loadError": "تعذر تحميل طلبات العملاء.",
+    "notFound": "تعذر العثور على طلب خدمة العملاء هذا.",
+    "empty": "لا توجد طلبات تطابق البحث.",
+    "demoNote": "تُحفظ الطلبات التجريبية في هذا المتصفح فقط."
+  },
+  "adminControlPanel": {
+    "title": "لوحة التحكم",
+    "portalLabel": "بوابة مشرفي Nameer",
+    "navigation": "التنقل الرئيسي",
+    "toggleNavigation": "تبديل قائمة التنقل",
+    "home": "لوحة التحكم",
+    "overview": "نظرة عامة على المنصة",
+    "demoData": "بيانات تجريبية",
+    "stats": {
+      "verifiedStores": "إجمالي المتاجر الموثقة",
+      "currentOrders": "الطلبات الجارية اليوم",
+      "pendingVerifications": "طلبات التوثيق المعلقة",
+      "openTickets": "تذاكر الدعم المفتوحة"
+    },
+    "recentStores": "أحدث المتاجر المسجلة",
+    "columns": {
+      "name": "اسم المتجر",
+      "type": "النوع",
+      "registered": "تاريخ التسجيل",
+      "status": "الحالة"
+    },
+    "verified": "موثق"
+  },
+  "adminChat": {
+    "title": "محادثات المشرف",
+    "filterLabel": "تصفية المحادثات حسب نوع الحساب",
+    "filters": {
+      "all": "الكل",
+      "supplier": "الأسر المنتجة",
+      "cafe": "المنشآت"
+    },
+    "searchPlaceholder": "ابحث عن مستخدم",
+    "empty": "لا يوجد مستخدمون يطابقون البحث.",
+    "unreadCount": "{{count}} غير مقروءة",
+    "viewProfile": "عرض الملف الشخصي",
+    "today": "اليوم",
+    "you": "المشرف",
+    "messageLabel": "الرسالة",
+    "messagePlaceholder": "اكتب رسالة...",
+    "send": "إرسال الرسالة",
+    "emptyConversation": "ابدأ المحادثة بإرسال رسالة.",
+    "selectConversation": "اختر مستخدماً لفتح المحادثة.",
+    "noMessages": "لا توجد رسائل بعد",
+    "sampleSupplierMessage": "مرحباً، لدي استفسار حول توثيق متجري.",
+    "sampleAdminReply": "مرحباً، يمكنني مساعدتك. سأراجع حسابك.",
+    "sampleBusinessMessage": "هل يمكنكم مساعدتي في تحديث الطلب؟",
+    "sampleTime": "١٠:٣٠ ص",
+    "justNow": "الآن"
   }
 }

@@ -1,0 +1,163 @@
+.admin-control-panel-page {
+  min-height: calc(100vh - 4rem);
+  padding: clamp(1.5rem, 3vw, 2.75rem);
+  color: var(--foreground);
+}
+
+.admin-control-panel-content {
+  display: flex;
+  width: min(100%, 88rem);
+  flex-direction: column;
+  gap: clamp(1.5rem, 3vw, 2.25rem);
+  margin-inline: auto;
+}
+
+.admin-control-panel-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.admin-control-panel-eyebrow {
+  margin: 0 0 0.4rem;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+}
+
+.admin-control-panel-heading h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 650;
+  letter-spacing: -0.035em;
+}
+
+.admin-control-panel-overview {
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border-radius: var(--radius-xl);
+  background: var(--background);
+}
+
+.admin-control-panel-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  direction: ltr;
+}
+
+.admin-control-panel-stat {
+  min-height: 13rem;
+  justify-content: space-between;
+  padding-block: 1.5rem;
+  border: 0;
+  border-radius: 2rem;
+  background: var(--nameer-brand-100);
+  color: var(--nameer-brand-800);
+  box-shadow: none;
+}
+
+.admin-control-panel-stat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  direction: ltr;
+}
+
+.admin-control-panel-stat-icon {
+  width: clamp(2.5rem, 4vw, 4rem);
+  height: clamp(2.5rem, 4vw, 4rem);
+  flex-shrink: 0;
+  stroke-width: 1.6;
+}
+
+.admin-control-panel-stat-value {
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  font-weight: 350;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.admin-control-panel-stat-label {
+  color: inherit;
+  font-size: clamp(0.9rem, 1.35vw, 1.2rem);
+  line-height: 1.6;
+  text-align: end;
+}
+
+.admin-control-panel-stores {
+  overflow: hidden;
+  border: 0;
+  border-radius: var(--radius-xl);
+  background: var(--background);
+  box-shadow: none;
+}
+
+.admin-control-panel-stores-header {
+  padding: clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 3vw, 2.25rem) 1rem;
+}
+
+.admin-control-panel-stores-header [data-slot="card-title"] {
+  font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+  font-weight: 600;
+}
+
+.admin-control-panel-stores-content {
+  padding: 0 clamp(1.25rem, 3vw, 2.25rem) clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.admin-control-panel-table {
+  text-align: center;
+}
+
+.admin-control-panel-table thead {
+  background: color-mix(in oklch, var(--muted) 95%, var(--background));
+}
+
+.admin-control-panel-table th {
+  height: 3.5rem;
+  color: var(--foreground);
+  font-size: clamp(0.875rem, 1.5vw, 1.125rem);
+  font-weight: 550;
+  text-align: center;
+}
+
+.admin-control-panel-table td {
+  height: 3.25rem;
+  background: color-mix(in oklch, var(--muted) 78%, var(--background));
+  font-size: clamp(0.8125rem, 1.4vw, 1rem);
+  text-align: center;
+}
+
+.admin-control-panel-store-name {
+  font-weight: 550;
+}
+
+@media (max-width: 56rem) {
+  .admin-control-panel-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 36rem) {
+  .admin-control-panel-page {
+    padding: 1.25rem 1rem;
+  }
+
+  .admin-control-panel-metrics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .admin-control-panel-stat {
+    min-height: 9.5rem;
+  }
+
+  .admin-control-panel-stores-content {
+    padding-inline: 0;
+  }
+
+  .admin-control-panel-table {
+    min-width: 38rem;
+  }
+}

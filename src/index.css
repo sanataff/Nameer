@@ -2,11 +2,13 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
-
+@import '@fontsource/ibm-plex-sans-arabic/400.css';
+@import '@fontsource/ibm-plex-sans-arabic/500.css';
+@import '@fontsource/ibm-plex-sans-arabic/700.css';
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-      --font-sans: "Noto Sans Arabic Variable", sans-serif;
+      --font-sans: "IBM Plex Sans Arabic", sans-serif;
 
     --font-heading: var(--font-sans);
     --color-sidebar-ring: var(--sidebar-ring);

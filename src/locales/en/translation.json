@@ -2,6 +2,9 @@
   "language": {
     "switchTo": "العربية"
   },
+    "orderspage":{
+    "layla" : "layla cafe"
+  },
   "common": {
     "email": "Email address",
     "emailPlaceholder": "name@example.com",
@@ -56,7 +59,9 @@
     "postalCode": "Postal code",
     "shortAddress": "Short address",
     "passwordMismatch": "The passwords do not match.",
-    "success": "Your details are valid. Account creation will be available when the service is connected."
+    "success": "Your account has been saved for administrator review (demo mode).",
+    "emailExists": "An account with this email address already exists.",
+    "saveError": "Your account could not be saved. Please try again."
   },
   "supplierDashboard": {
         "orders": "Orders",
@@ -110,6 +115,11 @@
     "targetUnitPrice": "Target unit price",
     "nominate": "Nominate your business",
     "nominationSent": "Nomination recorded (demo)",
+    "nominationConfirmation": {
+      "title": "Your offer has been submitted!",
+      "description": "Please check your email for updates.",
+      "returnHome": "Return to home page"
+    },
     "offerDetails": "Offer details",
     "offerDetailsPlaceholder": "Describe how you can fulfill this request...",
     "offerDetailsRequired": "Enter the details of your offer.",
@@ -369,5 +379,195 @@
     "accessNote": "Administrator sign-in will be enabled once authentication is connected.",
     "visualTitle": "Manage Nameer with confidence",
     "visualDescription": "A dedicated workspace for Nameer platform administrators."
+  },
+  "adminUsers": {
+    "title": "User management",
+    "portalLabel": "Nameer Admin Portal",
+    "demoData": "Demo data",
+    "demoNote": "Example users are stored in this browser only. Newly registered accounts appear as unverified.",
+    "filtersLabel": "Filter users by status",
+    "filters": {
+      "all": "All",
+      "active": "Active",
+      "unverified": "Unverified",
+      "rejected": "Rejected",
+      "banned": "Blocked"
+    },
+    "searchPlaceholder": "Search users",
+    "columns": {
+      "name": "User name",
+      "role": "Type",
+      "email": "Email address",
+      "phone": "Phone number",
+      "joined": "Joined",
+      "status": "Status",
+      "customerRequest": "Customer request",
+      "actions": "User actions"
+    },
+    "roles": {
+      "supplier": "Supplier",
+      "cafe": "Café"
+    },
+    "status": {
+      "active": "Active",
+      "unverified": "Unverified",
+      "rejected": "Rejected",
+      "banned": "Blocked"
+    },
+    "actions": {
+      "viewUser": "View {{name}}",
+      "editUser": "Edit {{name}}",
+      "banUser": "Block {{name}}",
+      "unbanUser": "Unblock {{name}}"
+    },
+    "empty": "No users match your search.",
+    "loadError": "Users could not be loaded.",
+    "retry": "Try again",
+    "detailsTitle": "User details",
+    "detailsDescription": "Account information and current status.",
+    "noCustomerRequest": "No requests",
+    "editTitle": "Edit user",
+    "editDescription": "Update this account's profile information.",
+    "save": "Save changes",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "saveError": "Changes could not be saved. Please try again.",
+    "emailExists": "A user with this email address already exists.",
+    "updateSuccess": "User details updated.",
+    "banSuccess": "User blocked.",
+    "unbanSuccess": "User unblocked."
+  },
+  "storeVerification": {
+    "title": "Store verification",
+    "description": "Review supplier and café applications before they join Nameer.",
+    "openPage": "Store verification",
+    "demoNote": "Example application data is stored in this browser only.",
+    "filtersLabel": "Filter store applications",
+    "filters": {
+      "all": "All",
+      "supplier": "Suppliers",
+      "cafe": "Cafés",
+      "unverified": "Under review"
+    },
+    "searchPlaceholder": "Search stores",
+    "columns": {
+      "name": "Store name",
+      "type": "Type",
+      "registered": "Registration date",
+      "actions": "Review actions"
+    },
+    "approve": "Approve",
+    "reject": "Reject",
+    "approveUser": "Approve {{name}}",
+    "rejectUser": "Reject {{name}}",
+    "approveSuccess": "Store application approved.",
+    "rejectSuccess": "Store application rejected.",
+    "updateError": "Could not update this application. Please try again.",
+    "empty": "No store applications match your search."
+  },
+  "customerService": {
+    "title": "Customer service",
+    "description": "Review customer requests, update their status, and follow up on each case.",
+    "userManagement": "User management",
+    "statusSummary": "Customer request status summary",
+    "filtersLabel": "Filter customer requests by status",
+    "filters": {
+      "all": "All requests",
+      "open": "Open",
+      "reviewing": "Under review",
+      "closed": "Closed"
+    },
+    "status": {
+      "open": "Open",
+      "reviewing": "Under review",
+      "closed": "Closed"
+    },
+    "priorities": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "searchPlaceholder": "Search by ticket, customer, or subject",
+    "tableTitle": "Customer requests",
+    "tableDescription": "Select a request to review its full details and update its status.",
+    "columns": {
+      "ticket": "Ticket number",
+      "requester": "Sender",
+      "subject": "Subject",
+      "priority": "Priority",
+      "createdAt": "Created",
+      "status": "Status",
+      "actions": "Request actions"
+    },
+    "openRequest": "Open request",
+    "detailsTitle": "Request #{{id}}",
+    "ticketNumber": "Ticket #{{id}}",
+    "backToRequests": "All customer requests",
+    "requestDetails": "Request details",
+    "requestDetailsDescription": "Customer message and case information.",
+    "category": "Category",
+    "priority": "Priority",
+    "createdAt": "Created",
+    "message": "Customer message",
+    "requester": "Customer",
+    "requesterDescription": "Contact details for this request.",
+    "requesterUnavailable": "Customer record unavailable",
+    "updateStatus": "Update status",
+    "updateStatusDescription": "The latest status also appears in user management.",
+    "statusUpdated": "Request status updated.",
+    "updateError": "Could not update this request. Please try again.",
+    "loadError": "Customer requests could not be loaded.",
+    "notFound": "This customer request could not be found.",
+    "empty": "No requests match your search.",
+    "demoNote": "Example requests are stored in this browser only."
+  },
+  "adminControlPanel": {
+    "title": "Control panel",
+    "portalLabel": "Nameer Admin Portal",
+    "navigation": "Admin navigation",
+    "toggleNavigation": "Toggle navigation",
+    "home": "Control panel",
+    "overview": "Platform overview",
+    "demoData": "Demo data",
+    "stats": {
+      "verifiedStores": "Total verified stores",
+      "currentOrders": "Orders today",
+      "pendingVerifications": "Pending verification requests",
+      "openTickets": "Open support tickets"
+    },
+    "recentStores": "Recently registered stores",
+    "columns": {
+      "name": "Store name",
+      "type": "Type",
+      "registered": "Registration date",
+      "status": "Status"
+    },
+    "verified": "Verified"
+  },
+  "adminChat": {
+    "title": "Admin chat",
+    "filterLabel": "Filter conversations by account type",
+    "filters": {
+      "all": "All",
+      "supplier": "Suppliers",
+      "cafe": "Businesses"
+    },
+    "searchPlaceholder": "Search users",
+    "empty": "No users match your search.",
+    "unreadCount": "{{count}} unread",
+    "viewProfile": "View profile",
+    "today": "Today",
+    "you": "Admin",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Write a message...",
+    "send": "Send message",
+    "emptyConversation": "Start the conversation by sending a message.",
+    "selectConversation": "Select a user to open a conversation.",
+    "noMessages": "No messages yet",
+    "sampleSupplierMessage": "Hello, I have a question about my store verification.",
+    "sampleAdminReply": "Hello, I can help you with that. I will review your account.",
+    "sampleBusinessMessage": "Could you help me with an order update?",
+    "sampleTime": "10:30 AM",
+    "justNow": "Just now"
   }
 }
