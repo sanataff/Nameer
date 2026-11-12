@@ -1,12 +1,18 @@
 import { Check, Clock3, ShoppingBag } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import brownies from '../image/brownies.jpeg'
+import tiramisu from '../image/tiramisu.jpeg'
+import cheesecake from '../image/cheesecake.jpeg'
+import cookies from '../image/cookies.jpeg'
+import minicheesecake from '../image/minicheesecake.jpeg'
+import pistachio from '../image/pistachio-cake.jpeg'
 
 export type DessertProduct = {
   id: number
   name: string
   description: string
   price: string
-  emoji: string
+  image: string
   style: string
 }
 
@@ -18,7 +24,7 @@ export const mockProducts: DessertProduct[] = [
     name: 'براوني الشوكولاتة',
     description: 'براوني غني بالشوكولاتة الداكنة، طري من الداخل.',
     price: '١٥',
-    emoji: '🍫',
+    image: brownies,
     style: 'brownie',
   },
   {
@@ -26,7 +32,7 @@ export const mockProducts: DessertProduct[] = [
     name: 'تيراميسو',
     description: 'طبقات قهوة ناعمة مع كريمة ماسكاربوني مخفوقة.',
     price: '١٨',
-    emoji: '🍰',
+    image: tiramisu,
     style: 'tiramisu',
   },
   {
@@ -34,7 +40,7 @@ export const mockProducts: DessertProduct[] = [
     name: 'تشيزكيك كلاسيك',
     description: 'تشيزكيك مخملي على قاعدة بسكويت هشة.',
     price: '٢٠',
-    emoji: '🍰',
+    image: cheesecake,
     style: 'cheesecake',
   },
   {
@@ -42,7 +48,7 @@ export const mockProducts: DessertProduct[] = [
     name: 'كوكيز محشية',
     description: 'كوكيز طازجة بحشوة شوكولاتة ذائبة.',
     price: '١٢',
-    emoji: '🍪',
+    image: cookies,
     style: 'cookies',
   },
   {
@@ -50,7 +56,7 @@ export const mockProducts: DessertProduct[] = [
     name: 'ميني تشيزكيك',
     description: 'قطع صغيرة لطيفة، مثالية للقهوة والضيافة.',
     price: '١٤',
-    emoji: '🧁',
+    image: minicheesecake,
     style: 'mini-cheesecake',
   },
   {
@@ -58,7 +64,7 @@ export const mockProducts: DessertProduct[] = [
     name: 'كب كيك فستق',
     description: 'كب كيك هش مع كريمة الفستق الغنية.',
     price: '١٦',
-    emoji: '🧁',
+    image: pistachio,
     style: 'pistachio',
   },
 ]
@@ -76,10 +82,7 @@ export default function ProductCard({ product, onAdd }: ProductCardProps) {
         role="img"
         aria-label={`صورة توضيحية لمنتج ${product.name}`}
       >
-        <span className="dessert-artwork-ring" aria-hidden="true" />
-        <span className="dessert-product-emoji" aria-hidden="true">
-          {product.emoji}
-        </span>
+        <img className="dessert-product-image" src={product.image} alt="" />
         <span className="dessert-artwork-caption">تحضير يومي طازج</span>
       </div>
 

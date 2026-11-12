@@ -18,15 +18,12 @@ export default function VendorCard({
   return (
     <article className="marketplace-vendor-card">
       <div
-        className={`marketplace-vendor-artwork artwork-${vendor.artwork}`}
+        className="marketplace-vendor-artwork"
         role="group"
         aria-label={`${vendor.name} — ${vendor.specialty}`}
       >
+        <img className="marketplace-vendor-image" src={vendor.artwork} alt="" />
         <span className="marketplace-artwork-tag">{vendor.tag}</span>
-        <span className="marketplace-artwork-sun" aria-hidden="true" />
-        <span className="marketplace-dessert-emoji" aria-hidden="true">
-          {vendor.dessert}
-        </span>
         <button
           className={`marketplace-favorite${isFavorite ? ' is-favorite' : ''}`}
           type="button"
@@ -43,7 +40,7 @@ export default function VendorCard({
       </div>
       <div className="marketplace-vendor-body">
         <div className="marketplace-vendor-topline">
-          <span className={`marketplace-vendor-avatar avatar-${vendor.artwork}`}>
+          <span className="marketplace-vendor-avatar">
             {vendor.initials}
           </span>
           <span className="marketplace-rating">

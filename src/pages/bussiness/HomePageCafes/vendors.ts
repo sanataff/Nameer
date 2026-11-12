@@ -1,3 +1,10 @@
+import bakery from '../image/bakery.jpeg'
+import cake from '../image/cake.jpeg'
+import eidSweet from '../image/eid-sweets.jpeg'
+import cheesecake from '../image/cheesecake.jpeg'
+import sweet from '../image/sweet.jpeg'
+import cupcake from '../image/cupcake.jpeg'
+
 export type DessertVendor = {
   name: string
   initials: string
@@ -7,7 +14,6 @@ export type DessertVendor = {
   minimum: string
   rating: string
   artwork: string
-  dessert: string
   tag: string
 }
 
@@ -22,8 +28,7 @@ export const vendors: DessertVendor[] = [
     delivery: '٢٥–٣٥ دقيقة',
     minimum: '٣٥ ر.س',
     rating: '٤.٩',
-    artwork: 'cake',
-    dessert: '🍰',
+    artwork: cake,
     tag: 'الأكثر طلباً',
   },
   {
@@ -34,8 +39,7 @@ export const vendors: DessertVendor[] = [
     delivery: '٢٠–٣٠ دقيقة',
     minimum: '٢٥ ر.س',
     rating: '٤.٨',
-    artwork: 'maamoul',
-    dessert: '🥮',
+    artwork: eidSweet,
     tag: 'طازج يومياً',
   },
   {
@@ -46,8 +50,7 @@ export const vendors: DessertVendor[] = [
     delivery: '١٥–٢٥ دقيقة',
     minimum: '٢٠ ر.س',
     rating: '٤.٧',
-    artwork: 'croissant',
-    dessert: '🥐',
+    artwork: bakery,
     tag: 'يفتح الآن',
   },
   {
@@ -58,8 +61,7 @@ export const vendors: DessertVendor[] = [
     delivery: '٣٠–٤٠ دقيقة',
     minimum: '٤٠ ر.س',
     rating: '٤.٩',
-    artwork: 'cheesecake',
-    dessert: '🍰',
+    artwork: cheesecake,
     tag: 'وصفة مميزة',
   },
   {
@@ -70,8 +72,7 @@ export const vendors: DessertVendor[] = [
     delivery: '٢٥–٣٥ دقيقة',
     minimum: '٣٠ ر.س',
     rating: '٤.٨',
-    artwork: 'cupcake',
-    dessert: '🧁',
+    artwork: cupcake,
     tag: 'تزيين حسب الطلب',
   },
   {
@@ -82,8 +83,7 @@ export const vendors: DessertVendor[] = [
     delivery: '٢٠–٣٠ دقيقة',
     minimum: '٢٥ ر.س',
     rating: '٤.٦',
-    artwork: 'cookies',
-    dessert: '🍪',
+    artwork: sweet,
     tag: 'اختيار محلي',
   },
 ]
