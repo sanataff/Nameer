@@ -560,6 +560,11 @@
   },
   "adminChat": {
     "title": "محادثات المشرف",
+    "conversationCount": "{{count}} محادثات",
+    "detailsTitle": "تفاصيل المحادثة",
+    "messageCountLabel": "الرسائل",
+    "latestRequest": "أحدث طلب دعم",
+    "noRecentRequest": "لا توجد طلبات دعم حديثة.",
     "filterLabel": "تصفية المحادثات حسب نوع الحساب",
     "filters": {
       "all": "الكل",

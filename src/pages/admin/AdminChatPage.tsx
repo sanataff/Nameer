@@ -1,5 +1,13 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
-import { MessageCircle, Search, Send, UserRound } from 'lucide-react'
+import {
+  CalendarDays,
+  Mail,
+  MessageCircle,
+  Phone,
+  Search,
+  Send,
+  TicketCheck,
+} from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import {
   CUSTOMER_REQUESTS_STORAGE_KEY,
@@ -25,16 +33,10 @@ import {
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -86,7 +88,6 @@ export function AdminChatPage() {
   const [filter, setFilter] = useState<UserFilter>('all')
   const [query, setQuery] = useState('')
   const [selectedUserId, setSelectedUserId] = useState<string | null>('u-1001')
-  const [viewingUser, setViewingUser] = useState<ManagedUser | null>(null)
   const [draft, setDraft] = useState('')
   const [messagesByUser, setMessagesByUser] = useState<
     Record<string, AdminChatMessage[]>
@@ -132,6 +133,11 @@ export function AdminChatPage() {
         month: 'short',
         year: 'numeric',
       }),
+    [locale],
+  )
+  const numberFormat = useMemo(() => new Intl.NumberFormat(locale), [locale])
+  const timeFormat = useMemo(
+    () => new Intl.DateTimeFormat(locale, { hour: 'numeric', minute: '2-digit' }),
     [locale],
   )
 
@@ -238,12 +244,12 @@ export function AdminChatPage() {
     sortedUsers.find((user) => user.id === selectedUserId) ??
     sortedUsers[0] ??
     null
-  const profileUser = viewingUser
-    ? users.find((user) => user.id === viewingUser.id) ?? viewingUser
-    : null
   const messages = selectedUser
     ? messagesByUser[selectedUser.id] ?? []
     : []
+  const latestRequest = selectedUser
+    ? latestRequestForUser(selectedUser.id)
+    : undefined
   const messageGroups = messages.reduce<AdminChatMessage[][]>((groups, message) => {
     const currentGroup = groups[groups.length - 1]
     if (currentGroup && currentGroup[0].sender === message.sender) {
@@ -319,6 +325,9 @@ export function AdminChatPage() {
         <Card className="admin-chat-conversations">
           <CardHeader>
             <CardTitle>{t('adminChat.title')}</CardTitle>
+            <CardDescription>
+              {t('adminChat.conversationCount', { count: numberFormat.format(sortedUsers.length) })}
+            </CardDescription>
           </CardHeader>
           <CardContent className="admin-chat-list-content">
             <ToggleGroup
@@ -430,6 +439,11 @@ export function AdminChatPage() {
                       <span className="admin-chat-contact-copy">
                         <span className="admin-chat-contact-heading">
                           <span className="admin-chat-contact-name">{name}</span>
+                          <span className="admin-chat-contact-time">
+                            {latestMessage
+                              ? timeFormat.format(new Date(latestMessage.sentAt))
+                              : dateFormat.format(new Date(user.joinedAt))}
+                          </span>
                           {unreadCount > 0 && (
                             <Badge
                               className="admin-chat-unread-badge"
@@ -441,8 +455,8 @@ export function AdminChatPage() {
                             </Badge>
                           )}
                         </span>
-                        <span className="admin-chat-contact-role">
-                          {t(`adminUsers.roles.${user.role}`)}
+                        <span className="admin-chat-contact-email">
+                          {user.email}
                         </span>
                         <span className="admin-chat-contact-preview">
                           {latestMessage
@@ -466,18 +480,9 @@ export function AdminChatPage() {
                 </Avatar>
                 <div className="admin-chat-thread-identity">
                   <CardTitle>{userName(selectedUser)}</CardTitle>
-                  <p>{t(`adminUsers.roles.${selectedUser.role}`)}</p>
+                  <p>{selectedUser.email}</p>
                 </div>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  className="admin-chat-profile-button"
-                  onClick={() => setViewingUser(selectedUser)}
-                >
-                  <UserRound data-icon="inline-start" />
-                  {t('adminChat.viewProfile')}
-                </Button>
+                {statusBadge(selectedUser.status)}
               </CardHeader>
 
               <MessageScrollerProvider autoScroll key={selectedUser.id}>
@@ -571,72 +576,80 @@ export function AdminChatPage() {
             </div>
           )}
         </Card>
-      </div>
 
-      <Dialog
-        open={profileUser !== null}
-        onOpenChange={(open) => {
-          if (!open) setViewingUser(null)
-        }}
-      >
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>{t('adminUsers.detailsTitle')}</DialogTitle>
-            <DialogDescription>
-              {t('adminUsers.detailsDescription')}
-            </DialogDescription>
-          </DialogHeader>
-          {profileUser && (
-            <dl className="admin-chat-profile-details">
-              <div>
-                <dt>{t('adminUsers.columns.name')}</dt>
-                <dd>{userName(profileUser)}</dd>
-              </div>
-              <div>
-                <dt>{t('adminUsers.columns.role')}</dt>
-                <dd>{t(`adminUsers.roles.${profileUser.role}`)}</dd>
-              </div>
-              <div>
-                <dt>{t('adminUsers.columns.email')}</dt>
-                <dd dir="ltr">{profileUser.email}</dd>
-              </div>
-              <div>
-                <dt>{t('adminUsers.columns.phone')}</dt>
-                <dd dir="ltr">{profileUser.phone}</dd>
-              </div>
-              <div>
-                <dt>{t('adminUsers.columns.joined')}</dt>
-                <dd>{dateFormat.format(new Date(profileUser.joinedAt))}</dd>
-              </div>
-              <div>
-                <dt>{t('adminUsers.columns.status')}</dt>
-                <dd>{statusBadge(profileUser.status)}</dd>
-              </div>
-              <div>
-                <dt>{t('adminUsers.columns.customerRequest')}</dt>
-                <dd>
-                  {requestLoadError
-                    ? t('customerService.loadError')
-                    : (() => {
-                        const latestRequest = latestRequestForUser(profileUser.id)
-                        return latestRequest ? (
-                          <a
-                            className="admin-chat-request-status"
-                            href={`/admin/customer-service/${encodeURIComponent(latestRequest.id)}`}
-                          >
-                            {requestStatusBadge(latestRequest.status)}
-                            <span dir="ltr">#{latestRequest.id}</span>
-                          </a>
-                        ) : (
-                          t('adminUsers.noCustomerRequest')
-                        )
-                      })()}
-                </dd>
-              </div>
-            </dl>
+        <Card className="admin-chat-details">
+          {selectedUser ? (
+            <>
+              <CardHeader className="admin-chat-details-header">
+                <Avatar aria-hidden="true">
+                  <AvatarFallback>{userName(selectedUser).slice(0, 2)}</AvatarFallback>
+                </Avatar>
+                <div className="admin-chat-details-identity">
+                  <CardTitle>{t('adminChat.detailsTitle')}</CardTitle>
+                  <CardDescription>{userName(selectedUser)}</CardDescription>
+                </div>
+              </CardHeader>
+              <CardContent className="admin-chat-details-content">
+                <div className="admin-chat-details-badges">
+                  <Badge variant="outline">
+                    {t(`adminUsers.roles.${selectedUser.role}`)}
+                  </Badge>
+                  {statusBadge(selectedUser.status)}
+                </div>
+
+                <dl className="admin-chat-profile-details">
+                  <div>
+                    <dt><Mail aria-hidden="true" />{t('adminUsers.columns.email')}</dt>
+                    <dd dir="ltr">{selectedUser.email}</dd>
+                  </div>
+                  <div>
+                    <dt><Phone aria-hidden="true" />{t('adminUsers.columns.phone')}</dt>
+                    <dd dir="ltr">{selectedUser.phone}</dd>
+                  </div>
+                  <div>
+                    <dt><CalendarDays aria-hidden="true" />{t('adminUsers.columns.joined')}</dt>
+                    <dd>{dateFormat.format(new Date(selectedUser.joinedAt))}</dd>
+                  </div>
+                  <div>
+                    <dt><MessageCircle aria-hidden="true" />{t('adminChat.messageCountLabel')}</dt>
+                    <dd>{numberFormat.format(messages.length)}</dd>
+                  </div>
+                </dl>
+
+                <section className="admin-chat-latest-request">
+                  <h3>{t('adminChat.latestRequest')}</h3>
+                  {requestLoadError ? (
+                    <p className="admin-chat-details-error" role="alert">
+                      {t('customerService.loadError')}
+                    </p>
+                  ) : latestRequest ? (
+                    <a
+                      className="admin-chat-request-status"
+                      href={`/admin/customer-service/${encodeURIComponent(latestRequest.id)}`}
+                    >
+                      <TicketCheck aria-hidden="true" />
+                      <span className="admin-chat-request-copy">
+                        <strong>{latestRequest.subject[language]}</strong>
+                        <span dir="ltr">#{latestRequest.id}</span>
+                      </span>
+                      {requestStatusBadge(latestRequest.status)}
+                    </a>
+                  ) : (
+                    <p className="admin-chat-details-empty">
+                      {t('adminChat.noRecentRequest')}
+                    </p>
+                  )}
+                </section>
+              </CardContent>
+            </>
+          ) : (
+            <div className="admin-chat-thread-empty">
+              <TicketCheck aria-hidden="true" />
+              <p>{t('adminChat.selectConversation')}</p>
+            </div>
           )}
-        </DialogContent>
-      </Dialog>
+        </Card>
+      </div>
     </div>
   )
 }

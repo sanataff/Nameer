@@ -561,6 +561,11 @@
   },
   "adminChat": {
     "title": "Admin chat",
+    "conversationCount": "{{count}} conversations",
+    "detailsTitle": "Conversation details",
+    "messageCountLabel": "Messages",
+    "latestRequest": "Latest support request",
+    "noRecentRequest": "No recent support requests.",
     "filterLabel": "Filter conversations by account type",
     "filters": {
       "all": "All",
