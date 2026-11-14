@@ -89,8 +89,17 @@
 
 | C19 | Sarah Almanjahi | Codex (model not exposed) | Remove the requested visible confirmation note; leave simulation logic unchanged | `src/pages/bussiness/orderConfirmation/OrderConfirmationPage.tsx`, `AI_USAGE.md` |
 
+| C41 | Jood Alharthi | Copilot SDK in VS Code (model unknown) | Audit business route modules for React Router framework and BrowserRouter consistency | `AI_USAGE.md` |
+
+| C42 | Jood Alharthi | Copilot SDK in VS Code (model unknown) | Connect business page navigation, shared cart, checkout, orders, and store chat flows | `app/routes.ts`, `src/App.css`, `src/components/chat/ChatPanel.tsx`, `src/pages/bussiness/BrowseProducts/ProductCard.tsx`, `src/pages/bussiness/BrowseProducts/ProductsNavbar.tsx`, `src/pages/bussiness/BrowseProducts/browseProducts.css`, `src/pages/bussiness/BrowseProducts/index.tsx`, `src/pages/bussiness/BusinessOrdersPage.tsx`, `src/pages/bussiness/HomePageCafes/HomePage-Cafes.css`, `src/pages/bussiness/HomePageCafes/MarketplaceHeader.tsx`, `src/pages/bussiness/HomePageCafes/VendorCard.tsx`, `src/pages/bussiness/HomePageCafes/VendorGrid.tsx`, `src/pages/bussiness/HomePageCafes/index.tsx`, `src/pages/bussiness/accountSettings/SettingsNavbar.tsx`, `src/pages/bussiness/accountSettings/accountSettings.css`, `src/pages/bussiness/accountSettings/index.tsx`, `src/pages/bussiness/chat/BusinessChatPage.tsx`, `src/pages/bussiness/checkout/CheckoutPage.tsx`, `src/pages/bussiness/orderConfirmation/OrderConfirmationPage.tsx`, `src/pages/bussiness/propose to local provider/ProposalNavbar.tsx`, `src/pages/bussiness/propose to local provider/proposeToLocalProvider.css`, `src/pages/bussiness/proposeToLocalProviderSuccess/SuccessNavbar.tsx`, `src/pages/bussiness/shoppingCart/CartLayout.tsx`, `src/pages/bussiness/shoppingCart/CartNavbar.tsx`, `src/pages/bussiness/shoppingCart/ShoppingCartPage.tsx`, `src/pages/bussiness/shoppingCart/cart-data.ts`, `AI_USAGE.md` |
+
+| C43 | Jood Alharthi | OpenCode (DeepSeek V4.1 Flash Free) | Fix business routing: redirect `/business` to the marketplace home, remove duplicate legacy `/business/cafes` and `/bussiness/*` routes, and rename the space-containing proposal page folder with its unused route module removed | `app/routes.ts`, `app/routes/business/index.tsx`, `app/routes/business/propose-to-local-provider.tsx`, `src/pages/bussiness/proposeToLocalProvider/` (renamed from `propose to local provider`, unused `route.tsx` removed), `AI_USAGE.md` |
+
+| C44 | Jood Alharthi | Copilot SDK in VS Code (model unknown) | Restore legacy business URL aliases alongside canonical business routes under the shared cart layout | `app/routes.ts`, `AI_USAGE.md` |
+| C45 | Jood Alharthi | Copilot SDK in VS Code (gpt-6-luna) | Fix vertical and horizontal alignment of the marketplace vendor contact link to match the adjacent button | `src/pages/bussiness/HomePageCafes/HomePage-Cafes.css`, `AI_USAGE.md` |
+
 No AI used: Not reported
 
 ### User-reported manual work (not AI-assisted)
 
-The user reports manually adjusting the marketplace page under `src/pages/bussiness/HomePageCafes`: adding image assets in folders and replacing emojis in the code with externally linked visual assets.
+| C46 | Jood Alharthi | manually adjusting the marketplace page under `src/pages/bussiness/HomePageCafes`: adding image assets in folders and replacing emojis in the code with externally linked visual assets.
