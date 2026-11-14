@@ -2,6 +2,7 @@ import { index, route, type RouteConfig } from '@react-router/dev/routes'
 
 export default [
   index('./routes/home.tsx'),
+
   route('business', './routes/business/cart-layout.tsx', [
     index('./routes/business/index.tsx', {
       id: 'business-index',
@@ -51,6 +52,11 @@ export default [
   ]),
   route('login', './routes/auth/login.tsx'),
   route('admin/login', './routes/admin/login.tsx'),
+  route('business/cafes', './routes/business/home-page-cafes.tsx'),
+  route('business/account-settings', './routes/business/account-settings.tsx'),
+  route('business/browse-products', './routes/business/browse-products.tsx'),
+  route('business/propose-to-local-provider', './routes/business/propose-to-local-provider.tsx'),
+  route('business/propose-to-local-provider/success', './routes/business/propose-to-local-provider-success.tsx'),
   route('admin', './routes/admin/layout.tsx', [
     index('./routes/admin/dashboard.tsx'),
     route('users', './routes/admin/users.tsx'),
