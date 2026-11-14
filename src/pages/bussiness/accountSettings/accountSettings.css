@@ -124,6 +124,7 @@
   font: inherit;
   font-size: 0.82rem;
   font-weight: 700;
+  text-decoration: none;
 }
 
 .account-settings-orders-button:hover {

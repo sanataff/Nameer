@@ -6,14 +6,12 @@ type VendorCardProps = {
   vendor: DessertVendor
   isFavorite: boolean
   onToggleFavorite: (vendorName: string) => void
-  onNotice: (message: string) => void
 }
 
 export default function VendorCard({
   vendor,
   isFavorite,
   onToggleFavorite,
-  onNotice,
 }: VendorCardProps) {
   return (
     <article className="marketplace-vendor-card">
@@ -67,13 +65,12 @@ export default function VendorCard({
           >
             تصفح المنتجات
           </Link>
-          <button
+          <Link
             className="marketplace-contact-button"
-            type="button"
-            onClick={() => onNotice(`قريباً: تواصل مع ${vendor.name}`)}
+            to={`/business/chat?contact=${encodeURIComponent(vendor.name)}`}
           >
             تواصل معنا
-          </button>
+          </Link>
         </div>
       </div>
     </article>

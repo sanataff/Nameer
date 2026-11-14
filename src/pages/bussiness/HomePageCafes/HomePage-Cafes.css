@@ -128,13 +128,20 @@
 
 .marketplace-cart-dot {
   position: absolute;
-  inset-block-start: 0.35rem;
-  inset-inline-start: 0.42rem;
-  width: 0.45rem;
-  aspect-ratio: 1;
+  inset-block-start: 0.1rem;
+  inset-inline-start: 0.1rem;
+  display: grid;
+  min-width: 1.1rem;
+  height: 1.1rem;
+  place-items: center;
   border: 2px solid white;
   border-radius: 50%;
   background: var(--marketplace-caramel);
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 700;
+  line-height: 1;
+  padding-inline: 0.15rem;
 }
 
 .marketplace-orders-button,
@@ -606,6 +613,9 @@
 }
 
 .marketplace-contact-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid #d5b08a;
   border-radius: 0.75rem;
   background: #fff;
@@ -614,6 +624,7 @@
   font: inherit;
   font-size: 0.74rem;
   font-weight: 700;
+  text-decoration: none;
   transition: border-color 180ms ease, background 180ms ease, transform 180ms ease;
 }
 

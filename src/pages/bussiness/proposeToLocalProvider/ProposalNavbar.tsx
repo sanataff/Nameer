@@ -5,6 +5,7 @@ import {
   ShoppingBag,
   UserRound,
 } from 'lucide-react'
+import { Link } from 'react-router'
 
 type ProposalNavbarProps = {
   onAction: (message: string) => void
@@ -14,15 +15,14 @@ export default function ProposalNavbar({ onAction }: ProposalNavbarProps) {
   return (
     <header className="proposal-navbar">
       <div className="proposal-navbar-inner">
-        <button
+        <Link
           className="proposal-avatar"
-          type="button"
+          to="/business/account-settings"
           aria-label="الملف الشخصي"
-          onClick={() => onAction('الملف الشخصي — أهلاً بك في نمير للأعمال')}
         >
           <UserRound aria-hidden="true" />
           <span className="proposal-avatar-status" aria-hidden="true" />
-        </button>
+        </Link>
 
         <form
           className="proposal-search"
@@ -38,15 +38,14 @@ export default function ProposalNavbar({ onAction }: ProposalNavbarProps) {
         </form>
 
         <nav className="proposal-nav-actions" aria-label="روابط سريعة">
-          <button
+          <Link
             className="proposal-nav-icon"
-            type="button"
+            to="/business/chat"
             aria-label="الرسائل"
-            onClick={() => onAction('ستظهر رسائلك مع العملاء هنا')}
           >
             <MessageCircle aria-hidden="true" />
             <span className="proposal-nav-unread" aria-hidden="true" />
-          </button>
+          </Link>
           <button
             className="proposal-nav-icon proposal-nav-secondary"
             type="button"
@@ -55,21 +54,19 @@ export default function ProposalNavbar({ onAction }: ProposalNavbarProps) {
           >
             <Bell aria-hidden="true" />
           </button>
-          <button
+          <Link
             className="proposal-nav-icon proposal-nav-secondary"
-            type="button"
+            to="/business/cart"
             aria-label="السلة"
-            onClick={() => onAction('السلة فارغة حالياً')}
           >
             <ShoppingBag aria-hidden="true" />
-          </button>
-          <button
+          </Link>
+          <Link
             className="proposal-orders-button"
-            type="button"
-            onClick={() => onAction('ستجد طلباتك وعروضك في هذه الصفحة')}
+            to="/business/orders"
           >
             طلباتي
-          </button>
+          </Link>
         </nav>
       </div>
     </header>

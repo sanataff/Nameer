@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { Button } from '@/components/ui/button'
 import { DirectionProvider } from '@/components/ui/direction'
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { CartNavbar } from '../shoppingCart/CartNavbar'
 import { useCart } from '../shoppingCart/cart-context'
@@ -19,11 +18,10 @@ export default function OrderConfirmationPage() {
   const { submittedOrder } = useCart()
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
-  const [panel, setPanel] = useState<{ title: string; description: string } | null>(null)
   return (
     <DirectionProvider direction="rtl">
       <div className="order-confirmation-page shopping-cart-page" dir="rtl" lang="ar">
-        <CartNavbar query={query} onQueryChange={setQuery} onPanel={(title, description) => setPanel({ title, description })} />
+        <CartNavbar query={query} onQueryChange={setQuery} />
         <main className="confirmation-main">
           {submittedOrder ? <>
           <div className="confirmation-success">
@@ -37,19 +35,14 @@ export default function OrderConfirmationPage() {
               <OrderTracking />
               <OrderDetails items={submittedOrder.items} query={query} />
               <ContactUs onContact={() => navigate('/business/chat')} />
-              <Button className="confirmation-home" size="lg" render={<Link to="/" />}>العودة إلى الصفحة الرئيسية</Button>
+              <Button nativeButton={false} className="confirmation-home" size="lg" render={<Link to="/business/home-page-cafes" />}>العودة إلى الصفحة الرئيسية</Button>
             </div>
           </> : <div className="confirmation-panel">
             <h1>لا يوجد طلب مؤكد لعرضه</h1>
             <p>أكمل خطوات الطلب من السلة أولاً. تفاصيل التأكيد لا تبقى بعد تحديث الصفحة.</p>
-            <Button render={<Link to="/business/cart" />}>العودة إلى السلة</Button>
+            <Button nativeButton={false} render={<Link to="/business/cart" />}>العودة إلى السلة</Button>
           </div>}
         </main>
-        <Dialog open={panel !== null} onOpenChange={(open) => { if (!open) setPanel(null) }}>
-          <DialogContent dir="rtl" lang="ar" closeLabel="إغلاق">
-            <DialogHeader><DialogTitle>{panel?.title}</DialogTitle><DialogDescription>{panel?.description}</DialogDescription></DialogHeader>
-          </DialogContent>
-        </Dialog>
       </div>
     </DirectionProvider>
   )

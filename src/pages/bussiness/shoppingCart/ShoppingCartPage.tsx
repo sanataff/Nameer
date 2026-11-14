@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { DirectionProvider } from '@/components/ui/direction'
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { CartNavbar } from './CartNavbar'
 import { CartItemList } from './CartItemList'
@@ -15,7 +14,6 @@ export default function ShoppingCartPage() {
   const { items, setItems } = useCart()
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
-  const [panel, setPanel] = useState<{ title: string; description: string } | null>(null)
   const visibleItems = items.filter((item) => item.name.includes(query.trim()))
 
   function updateQuantity(id: string, quantity: number) {
@@ -26,7 +24,7 @@ export default function ShoppingCartPage() {
   return (
     <DirectionProvider direction="rtl">
       <div className="shopping-cart-page" dir="rtl" lang="ar">
-        <CartNavbar query={query} onQueryChange={setQuery} onPanel={(title, description) => setPanel({ title, description })} />
+        <CartNavbar query={query} onQueryChange={setQuery} />
         <main className="shopping-cart-main">
           <h1>سلة التسوق</h1>
           <div className="shopping-cart-layout">
@@ -40,11 +38,6 @@ export default function ShoppingCartPage() {
             <OrderSummary items={items} onCheckout={() => navigate('/business/checkout')} />
           </div>
         </main>
-        <Dialog open={panel !== null} onOpenChange={(open) => { if (!open) setPanel(null) }}>
-          <DialogContent dir="rtl" lang="ar" closeLabel="إغلاق">
-            <DialogHeader><DialogTitle>{panel?.title}</DialogTitle><DialogDescription>{panel?.description}</DialogDescription></DialogHeader>
-          </DialogContent>
-        </Dialog>
       </div>
     </DirectionProvider>
   )

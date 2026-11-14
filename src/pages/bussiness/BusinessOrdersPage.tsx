@@ -1,15 +1,17 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { CupSoda, MessageCircle, Search, ShoppingBag, ShoppingCart, UserRound } from 'lucide-react'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { DirectionProvider } from '@/components/ui/direction'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { usePageTitle } from '@/hooks/use-page-title'
+import { useCart } from './shoppingCart/cart-context'
+import { mergeCartItems, sampleCart, type CartProduct } from './shoppingCart/cart-data'
 import '@fontsource-variable/noto-sans-arabic'
 import './business-orders.css'
-import { Translation, useTranslation } from 'react-i18next'
-type Order = { id: string; date: string; business: string; price: number; active: boolean }
+import { useTranslation } from 'react-i18next'
+type Order = { id: string; date: string; business: string; price: number; active: boolean; items?: CartProduct[] }
 type Panel = { title: string; description: string; order?: Order; type?: 'tracking' }
 
 // MOCK DATA: frontend demonstration only; no orders are submitted or charged.
@@ -58,29 +60,33 @@ function OrderCard({ order, onDetails, onAction }: {
 
 export default function BusinessOrdersPage() {
   const navigate = useNavigate()
+  const { items, setItems, submittedOrder } = useCart()
   usePageTitle('طلباتك')
   const [query, setQuery] = useState('')
-  const [cart, setCart] = useState<Order[]>([])
   const [panel, setPanel] = useState<Panel | null>(null)
-   const { t, i18n } = useTranslation()
-  const language = i18n.resolvedLanguage?.split('-')[0] ?? 'ar'
+  const { t } = useTranslation()
   const sampleOrders: Order[] = [
   { id: '1004', date: '2026-09-17', business: t('orderspage.layla'), price: 400, active: true },
   { id: '1003', date: '2026-09-17', business: t('orderspage.layla'), price: 400, active: false },
   { id: '1002', date: '2026-09-17', business:t('orderspage.layla'), price: 400, active: false },
   { id: '1001', date: '2026-09-17', business: t('orderspage.layla'), price: 400, active: false },
 ]
-  const filteredOrders = sampleOrders.filter((order) =>
+  const confirmedOrder: Order | null = submittedOrder ? {
+    id: 'latest',
+    date: new Date().toISOString().slice(0, 10),
+    business: [...new Set(submittedOrder.items.map((item) => item.business))].join('، '),
+    price: submittedOrder.items.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0),
+    active: true,
+    items: submittedOrder.items,
+  } : null
+  const orders = confirmedOrder ? [confirmedOrder, ...sampleOrders] : sampleOrders
+  const visibleOrders = orders.filter((order) =>
     `${order.business} ${order.id}`.includes(query.trim()),
   )
 
   function reorder(order: Order) {
-    setCart((current) => [...current, order])
-    setPanel({
-      title: 'إعادة الطلب',
-      description: 'تمت إضافة الطلب إلى السلة. لم يتم إرسال طلب أو تحصيل مبلغ.',
-      order,
-    })
+    setItems((current) => mergeCartItems(current, order.items ?? sampleCart))
+    navigate('/business/cart')
   }
 
   return (
@@ -89,8 +95,8 @@ export default function BusinessOrdersPage() {
         <a className="business-orders-skip" href="#business-orders">انتقل إلى الطلبات</a>
         <header className="business-orders-header">
           <nav className="business-orders-nav" aria-label="التنقل الرئيسي">
-            <Button variant="ghost" size="icon-lg" aria-label="الملف الشخصي"
-              onClick={() => setPanel({ title: 'الملف الشخصي', description: 'معلومات حساب الأعمال.' })}>
+            <Button nativeButton={false} variant="ghost" size="icon-lg" aria-label="الملف الشخصي"
+              render={<Link to="/business/account-settings" />}>
               <Avatar><AvatarFallback><UserRound aria-hidden="true" /></AvatarFallback></Avatar>
             </Button>
             <label className="business-orders-search">
@@ -99,15 +105,15 @@ export default function BusinessOrdersPage() {
                 placeholder="بحث" aria-label="ابحث باسم المقهى أو رقم الطلب" />
             </label>
             <div className="business-orders-nav-actions">
-              <Button variant="ghost" size="icon-lg" aria-label={`السلة، ${cart.length} طلب`}
-                onClick={() => navigate('/business/cart')}>
-                <ShoppingCart />{cart.length > 0 && <span className="business-cart-count">{cart.length}</span>}
+              <Button nativeButton={false} variant="ghost" size="icon-lg" aria-label={`السلة، ${items.reduce((count, item) => count + item.quantity, 0)} قطعة`}
+                render={<Link to="/business/cart" />}>
+                <ShoppingCart />
               </Button>
-              <Button variant="ghost" size="icon-lg" aria-label="الرسائل"
-                onClick={() => setPanel({ title: 'الرسائل', description: 'لا توجد رسائل حالياً.' })}>
+              <Button nativeButton={false} variant="ghost" size="icon-lg" aria-label="الرسائل"
+                render={<Link to="/business/chat" />}>
                 <MessageCircle />
               </Button>
-              <Button size="lg" render={<a href="#business-orders" aria-current="page" />}>
+              <Button nativeButton={false} size="lg" render={<Link to="/business/orders" aria-current="page" />}>
                 <ShoppingBag data-icon="inline-start" />طلبــاتك
               </Button>
             </div>
@@ -117,20 +123,20 @@ export default function BusinessOrdersPage() {
         <main id="business-orders" className="business-orders-main" tabIndex={-1}>
           <h1 className="sr-only">طلباتك</h1>
           {([true, false] as const).map((active) => {
-            const orders = filteredOrders.filter((order) => order.active === active)
+            const sectionOrders = visibleOrders.filter((order) => order.active === active)
             const title = active ? 'طلبات قيد التنفيذ' : 'الطلبات السابقة'
             return (
               <section key={title} className="business-orders-section" aria-labelledby={active ? 'active-orders-title' : 'previous-orders-title'}>
                 <h2 id={active ? 'active-orders-title' : 'previous-orders-title'}>{title}</h2>
                 <div className="business-orders-list">
-                  {orders.map((order) => (
+                  {sectionOrders.map((order) => (
                     <OrderCard key={order.id} order={order}
                       onDetails={() => setPanel({ title: 'تفاصيل الطلب', description: 'تفاصيل الطلب.', order })}
                       onAction={() => active
                         ? setPanel({  type: 'tracking', title: 'تتبع الطلب', description: 'حالة طلبك الحالية', order })
                         : reorder(order)} />
                   ))}
-                  {orders.length === 0 && <p className="business-orders-empty" role="status">لا توجد طلبات مطابقة لبحثك.</p>}
+                  {sectionOrders.length === 0 && <p className="business-orders-empty" role="status">لا توجد طلبات مطابقة لبحثك.</p>}
                 </div>
               </section>
             )

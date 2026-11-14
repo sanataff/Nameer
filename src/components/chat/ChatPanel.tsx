@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { MapPin, Send } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
@@ -26,13 +26,6 @@ import {
   MessageGroup,
   MessageHeader,
 } from '@/components/ui/message'
-import {
-  MessageScroller,
-  MessageScrollerContent,
-  MessageScrollerItem,
-  MessageScrollerProvider,
-  MessageScrollerViewport,
-} from '@/components/ui/message-scroller'
 
 export type ChatContact = {
   name?: string
@@ -50,6 +43,8 @@ type ChatMessage = {
   text: string
   time: string
 }
+
+const EMPTY_MESSAGES: ChatMessage[] = []
 
 // MOCK CONTACTS: original supplier demo data.
 const defaultContacts: ChatContact[] = [
@@ -107,7 +102,8 @@ export function ChatPanel({ contacts = defaultContacts, viewer = 'supplier', con
     ],
   } : {})
   const selectedContact = contacts.find((contact) => contact.id === selectedContactId) ?? contacts[0]
-  const messages = selectedContact ? messagesByContact[selectedContact.id] ?? [] : []
+  const messages = selectedContact ? messagesByContact[selectedContact.id] ?? EMPTY_MESSAGES : EMPTY_MESSAGES
+  const threadRef = useRef<HTMLDivElement>(null)
   const messageGroups = messages.reduce<ChatMessage[][]>((groups, message) => {
     const currentGroup = groups[groups.length - 1]
     if (currentGroup && currentGroup[0].sender === message.sender) {
@@ -117,6 +113,11 @@ export function ChatPanel({ contacts = defaultContacts, viewer = 'supplier', con
     }
     return groups
   }, [])
+
+  useEffect(() => {
+    const thread = threadRef.current
+    if (thread) thread.scrollTo({ top: thread.scrollHeight, behavior: 'smooth' })
+  }, [messages])
 
   function sendMessage(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -200,23 +201,21 @@ export function ChatPanel({ contacts = defaultContacts, viewer = 'supplier', con
           </div>
         </CardHeader>
 
-        <MessageScrollerProvider autoScroll key={selectedContact.id}>
-          <MessageScroller className="supplier-chat-scroller">
-            <MessageScrollerViewport>
-              <MessageScrollerContent className="supplier-chat-message-content">
-                <MessageScrollerItem messageId="today">
+        <div className="supplier-chat-scroller" ref={threadRef} role="log" aria-live="polite">
+          <div className="supplier-chat-message-content">
+                <div data-message-id="today">
                   <Marker variant="separator">
                     <MarkerContent>{t('supplierChat.today')}</MarkerContent>
                   </Marker>
-                </MessageScrollerItem>
+                </div>
                 {messageGroups.map((group) => {
                   const sender = group[0].sender
                   const isOwnMessage = sender === viewer
                   return (
-                    <MessageScrollerItem
+                    <div
                       key={group[0].id}
-                      messageId={String(group[0].id)}
-                      scrollAnchor={isOwnMessage}
+                      data-message-id={String(group[0].id)}
+                      data-scroll-anchor={isOwnMessage}
                     >
                       <MessageGroup>
                         <Message align={isOwnMessage ? 'start' : 'end'}>
@@ -237,18 +236,16 @@ export function ChatPanel({ contacts = defaultContacts, viewer = 'supplier', con
                           </MessageContent>
                         </Message>
                       </MessageGroup>
-                    </MessageScrollerItem>
+                    </div>
                   )
                 })}
                 {messages.length === 0 && (
-                  <MessageScrollerItem messageId="empty">
+                  <div data-message-id="empty">
                     <p className="supplier-chat-empty">{t('supplierChat.emptyConversation')}</p>
-                  </MessageScrollerItem>
+                  </div>
                 )}
-              </MessageScrollerContent>
-            </MessageScrollerViewport>
-          </MessageScroller>
-        </MessageScrollerProvider>
+          </div>
+        </div>
 
         <form className="supplier-chat-composer" onSubmit={sendMessage}>
           <FieldGroup className="supplier-chat-composer-fields">

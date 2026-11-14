@@ -1,4 +1,4 @@
-import ProposeToLocalProviderPage from '../../../src/pages/bussiness/propose to local provider'
+import ProposeToLocalProviderPage from '../../../src/pages/bussiness/proposeToLocalProvider'
 
 export default function ProposeToLocalProviderRoute() {
   return <ProposeToLocalProviderPage />

@@ -1,4 +1,4 @@
-import BrowseProductsPage from '../../../src/pages/bussiness/Browse products/index'
+import BrowseProductsPage from '../../../src/pages/bussiness/BrowseProducts/index'
 
 export default function BrowseProductsRoute() {
   return <BrowseProductsPage />

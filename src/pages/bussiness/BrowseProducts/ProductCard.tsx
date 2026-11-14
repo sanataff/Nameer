@@ -11,7 +11,7 @@ export type DessertProduct = {
   id: number
   name: string
   description: string
-  price: string
+  price: number
   image: string
   style: string
 }
@@ -23,7 +23,7 @@ export const mockProducts: DessertProduct[] = [
     id: 1,
     name: 'براوني الشوكولاتة',
     description: 'براوني غني بالشوكولاتة الداكنة، طري من الداخل.',
-    price: '١٥',
+    price: 15,
     image: brownies,
     style: 'brownie',
   },
@@ -31,7 +31,7 @@ export const mockProducts: DessertProduct[] = [
     id: 2,
     name: 'تيراميسو',
     description: 'طبقات قهوة ناعمة مع كريمة ماسكاربوني مخفوقة.',
-    price: '١٨',
+    price: 18,
     image: tiramisu,
     style: 'tiramisu',
   },
@@ -39,7 +39,7 @@ export const mockProducts: DessertProduct[] = [
     id: 3,
     name: 'تشيزكيك كلاسيك',
     description: 'تشيزكيك مخملي على قاعدة بسكويت هشة.',
-    price: '٢٠',
+    price: 20,
     image: cheesecake,
     style: 'cheesecake',
   },
@@ -47,7 +47,7 @@ export const mockProducts: DessertProduct[] = [
     id: 4,
     name: 'كوكيز محشية',
     description: 'كوكيز طازجة بحشوة شوكولاتة ذائبة.',
-    price: '١٢',
+    price: 12,
     image: cookies,
     style: 'cookies',
   },
@@ -55,7 +55,7 @@ export const mockProducts: DessertProduct[] = [
     id: 5,
     name: 'ميني تشيزكيك',
     description: 'قطع صغيرة لطيفة، مثالية للقهوة والضيافة.',
-    price: '١٤',
+    price: 14,
     image: minicheesecake,
     style: 'mini-cheesecake',
   },
@@ -63,7 +63,7 @@ export const mockProducts: DessertProduct[] = [
     id: 6,
     name: 'كب كيك فستق',
     description: 'كب كيك هش مع كريمة الفستق الغنية.',
-    price: '١٦',
+    price: 16,
     image: pistachio,
     style: 'pistachio',
   },
@@ -90,7 +90,7 @@ export default function ProductCard({ product, onAdd }: ProductCardProps) {
         <div className="dessert-product-title-row">
           <h2>{product.name}</h2>
           <span className="dessert-product-price">
-            {product.price}
+            {product.price.toLocaleString('ar-SA')}
             <small> ر.س</small>
             <small> / للقطعة</small>
           </span>
@@ -113,10 +113,10 @@ export default function ProductCard({ product, onAdd }: ProductCardProps) {
           type="button"
           size="lg"
           onClick={onAdd}
-          aria-label={`أضف ${product.name} إلى السلة`}
+          aria-label={`أضف ١٥ قطعة من ${product.name} إلى السلة`}
         >
           <Check data-icon="inline-end" />
-          أضف إلى السلة
+          أضف ١٥ قطعة إلى السلة
         </Button>
       </div>
     </article>

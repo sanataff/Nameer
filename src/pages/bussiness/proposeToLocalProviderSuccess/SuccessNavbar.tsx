@@ -4,18 +4,19 @@ import {
   ShoppingBag,
   UserRound,
 } from 'lucide-react'
+import { Link } from 'react-router'
 
 export default function SuccessNavbar() {
   return (
     <header className="proposal-success-navbar">
       <div className="proposal-success-navbar-inner">
-        <button
+        <Link
           className="proposal-success-avatar"
-          type="button"
+          to="/business/account-settings"
           aria-label="الملف الشخصي"
         >
           <UserRound aria-hidden="true" />
-        </button>
+        </Link>
 
         <form
           className="proposal-success-search"
@@ -34,23 +35,23 @@ export default function SuccessNavbar() {
         </form>
 
         <nav className="proposal-success-actions" aria-label="التنقل السريع">
-          <button
+          <Link
             className="proposal-success-icon-button"
-            type="button"
+            to="/business/chat"
             aria-label="الرسائل"
           >
             <MessageCircle aria-hidden="true" />
-          </button>
-          <button
+          </Link>
+          <Link
             className="proposal-success-icon-button"
-            type="button"
+            to="/business/cart"
             aria-label="سلة التسوق"
           >
             <ShoppingBag aria-hidden="true" />
-          </button>
-          <button className="proposal-success-orders-button" type="button">
+          </Link>
+          <Link className="proposal-success-orders-button" to="/business/orders">
             طلباتي
-          </button>
+          </Link>
         </nav>
       </div>
     </header>

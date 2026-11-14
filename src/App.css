@@ -733,9 +733,15 @@ html[lang="en"] .supplier-dashboard-page {
 .supplier-chat-scroller {
   min-height: 0;
   flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .supplier-chat-message-content {
+  display: flex;
+  min-height: 100%;
+  height: max-content;
+  flex-direction: column;
   justify-content: flex-end;
   gap: 1rem;
   padding: 1rem;
