@@ -1,0 +1,39 @@
+﻿.confirmation-main { width: min(100%, 850px); margin-inline: auto; padding: 48px 24px 64px; }
+.confirmation-main > h1 { text-align: center; font-size: clamp(26px, 3vw, 36px); font-weight: 500; margin: 0 0 36px; line-height: 1.6; }
+.confirmation-panel { display: flex; flex-direction: column; gap: 24px; padding: 26px 24px; border: 1px solid var(--border); border-radius: var(--radius-xl); }
+.confirmation-panel h2 { font-size: 18px; font-weight: 600; margin: 0 0 12px; }
+.confirmation-tracking ol { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; }
+.confirmation-tracking li { position: relative; display: flex; align-items: center; gap: 14px; min-height: 48px; color: var(--muted-foreground); font-size: 14px; }
+.confirmation-tracking li:not(:last-child)::after { content: ''; position: absolute; inset-inline-start: 12px; top: calc(50% + 13px); height: 16px; width: 2px; background: var(--border); }
+.confirmation-stage-icon { display: grid; place-items: center; border: 2px solid var(--border); border-radius: 50%; width: 26px; height: 26px; flex-shrink: 0; }
+.confirmation-stage-icon svg { width: 16px; height: 16px; }
+.confirmation-tracking .confirmation-stage-complete { color: var(--foreground);font-weight: 600; }
+.confirmation-stage-complete .confirmation-stage-icon { background: var(--primary); border-color: var(--primary); color: var(--primary-foreground); }
+.confirmation-order-details { margin-top: 8px; }
+.confirmation-order-details ul { display: flex; flex-direction: column; gap: 16px; list-style: none; padding: 0; margin: 0; }
+.confirmation-product { width: 100%; display: grid; grid-template-columns: 106px minmax(0, 1fr) auto; align-items: center; gap: 16px; background: var(--muted); border-radius: var(--radius-xl); padding: 8px; }
+.confirmation-product-image { width: 106px; height: 78px; object-fit: cover; border-radius: var(--radius-md); display: grid; place-items: center; font-size: 12px; }
+.confirmation-product h3 { font-size: 13px; font-weight: 600; margin: 0; }
+.confirmation-product p { font-size: 12px; margin: 6px 0; line-height: 1.7; }
+.confirmation-product > p { padding-inline-end: 8px; }
+.confirmation-total { margin: 16px 0 0; font-size: 14px; font-weight: 600; }
+.confirmation-contact { background: var(--muted); border-radius: var(--radius-lg); }
+.confirmation-contact button { display: flex; align-items: center; gap: 12px; text-align: start; width: 100%; padding: 14px; cursor: pointer; border-radius: inherit; }
+.confirmation-contact button:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+.confirmation-contact svg { width: 24px; height: 24px; color: var(--primary); }
+.confirmation-contact button > span { display: flex; flex-direction: column; gap: 3px; font-size: 14px; }
+.confirmation-contact small { font-size: 11px; color: var(--muted-foreground); }
+.confirmation-demo-note { color: var(--muted-foreground); font-size: 12px; line-height: 1.8; margin: 0; }
+.confirmation-home { width: min(100%, 340px); align-self: center; margin-top: 8px; }
+.confirmation-stage-icon {transition: background-color 0.2s ease, border-color 0.2s ease;}
+.confirmation-success {display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; margin-bottom: 32px;}
+.confirmation-success-icon {display: flex; align-items: center; justify-content: center; width: 64px; height: 64px; border-radius: 50%; background: var(--primary); color: var(--primary-foreground);}
+.confirmation-success h1 {font-size: clamp(26px, 3vw, 36px); font-weight: 600; margin: 0;}
+.confirmation-success p { font-size: 14px; color: var(--muted-foreground); margin: 0;}
+@media (max-width: 640px) {
+  .confirmation-main { padding: 36px 16px; }
+  .confirmation-panel { padding: 20px 16px; gap: 28px; }
+  .confirmation-product { grid-template-columns: 80px minmax(0, 1fr); gap: 12px; }
+  .confirmation-product-image { width: 80px; height: 78px; grid-row: span 2; }
+  .confirmation-product > p { grid-column: 2; margin: 0; }
+}

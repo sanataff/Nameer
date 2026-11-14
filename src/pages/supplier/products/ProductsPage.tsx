@@ -59,6 +59,7 @@ import {
 } from '@/components/ui/select'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Switch } from '@/components/ui/switch'
+import { getSupplierProductImage } from './product-images'
 import './products.css'
 
 /** Stock wording derived from availability + quantity (FR-11). */
@@ -624,7 +625,7 @@ export function ProductsPage() {
                               className={`pm-thumb pm-thumb--${product.category}`}
                               aria-hidden="true"
                             >
-                              <CategoryIcon />
+                              <img src={getSupplierProductImage(product)} alt="" />
                             </span>
                             <div className="pm-product-text">
                               <p className="pm-product-name">
@@ -685,7 +686,7 @@ export function ProductsPage() {
                     <div
                       className={`pm-card-media pm-thumb--${product.category}`}
                     >
-                      <CategoryIcon aria-hidden="true" />
+                      <img src={getSupplierProductImage(product)} alt="" />
                       <div className="pm-card-media-bar">
                         <StatusPill state={state} />
                         {renderActions(product)}

@@ -1,4 +1,7 @@
 {
+  "orderspage": {
+    "layla": "مقهى ليلى"
+  },
   "language": {
     "switchTo": "English"
   },
@@ -120,6 +123,11 @@
     "targetUnitPrice": "السعر المستهدف للوحدة",
     "nominate": "رشّح نشاطك لهذا الطلب",
     "nominationSent": "تم تسجيل الترشيح (معاينة)",
+    "nominationConfirmation": {
+      "title": "تم تقديم عرضك!",
+      "description": "الرجاء الاطلاع على البريد الإلكتروني لمتابعة التحديثات",
+      "returnHome": "العودة إلى الصفحة الرئيسية"
+    },
     "offerDetails": "تفاصيل العرض",
     "offerDetailsPlaceholder": "اكتب تفاصيل قدرتك على تلبية الطلب...",
     "offerDetailsRequired": "يرجى إدخال تفاصيل العرض.",

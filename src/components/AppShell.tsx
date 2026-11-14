@@ -9,7 +9,7 @@ type AppShellProps = {
 
 export function AppShell({ children, variant = 'auth' }: AppShellProps) {
   return (
-    <div className={variant === 'supplier' ? 'supplier-dashboard-page' : 'app-shell'}>
+    <div className={`app-shell app-shell--${variant}`}>
       <LanguageSwitcher />
       {children}
     </div>

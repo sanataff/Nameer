@@ -2,6 +2,9 @@
   "language": {
     "switchTo": "العربية"
   },
+    "orderspage":{
+    "layla" : "layla cafe"
+  },
   "common": {
     "email": "Email address",
     "emailPlaceholder": "name@example.com",
@@ -121,6 +124,11 @@
     "targetUnitPrice": "Target unit price",
     "nominate": "Nominate your business",
     "nominationSent": "Nomination recorded (demo)",
+    "nominationConfirmation": {
+      "title": "Your offer has been submitted!",
+      "description": "Please check your email for updates.",
+      "returnHome": "Return to home page"
+    },
     "offerDetails": "Offer details",
     "offerDetailsPlaceholder": "Describe how you can fulfill this request...",
     "offerDetailsRequired": "Enter the details of your offer.",

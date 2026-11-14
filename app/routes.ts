@@ -2,6 +2,25 @@ import { index, route, type RouteConfig } from '@react-router/dev/routes'
 
 export default [
   index('./routes/home.tsx'),
+
+  route('business', './routes/business/cart-layout.tsx', [
+    index('./routes/business/index.tsx', {
+    }),
+    route('cart', './routes/business/cart.tsx'),
+    route('checkout', './routes/business/checkout.tsx'),
+    route('chat', './routes/business/chat.tsx'),
+    route('order-confirmation', './routes/business/order-confirmation.tsx'),
+    route('orders', './routes/business/orders.tsx'),
+    route('account-settings', './routes/business/account-settings.tsx'),
+    route('browse-products', './routes/business/browse-products.tsx', {
+    }),
+    route('home-page-cafes', './routes/business/home-page-cafes.tsx', {
+    }),
+ 
+    route('propose-to-local-provider', './routes/business/propose-to-local-provider.tsx'),
+    route('propose-to-local-provider/success', './routes/business/propose-to-local-provider-success.tsx'),
+  ]),
+ 
   route('login', './routes/auth/login.tsx'),
   route('admin/login', './routes/admin/login.tsx'),
   route('admin', './routes/admin/layout.tsx', [
