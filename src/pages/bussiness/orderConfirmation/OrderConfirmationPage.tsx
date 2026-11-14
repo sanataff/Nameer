@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router'
 import { Button } from '@/components/ui/button'
 import { DirectionProvider } from '@/components/ui/direction'
 import { usePageTitle } from '@/hooks/use-page-title'
-import { CartNavbar } from '../shoppingCart/CartNavbar'
+import { Navbar } from '../shoppingCart/Navbar'
 import { useCart } from '../shoppingCart/cart-context'
 import { OrderTracking } from './OrderTracking'
 import { OrderDetails } from './OrderDetails'
@@ -21,7 +21,7 @@ export default function OrderConfirmationPage() {
   return (
     <DirectionProvider direction="rtl">
       <div className="order-confirmation-page shopping-cart-page" dir="rtl" lang="ar">
-        <CartNavbar query={query} onQueryChange={setQuery} />
+        <Navbar query={query} onQueryChange={setQuery} />
         <main className="confirmation-main">
           {submittedOrder ? <>
           <div className="confirmation-success">

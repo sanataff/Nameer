@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import ProposalForm from './ProposalForm'
-import ProposalNavbar from './ProposalNavbar'
+import { Navbar } from '../shoppingCart/Navbar'
 import RequestSummaryCard from './RequestSummaryCard'
 import './proposeToLocalProvider.css'
 
@@ -11,7 +11,7 @@ export default function ProposeToLocalProviderPage() {
 
   return (
     <div className="proposal-page" dir="rtl" lang="ar">
-      <ProposalNavbar onAction={setFeedback} />
+      <Navbar searchLabel="ابحث عن طلب أو متجر" onNotification={() => setFeedback('ليس لديك إشعارات جديدة')} />
 
       <main className="proposal-main">
         <header className="proposal-page-heading">

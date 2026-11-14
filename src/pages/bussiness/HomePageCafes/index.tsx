@@ -4,17 +4,19 @@ import { categories, vendors } from './vendors'
 import CategoryTabs from './CategoryTabs'
 import HeroSection from './HeroSection'
 import MarketplaceFooter from './MarketplaceFooter'
-import MarketplaceHeader from './MarketplaceHeader'
 import NoticeBanner from './NoticeBanner'
 import VendorGrid from './VendorGrid'
 import './HomePage-Cafes.css'
+import { Navbar } from '../shoppingCart/Navbar'
+import '@/App.css'
+import '../shoppingCart/shopping-cart.css'
+import '../chat/business-chat.css'
 
 export default function CafesMarketplacePage() {
   const [search, setSearch] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('الكل')
   const [notice, setNotice] = useState('')
   const [favorites, setFavorites] = useState<string[]>([])
-
   const visibleVendors = vendors.filter((vendor) => {
     const matchesSearch = `${vendor.name} ${vendor.specialty}`.includes(search.trim())
     const matchesCategory =
@@ -39,10 +41,7 @@ export default function CafesMarketplacePage() {
 
   return (
     <div className="marketplace-page" dir="rtl" lang="ar">
-      <MarketplaceHeader
-        search={search}
-        onSearchChange={setSearch}
-      />
+      <Navbar query={search} onQueryChange={setSearch} searchLabel="ابحث عن متجر أو حلوى" />
       <main className="marketplace-main">
         {notice && <NoticeBanner message={notice} onDismiss={() => setNotice('')} />}
         <HeroSection />

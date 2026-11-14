@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import CustomOrderCTA from './CustomOrderCTA'
 import ProductCard, { mockProducts } from './ProductCard'
-import ProductsNavbar from './ProductsNavbar'
 import ReviewsSection from './ReviewsSection'
+import { Navbar } from '../shoppingCart/Navbar'
 import { useCart } from '../shoppingCart/cart-context'
 import { mergeCartItems } from '../shoppingCart/cart-data'
 import './browseProducts.css'
@@ -17,10 +17,7 @@ export default function BrowseProductsPage() {
 
   return (
     <div className="browse-products-page" dir="rtl" lang="ar">
-      <ProductsNavbar
-        search={search}
-        onSearchChange={setSearch}
-      />
+      <Navbar query={search} onQueryChange={setSearch} searchLabel="بحث عن منتج" />
       <main className="browse-products-main">
         <header className="browse-products-heading">
           <div>

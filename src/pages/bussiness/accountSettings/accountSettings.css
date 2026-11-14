@@ -3,7 +3,7 @@
   --settings-caramel-dark: #85522d;
   --settings-ink: #332920;
   --settings-muted: #81776f;
-  min-width: 48rem;
+  min-width: 0;
   min-height: 100vh;
   background: #fff;
   color: var(--settings-ink);

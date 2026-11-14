@@ -97,6 +97,7 @@
 
 | C44 | Jood Alharthi | Copilot SDK in VS Code (model unknown) | Restore legacy business URL aliases alongside canonical business routes under the shared cart layout | `app/routes.ts`, `AI_USAGE.md` |
 | C45 | Jood Alharthi | Copilot SDK in VS Code (gpt-6-luna) | Fix vertical and horizontal alignment of the marketplace vendor contact link to match the adjacent button | `src/pages/bussiness/HomePageCafes/HomePage-Cafes.css`, `AI_USAGE.md` |
+| C47 | Sana Ammar | Copilot SDK in VS Code (model unknown) | Standardize all business screens on the shared Navbar component, preserve page-specific search and notification actions, and allow the shared responsive navbar to fit the account settings page | `src/pages/bussiness/shoppingCart/Navbar.tsx`, `src/pages/bussiness/HomePageCafes/index.tsx`, `src/pages/bussiness/BrowseProducts/index.tsx`, `src/pages/bussiness/BusinessOrdersPage.tsx`, `src/pages/bussiness/accountSettings/index.tsx`, `src/pages/bussiness/accountSettings/accountSettings.css`, `src/pages/bussiness/proposeToLocalProvider/index.tsx`, `src/pages/bussiness/proposeToLocalProviderSuccess/index.tsx`, `AI_USAGE.md` |
 
 No AI used: Not reported
 

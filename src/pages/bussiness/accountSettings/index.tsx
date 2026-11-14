@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router'
 import '@fontsource-variable/noto-sans-arabic'
 import { Button } from '@/components/ui/button'
-import SettingsNavbar from './SettingsNavbar'
+import { Navbar } from '../shoppingCart/Navbar'
 import BusinessDetailsCard from './BusinessDetailsCard'
 import PaymentMethodsCard from './PaymentMethodsCard'
 import InvoicesCard from './InvoicesCard'
@@ -14,7 +14,7 @@ export default function AccountSettingsPage() {
 
   return (
     <div className="account-settings-page" dir="rtl" lang="ar">
-      <SettingsNavbar />
+      <Navbar searchLabel="بحث في إعدادات الحساب" />
       <main className="account-settings-main">
         <div className="account-settings-column">
           <div className="account-settings-heading">

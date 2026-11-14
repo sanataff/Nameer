@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router'
-import { CupSoda, MessageCircle, Search, ShoppingBag, ShoppingCart, UserRound } from 'lucide-react'
-import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import { useNavigate } from 'react-router'
+import { CupSoda } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { DirectionProvider } from '@/components/ui/direction'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { usePageTitle } from '@/hooks/use-page-title'
+import { Navbar } from './shoppingCart/Navbar'
 import { useCart } from './shoppingCart/cart-context'
 import { mergeCartItems, sampleCart, type CartProduct } from './shoppingCart/cart-data'
 import '@fontsource-variable/noto-sans-arabic'
@@ -60,7 +60,7 @@ function OrderCard({ order, onDetails, onAction }: {
 
 export default function BusinessOrdersPage() {
   const navigate = useNavigate()
-  const { items, setItems, submittedOrder } = useCart()
+  const { setItems, submittedOrder } = useCart()
   usePageTitle('طلباتك')
   const [query, setQuery] = useState('')
   const [panel, setPanel] = useState<Panel | null>(null)
@@ -93,32 +93,7 @@ export default function BusinessOrdersPage() {
     <DirectionProvider direction="rtl">
       <div className="business-orders-page" dir="rtl" lang="ar">
         <a className="business-orders-skip" href="#business-orders">انتقل إلى الطلبات</a>
-        <header className="business-orders-header">
-          <nav className="business-orders-nav" aria-label="التنقل الرئيسي">
-            <Button nativeButton={false} variant="ghost" size="icon-lg" aria-label="الملف الشخصي"
-              render={<Link to="/business/account-settings" />}>
-              <Avatar><AvatarFallback><UserRound aria-hidden="true" /></AvatarFallback></Avatar>
-            </Button>
-            <label className="business-orders-search">
-              <Search size={16} aria-hidden="true" />
-              <input type="search" value={query} onChange={(event) => setQuery(event.target.value)}
-                placeholder="بحث" aria-label="ابحث باسم المقهى أو رقم الطلب" />
-            </label>
-            <div className="business-orders-nav-actions">
-              <Button nativeButton={false} variant="ghost" size="icon-lg" aria-label={`السلة، ${items.reduce((count, item) => count + item.quantity, 0)} قطعة`}
-                render={<Link to="/business/cart" />}>
-                <ShoppingCart />
-              </Button>
-              <Button nativeButton={false} variant="ghost" size="icon-lg" aria-label="الرسائل"
-                render={<Link to="/business/chat" />}>
-                <MessageCircle />
-              </Button>
-              <Button nativeButton={false} size="lg" render={<Link to="/business/orders" aria-current="page" />}>
-                <ShoppingBag data-icon="inline-start" />طلبــاتك
-              </Button>
-            </div>
-          </nav>
-        </header>
+        <Navbar query={query} onQueryChange={setQuery} searchLabel="ابحث باسم المقهى أو رقم الطلب" />
 
         <main id="business-orders" className="business-orders-main" tabIndex={-1}>
           <h1 className="sr-only">طلباتك</h1>

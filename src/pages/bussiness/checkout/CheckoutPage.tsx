@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { DirectionProvider } from '@/components/ui/direction'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { useCart } from '../shoppingCart/cart-context'
-import { CartNavbar } from '../shoppingCart/CartNavbar'
+import { Navbar } from '../shoppingCart/Navbar'
 import { OrderSummary } from './OrderSummary'
 import { CustomerInfo } from './CustomerInfo'
 import { DeliveryAddress } from './DeliveryAddress'
@@ -47,7 +47,7 @@ export default function CheckoutPage() {
   return (
     <DirectionProvider direction="rtl">
       <div className="checkout-page shopping-cart-page" dir="rtl" lang="ar">
-        <CartNavbar query={query} onQueryChange={setQuery} />
+        <Navbar query={query} onQueryChange={setQuery} />
         <main className="checkout-main">
           <OrderSummary items={items} query={query} />
           {!items.length
