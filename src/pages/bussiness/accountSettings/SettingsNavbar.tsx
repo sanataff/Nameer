@@ -4,24 +4,20 @@ import {
   ShoppingBag,
   UserRound,
 } from 'lucide-react'
+import { Link } from 'react-router'
 import { Button } from '@/components/ui/button'
 
-type SettingsNavbarProps = {
-  onAction: (message: string) => void
-}
-
-export default function SettingsNavbar({ onAction }: SettingsNavbarProps) {
+export default function SettingsNavbar() {
   return (
     <header className="account-settings-navbar">
       <div className="account-settings-navbar-inner">
-        <button
+        <Link
           className="account-settings-avatar"
-          type="button"
+          to="/business/account-settings"
           aria-label="الملف الشخصي"
-          onClick={() => onAction('مرحباً بك في إعدادات حسابك.')}
         >
           <UserRound aria-hidden="true" />
-        </button>
+        </Link>
 
         <form
           className="account-settings-search"
@@ -37,29 +33,29 @@ export default function SettingsNavbar({ onAction }: SettingsNavbarProps) {
 
         <nav className="account-settings-nav-actions" aria-label="التنقل السريع">
           <Button
+            nativeButton={false}
             className="account-settings-nav-icon"
-            type="button"
             variant="ghost"
             size="icon"
             aria-label="الرسائل"
-            onClick={() => onAction('لا توجد رسائل جديدة.')}
+            render={<Link to="/business/chat" />}
           >
             <MessageCircle aria-hidden="true" />
           </Button>
           <Button
+            nativeButton={false}
             className="account-settings-nav-icon"
-            type="button"
             variant="ghost"
             size="icon"
             aria-label="سلة التسوق"
-            onClick={() => onAction('سلة التسوق فارغة حالياً.')}
+            render={<Link to="/business/cart" />}
           >
             <ShoppingBag aria-hidden="true" />
           </Button>
           <Button
+            nativeButton={false}
             className="account-settings-orders-button"
-            type="button"
-            onClick={() => onAction('ستجد طلباتك هنا قريباً.')}
+            render={<Link to="/business/orders" />}
           >
             طلباتي
           </Button>

@@ -14,7 +14,7 @@ export default function AccountSettingsPage() {
 
   return (
     <div className="account-settings-page" dir="rtl" lang="ar">
-      <SettingsNavbar onAction={setNotice} />
+      <SettingsNavbar />
       <main className="account-settings-main">
         <div className="account-settings-column">
           <div className="account-settings-heading">
