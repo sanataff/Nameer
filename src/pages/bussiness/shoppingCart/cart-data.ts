@@ -13,6 +13,24 @@ export function formatSAR(amount: number) {
   }).format(amount)
 }
 
+export function mergeCartItems(current: CartProduct[], additions: CartProduct[]) {
+  const next = [...current]
+  for (const addition of additions) {
+    const existingIndex = next.findIndex(
+      (item) => item.id === addition.id && item.business === addition.business,
+    )
+    if (existingIndex === -1) {
+      next.push({ ...addition })
+    } else {
+      next[existingIndex] = {
+        ...next[existingIndex],
+        quantity: next[existingIndex].quantity + addition.quantity,
+      }
+    }
+  }
+  return next
+}
+
 // MOCK DATA: two sample products; changes remain in memory only.
 export const sampleCart: CartProduct[] = [
   { id: 'brownie-classic', name: 'براوني الشوكولاتة', business: 'حلويات ليلى', unitPrice: 15, quantity: 20,
