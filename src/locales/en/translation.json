@@ -521,20 +521,43 @@
     "home": "Control panel",
     "overview": "Platform overview",
     "demoData": "Demo data",
+    "description": "A quick view of stores, orders, and customer support.",
+    "analytics": "Platform analytics",
+    "chartCount": "Count",
     "stats": {
-      "verifiedStores": "Total verified stores",
-      "currentOrders": "Orders today",
+      "totalAccounts": "Total registered accounts",
+      "verifiedStores": "Verified accounts",
       "pendingVerifications": "Pending verification requests",
-      "openTickets": "Open support tickets"
+      "openTickets": "Open support tickets",
+      "totalOrders": "Total orders"
     },
+    "userAnalytics": "Account status",
+    "userAnalyticsDescription": "Accounts by verification status.",
+    "orderAnalytics": "Order status",
+    "orderAnalyticsDescription": "Orders by their current status.",
+    "supportAnalytics": "Customer-service requests",
+    "supportAnalyticsDescription": "Tickets by follow-up status.",
     "recentStores": "Recently registered stores",
+    "recentStoresDescription": "The latest accounts registered on the platform.",
+    "completedOrderValue": "Completed order value",
+    "recentOrders": "Recent orders",
+    "recentOrdersDescription": "Orders in the current platform data.",
+    "loadError": "Dashboard data could not be loaded.",
+    "emptyStores": "There are no registered accounts yet.",
+    "emptyOrders": "There are no orders yet.",
     "columns": {
       "name": "Store name",
       "type": "Type",
       "registered": "Registration date",
       "status": "Status"
     },
-    "verified": "Verified"
+    "orderColumns": {
+      "id": "Order number",
+      "buyer": "Buyer",
+      "createdAt": "Order date",
+      "total": "Total",
+      "status": "Status"
+    }
   },
   "adminChat": {
     "title": "Admin chat",

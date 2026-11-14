@@ -520,20 +520,43 @@
     "home": "لوحة التحكم",
     "overview": "نظرة عامة على المنصة",
     "demoData": "بيانات تجريبية",
+    "description": "نظرة سريعة على المتاجر والطلبات وخدمة العملاء.",
+    "analytics": "تحليلات المنصة",
+    "chartCount": "العدد",
     "stats": {
-      "verifiedStores": "إجمالي المتاجر الموثقة",
-      "currentOrders": "الطلبات الجارية اليوم",
+      "totalAccounts": "إجمالي الحسابات المسجلة",
+      "verifiedStores": "الحسابات الموثقة",
       "pendingVerifications": "طلبات التوثيق المعلقة",
-      "openTickets": "تذاكر الدعم المفتوحة"
+      "openTickets": "تذاكر الدعم المفتوحة",
+      "totalOrders": "إجمالي الطلبات"
     },
+    "userAnalytics": "حالة الحسابات",
+    "userAnalyticsDescription": "توزيع الحسابات حسب حالة التوثيق.",
+    "orderAnalytics": "حالة الطلبات",
+    "orderAnalyticsDescription": "توزيع الطلبات حسب حالتها الحالية.",
+    "supportAnalytics": "طلبات خدمة العملاء",
+    "supportAnalyticsDescription": "توزيع التذاكر حسب حالة المتابعة.",
     "recentStores": "أحدث المتاجر المسجلة",
+    "recentStoresDescription": "أحدث الحسابات المسجلة على المنصة.",
+    "completedOrderValue": "قيمة الطلبات المكتملة",
+    "recentOrders": "أحدث الطلبات",
+    "recentOrdersDescription": "الطلبات المسجلة في بيانات المنصة الحالية.",
+    "loadError": "تعذر تحميل بيانات لوحة التحكم.",
+    "emptyStores": "لا توجد حسابات مسجلة حتى الآن.",
+    "emptyOrders": "لا توجد طلبات مسجلة حتى الآن.",
     "columns": {
       "name": "اسم المتجر",
       "type": "النوع",
       "registered": "تاريخ التسجيل",
       "status": "الحالة"
     },
-    "verified": "موثق"
+    "orderColumns": {
+      "id": "رقم الطلب",
+      "buyer": "المشتري",
+      "createdAt": "تاريخ الطلب",
+      "total": "الإجمالي",
+      "status": "الحالة"
+    }
   },
   "adminChat": {
     "title": "محادثات المشرف",
