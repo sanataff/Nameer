@@ -1,9 +1,9 @@
-import { ImageIcon, Package } from 'lucide-react'
+import { Package } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
+import { supplierProductImages } from '../products/product-images'
 
 type RecentProductsSectionProps = {
   onManageProducts: () => void
@@ -22,18 +22,21 @@ export function RecentProductsSection({ onManageProducts }: RecentProductsSectio
       category: t('supplierDashboard.sweets'),
       price: 20,
       stock: 18,
+      image: supplierProductImages.cookies,
     },
     {
       name: t('supplierDashboard.sampleProductTwo'),
       category: t('supplierDashboard.bakedGoods'),
       price: 30,
       stock: 9,
+      image: supplierProductImages.bakery,
     },
     {
       name: t('supplierDashboard.sampleProductThree'),
       category: t('supplierDashboard.sweets'),
       price: 30,
       stock: 24,
+      image: supplierProductImages.dateBites,
     },
   ]
 
@@ -62,10 +65,8 @@ export function RecentProductsSection({ onManageProducts }: RecentProductsSectio
           <Card className="dashboard-product-card" key={product.name}>
             <div
               className="product-image-placeholder"
-              aria-label={t('supplierDashboard.imagePlaceholder')}
             >
-              <Skeleton className="product-image-skeleton" />
-              <ImageIcon aria-hidden="true" />
+              <img src={product.image} alt="" loading="lazy" />
             </div>
             <CardContent className="product-card-content">
               <div className="product-title-row">

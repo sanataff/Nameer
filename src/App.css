@@ -1389,22 +1389,12 @@ html[lang="en"] .supplier-dashboard-page {
   font-size: 0.75rem;
 }
 
-.product-image-placeholder svg {
-  width: 1.5rem;
-  height: 1.5rem;
-}
-
-.product-image-placeholder > :not(.product-image-skeleton) {
-  z-index: 1;
-}
-
-.product-image-skeleton {
+.product-image-placeholder img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  border-radius: 0;
-  opacity: 0.45;
+  object-fit: cover;
 }
 
 .product-card-content {
