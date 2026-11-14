@@ -1,12 +1,12 @@
 import '@fontsource-variable/noto-sans-arabic'
 import SuccessMessage from './SuccessMessage'
-import SuccessNavbar from './SuccessNavbar'
+import { Navbar } from '../shoppingCart/Navbar'
 import './proposeToLocalProviderSuccess.css'
 
 export default function ProposeToLocalProviderSuccessPage() {
   return (
     <div className="proposal-success-page" dir="rtl" lang="ar">
-      <SuccessNavbar />
+      <Navbar />
       <main className="proposal-success-main">
         <SuccessMessage />
       </main>

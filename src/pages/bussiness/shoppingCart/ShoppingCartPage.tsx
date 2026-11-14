@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { DirectionProvider } from '@/components/ui/direction'
 import { usePageTitle } from '@/hooks/use-page-title'
-import { CartNavbar } from './CartNavbar'
+import { Navbar } from './Navbar'
 import { CartItemList } from './CartItemList'
 import { OrderSummary } from './OrderSummary'
 import { useCart } from './cart-context'
@@ -24,7 +24,7 @@ export default function ShoppingCartPage() {
   return (
     <DirectionProvider direction="rtl">
       <div className="shopping-cart-page" dir="rtl" lang="ar">
-        <CartNavbar query={query} onQueryChange={setQuery} />
+        <Navbar query={query} onQueryChange={setQuery} />
         <main className="shopping-cart-main">
           <h1>سلة التسوق</h1>
           <div className="shopping-cart-layout">

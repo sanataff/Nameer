@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { DirectionProvider } from '@/components/ui/direction'
 import { usePageTitle } from '@/hooks/use-page-title'
 import { vendors } from '../HomePageCafes/vendors'
-import { CartNavbar } from '../shoppingCart/CartNavbar'
+import { Navbar } from '../shoppingCart/Navbar'
 import { useCart } from '../shoppingCart/cart-context'
 import '@/App.css'
 import '../shoppingCart/shopping-cart.css'
@@ -29,7 +29,7 @@ export default function BusinessChatPage() {
   return (
     <DirectionProvider direction="rtl">
       <div className="business-chat-page shopping-cart-page" dir="rtl" lang="ar">
-        <CartNavbar query={query} onQueryChange={setQuery} />
+        <Navbar query={query} onQueryChange={setQuery} />
         <main className="business-chat-main">
           <Button nativeButton={false} variant="outline" render={<Link to="/business/home-page-cafes" />}>العودة إلى المتاجر</Button>
           <p className="business-chat-note">{submittedOrder ? 'محادثة حول طلبك مع' : 'محادثات المتاجر'} {contacts.map((contact) => contact.name).join('، ')}</p>
