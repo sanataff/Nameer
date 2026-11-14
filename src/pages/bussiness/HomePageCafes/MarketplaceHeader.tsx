@@ -4,29 +4,31 @@ import {
   ShoppingBag,
   UserRound,
 } from 'lucide-react'
+import { Link } from 'react-router'
+import { useCart } from '../shoppingCart/cart-context'
 
 type MarketplaceHeaderProps = {
   search: string
   onSearchChange: (value: string) => void
-  onNotice: (message: string) => void
 }
 
 export default function MarketplaceHeader({
   search,
   onSearchChange,
-  onNotice,
 }: MarketplaceHeaderProps) {
+  const { items } = useCart()
+  const cartCount = items.reduce((total, item) => total + item.quantity, 0)
+
   return (
     <header className="marketplace-header">
       <div className="marketplace-header-inner">
-        <button
+        <Link
           className="marketplace-profile"
-          type="button"
+          to="/business/account-settings"
           aria-label="الملف الشخصي"
-          onClick={() => onNotice('أهلاً بك في نمير!')}
         >
           <UserRound aria-hidden="true" />
-        </button>
+        </Link>
         <form
           className="marketplace-search"
           role="search"
@@ -45,30 +47,31 @@ export default function MarketplaceHeader({
           />
         </form>
         <nav className="marketplace-actions" aria-label="التنقل السريع">
-          <button
+          <Link
             className="marketplace-icon-button"
-            type="button"
-            aria-label="سلة التسوق"
-            onClick={() => onNotice('سلتك بانتظار ألذ اختياراتك')}
+            to="/business/cart"
+            aria-label={`سلة التسوق، ${cartCount} قطعة`}
           >
             <ShoppingBag aria-hidden="true" />
-            <span className="marketplace-cart-dot" aria-hidden="true" />
-          </button>
-          <button
+            {cartCount > 0 && (
+              <span className="marketplace-cart-dot" aria-hidden="true">
+                {cartCount}
+              </span>
+            )}
+          </Link>
+          <Link
             className="marketplace-icon-button"
-            type="button"
+            to="/business/chat"
             aria-label="الرسائل"
-            onClick={() => onNotice('ستظهر رسائلك مع المتاجر هنا')}
           >
             <MessageCircle aria-hidden="true" />
-          </button>
-          <button
+          </Link>
+          <Link
             className="marketplace-orders-button"
-            type="button"
-            onClick={() => onNotice('ستجد طلباتك هنا قريباً')}
+            to="/business/orders"
           >
             طلباتك
-          </button>
+          </Link>
         </nav>
       </div>
     </header>

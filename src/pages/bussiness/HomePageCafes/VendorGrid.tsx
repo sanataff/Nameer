@@ -5,7 +5,6 @@ type VendorGridProps = {
   vendors: DessertVendor[]
   favorites: string[]
   onToggleFavorite: (vendorName: string) => void
-  onNotice: (message: string) => void
   onResetFilters: () => void
 }
 
@@ -13,7 +12,6 @@ export default function VendorGrid({
   vendors,
   favorites,
   onToggleFavorite,
-  onNotice,
   onResetFilters,
 }: VendorGridProps) {
   if (vendors.length === 0) {
@@ -37,7 +35,6 @@ export default function VendorGrid({
           vendor={vendor}
           isFavorite={favorites.includes(vendor.name)}
           onToggleFavorite={onToggleFavorite}
-          onNotice={onNotice}
         />
       ))}
     </div>

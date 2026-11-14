@@ -42,7 +42,6 @@ export default function CafesMarketplacePage() {
       <MarketplaceHeader
         search={search}
         onSearchChange={setSearch}
-        onNotice={setNotice}
       />
       <main className="marketplace-main">
         {notice && <NoticeBanner message={notice} onDismiss={() => setNotice('')} />}
@@ -67,7 +66,6 @@ export default function CafesMarketplacePage() {
             vendors={visibleVendors}
             favorites={favorites}
             onToggleFavorite={toggleFavorite}
-            onNotice={setNotice}
             onResetFilters={() => {
               setSearch('')
               setSelectedCategory('الكل')
