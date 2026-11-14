@@ -4,29 +4,27 @@ import {
   ShoppingBag,
   UserRound,
 } from 'lucide-react'
+import { Link } from 'react-router'
 
 type ProductsNavbarProps = {
   search: string
   onSearchChange: (value: string) => void
-  onNotice: (message: string) => void
 }
 
 export default function ProductsNavbar({
   search,
   onSearchChange,
-  onNotice,
 }: ProductsNavbarProps) {
   return (
     <header className="browse-products-navbar">
       <div className="browse-products-navbar-inner">
-        <button
+        <Link
           className="browse-products-avatar"
-          type="button"
+          to="/business/account-settings"
           aria-label="الملف الشخصي"
-          onClick={() => onNotice('أهلاً بك في حلويات ليلى')}
         >
           <UserRound aria-hidden="true" />
-        </button>
+        </Link>
 
         <form
           className="browse-products-search"
@@ -47,29 +45,26 @@ export default function ProductsNavbar({
         </form>
 
         <nav className="browse-products-nav-actions" aria-label="التنقل السريع">
-          <button
+          <Link
             className="browse-products-icon-button"
-            type="button"
+            to={`/business/chat?contact=${encodeURIComponent('حلويات ليلى')}`}
             aria-label="الرسائل"
-            onClick={() => onNotice('ستظهر رسائلك مع المتجر هنا')}
           >
             <MessageCircle aria-hidden="true" />
-          </button>
-          <button
+          </Link>
+          <Link
             className="browse-products-icon-button"
-            type="button"
+            to="/business/cart"
             aria-label="سلة التسوق"
-            onClick={() => onNotice('إضافة المنتجات هنا للعرض فقط')}
           >
             <ShoppingBag aria-hidden="true" />
-          </button>
-          <button
+          </Link>
+          <Link
             className="browse-products-orders-button"
-            type="button"
-            onClick={() => onNotice('ستظهر طلباتك هنا قريباً')}
+            to="/business/orders"
           >
             طلباتي
-          </button>
+          </Link>
         </nav>
       </div>
     </header>

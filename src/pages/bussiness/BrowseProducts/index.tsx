@@ -3,11 +3,14 @@ import CustomOrderCTA from './CustomOrderCTA'
 import ProductCard, { mockProducts } from './ProductCard'
 import ProductsNavbar from './ProductsNavbar'
 import ReviewsSection from './ReviewsSection'
+import { useCart } from '../shoppingCart/cart-context'
+import { mergeCartItems } from '../shoppingCart/cart-data'
 import './browseProducts.css'
 
 export default function BrowseProductsPage() {
   const [search, setSearch] = useState('')
   const [notice, setNotice] = useState('')
+  const { setItems } = useCart()
   const filteredProducts = mockProducts.filter((product) =>
     `${product.name} ${product.description}`.includes(search.trim()),
   )
@@ -17,7 +20,6 @@ export default function BrowseProductsPage() {
       <ProductsNavbar
         search={search}
         onSearchChange={setSearch}
-        onNotice={setNotice}
       />
       <main className="browse-products-main">
         <header className="browse-products-heading">
@@ -51,7 +53,17 @@ export default function BrowseProductsPage() {
               <ProductCard
                 key={product.id}
                 product={product}
-                onAdd={() => setNotice(`أضفنا ${product.name} إلى اختياراتك`)}
+                onAdd={() => {
+                  setItems((current) => mergeCartItems(current, [{
+                    id: `layla-${product.id}`,
+                    name: product.name,
+                    business: 'حلويات ليلى',
+                    unitPrice: product.price,
+                    quantity: 15,
+                    image: product.image,
+                  }]))
+                  setNotice(`أضفنا ١٥ قطعة من ${product.name} إلى سلة التسوق`)
+                }}
               />
             ))}
           </section>

@@ -132,6 +132,7 @@
   font-weight: 700;
   margin-inline-start: 0.35rem;
   padding-inline: 1.1rem;
+  text-decoration: none;
   transition: background 160ms ease, box-shadow 160ms ease, transform 160ms ease;
 }
 
