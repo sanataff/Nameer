@@ -7,6 +7,27 @@
 
 export type UserRole = 'supplier' | 'cafe'
 export type UserStatus = 'active' | 'unverified' | 'rejected' | 'banned'
+export type CafeDocumentMimeType = 'application/pdf' | 'image/jpeg' | 'image/png'
+
+export interface CafeApplicationDocument {
+  fileName: string
+  mimeType: CafeDocumentMimeType
+  dataUrl: string
+}
+
+export interface CafeApplicationDetails {
+  registeredBusinessName: string
+  commercialRegistration: string
+  vatNumber: string
+  city: string
+  district: string
+  street: string
+  buildingNumber: string
+  postalCode: string
+  shortAddress: string
+  commercialRegistrationDocument: CafeApplicationDocument
+  operatingLicenseDocument: CafeApplicationDocument
+}
 
 export interface LocalizedName {
   en: string
@@ -21,6 +42,7 @@ export interface ManagedUser {
   role: UserRole
   joinedAt: string
   status: UserStatus
+  cafeApplication?: CafeApplicationDetails
 }
 
 export interface UserUpdate {
@@ -35,6 +57,7 @@ export interface UserRegistration {
   email: string
   phone: string
   role: UserRole
+  cafeApplication?: CafeApplicationDetails
 }
 
 export const USERS_STORAGE_KEY = 'nameer:admin-users:v1'
@@ -109,8 +132,67 @@ function isLocalizedName(value: unknown): value is LocalizedName {
   )
 }
 
+function isCafeApplicationDocument(value: unknown): value is CafeApplicationDocument {
+  if (typeof value !== 'object' || value === null) return false
+  if (
+    !('fileName' in value) ||
+    typeof value.fileName !== 'string' ||
+    !('mimeType' in value) ||
+    typeof value.mimeType !== 'string' ||
+    !('dataUrl' in value) ||
+    typeof value.dataUrl !== 'string'
+  ) {
+    return false
+  }
+
+  const allowedMimeTypes: readonly string[] = [
+    'application/pdf',
+    'image/jpeg',
+    'image/png',
+  ]
+  return (
+    allowedMimeTypes.includes(value.mimeType) &&
+    value.dataUrl.startsWith(`data:${value.mimeType};base64,`)
+  )
+}
+
+function isCafeApplicationDetails(value: unknown): value is CafeApplicationDetails {
+  if (typeof value !== 'object' || value === null) return false
+  return (
+    'registeredBusinessName' in value &&
+    typeof value.registeredBusinessName === 'string' &&
+    'commercialRegistration' in value &&
+    typeof value.commercialRegistration === 'string' &&
+    'vatNumber' in value &&
+    typeof value.vatNumber === 'string' &&
+    'city' in value &&
+    typeof value.city === 'string' &&
+    'district' in value &&
+    typeof value.district === 'string' &&
+    'street' in value &&
+    typeof value.street === 'string' &&
+    'buildingNumber' in value &&
+    typeof value.buildingNumber === 'string' &&
+    'postalCode' in value &&
+    typeof value.postalCode === 'string' &&
+    'shortAddress' in value &&
+    typeof value.shortAddress === 'string' &&
+    'commercialRegistrationDocument' in value &&
+    isCafeApplicationDocument(value.commercialRegistrationDocument) &&
+    'operatingLicenseDocument' in value &&
+    isCafeApplicationDocument(value.operatingLicenseDocument)
+  )
+}
+
 function isManagedUser(value: unknown): value is ManagedUser {
   if (typeof value !== 'object' || value === null) return false
+  if (
+    'cafeApplication' in value &&
+    value.cafeApplication !== undefined &&
+    !isCafeApplicationDetails(value.cafeApplication)
+  ) {
+    return false
+  }
   return (
     'id' in value &&
     typeof value.id === 'string' &&
@@ -132,8 +214,28 @@ function isManagedUser(value: unknown): value is ManagedUser {
   )
 }
 
+function cloneUser(user: ManagedUser): ManagedUser {
+  return {
+    ...user,
+    name: { ...user.name },
+    ...(user.cafeApplication
+      ? {
+          cafeApplication: {
+            ...user.cafeApplication,
+            commercialRegistrationDocument: {
+              ...user.cafeApplication.commercialRegistrationDocument,
+            },
+            operatingLicenseDocument: {
+              ...user.cafeApplication.operatingLicenseDocument,
+            },
+          },
+        }
+      : {}),
+  }
+}
+
 function cloneUsers(users: ManagedUser[]): ManagedUser[] {
-  return users.map((user) => ({ ...user, name: { ...user.name } }))
+  return users.map(cloneUser)
 }
 
 function readStoredUsers(): ManagedUser[] {
@@ -148,7 +250,25 @@ function readStoredUsers(): ManagedUser[] {
 }
 
 function writeStoredUsers(users: ManagedUser[]) {
-  window.localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users))
+  try {
+    window.localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users))
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      (error.name === 'QuotaExceededError' ||
+        error.name === 'NS_ERROR_DOM_QUOTA_REACHED')
+    ) {
+      throw new UserStorageQuotaError()
+    }
+    throw error
+  }
+}
+
+export class UserStorageQuotaError extends Error {
+  constructor() {
+    super('Browser storage is full.')
+    this.name = 'UserStorageQuotaError'
+  }
 }
 
 function assertUniqueEmail(email: string, exceptId?: string) {
@@ -182,7 +302,7 @@ export async function createRegisteredUser(
     status: 'unverified',
   }
   writeStoredUsers([user, ...readStoredUsers()])
-  return { ...user, name: { ...user.name } }
+  return cloneUser(user)
 }
 
 export async function updateUser(
@@ -204,7 +324,7 @@ export async function updateUser(
   }
   users[index] = updated
   writeStoredUsers(users)
-  return { ...updated, name: { ...updated.name } }
+  return cloneUser(updated)
 }
 
 export async function setUserStatus(
@@ -219,5 +339,5 @@ export async function setUserStatus(
   const updated = { ...users[index], status }
   users[index] = updated
   writeStoredUsers(users)
-  return { ...updated, name: { ...updated.name } }
+  return cloneUser(updated)
 }

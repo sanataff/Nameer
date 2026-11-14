@@ -1,35 +1,37 @@
 .store-verification-page {
-  min-height: 100vh;
-  padding: clamp(1.25rem, 3vw, 2.75rem);
+  min-height: calc(100vh - 4rem);
+  padding: clamp(0.75rem, 1.6vw, 1.25rem);
   color: var(--foreground);
-  font-family: Tahoma, "Segoe UI", sans-serif;
-}
-
-html[lang="en"] .store-verification-page {
-  font-family: var(--font-sans);
 }
 
 .store-verification-content {
   display: flex;
-  width: min(100%, 88rem);
+  width: min(100%, 100rem);
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
   margin-inline: auto;
 }
 
 .store-verification-header {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
 }
 
 .store-verification-heading h1 {
   margin: 0.4rem 0 0;
-  font-size: clamp(1.75rem, 3vw, 2.35rem);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
   font-weight: 650;
   letter-spacing: -0.035em;
+}
+
+.store-verification-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
 }
 
 .store-verification-eyebrow {
@@ -104,7 +106,7 @@ html[lang="en"] .store-verification-page {
 }
 
 .store-verification-table {
-  min-width: 52rem;
+  min-width: 62rem;
 }
 
 .store-verification-table thead {
@@ -133,7 +135,7 @@ html[lang="en"] .store-verification-page {
 }
 
 .store-verification-actions-heading {
-  width: 13rem;
+  width: 22rem;
 }
 
 .store-verification-actions {
@@ -141,6 +143,17 @@ html[lang="en"] .store-verification-page {
   flex-wrap: wrap;
   align-items: center;
   gap: 0.4rem;
+}
+
+.store-verification-actions [data-slot="button"] {
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.store-verification-actions [data-slot="button"]:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px color-mix(in oklch, var(--foreground) 12%, transparent);
 }
 
 .store-verification-message {
@@ -176,11 +189,11 @@ html[lang="en"] .store-verification-page {
 
 @media (max-width: 48rem) {
   .store-verification-page {
-    padding: 4.5rem 1rem 1.5rem;
+    padding: 0.75rem;
   }
 
   .store-verification-content {
-    gap: 1.1rem;
+    gap: 1rem;
   }
 
   .store-verification-toolbar {
@@ -188,6 +201,10 @@ html[lang="en"] .store-verification-page {
   }
 
   .store-verification-search {
+    width: 100%;
+  }
+
+  .store-verification-header-actions {
     width: 100%;
   }
 }

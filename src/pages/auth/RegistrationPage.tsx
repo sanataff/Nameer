@@ -1,7 +1,14 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { useTranslation } from 'react-i18next'
-import { createRegisteredUser, UserEmailAlreadyExistsError } from '@/api/users'
+import {
+  createRegisteredUser,
+  UserEmailAlreadyExistsError,
+  UserStorageQuotaError,
+  type CafeApplicationDetails,
+  type CafeApplicationDocument,
+  type CafeDocumentMimeType,
+} from '@/api/users'
 import { AppShell } from '@/components/AppShell'
 import { Button } from '@/components/ui/button'
 import {
@@ -24,6 +31,58 @@ import { usePageTitle } from '@/hooks/use-page-title'
 
 export type AccountRole = 'supplier' | 'cafe'
 
+const MAX_CAFE_DOCUMENT_SIZE = 1024 * 1024
+const CAFE_DOCUMENT_MIME_TYPES: Record<string, CafeDocumentMimeType> = {
+  pdf: 'application/pdf',
+  jpg: 'image/jpeg',
+  jpeg: 'image/jpeg',
+  png: 'image/png',
+}
+
+class CafeDocumentReadError extends Error {
+  constructor() {
+    super('A café license document could not be read.')
+    this.name = 'CafeDocumentReadError'
+  }
+}
+
+function getCafeDocumentMimeType(file: File): CafeDocumentMimeType | null {
+  const extension = file.name.split('.').pop()?.toLowerCase()
+  if (!extension || !(extension in CAFE_DOCUMENT_MIME_TYPES)) return null
+
+  const mimeType = CAFE_DOCUMENT_MIME_TYPES[extension]
+  return !file.type || file.type === mimeType ? mimeType : null
+}
+
+function readCafeDocument(
+  file: File,
+  mimeType: CafeDocumentMimeType,
+): Promise<CafeApplicationDocument> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => {
+      if (typeof reader.result !== 'string') {
+        reject(new CafeDocumentReadError())
+        return
+      }
+
+      const separator = reader.result.indexOf(',')
+      if (separator < 0) {
+        reject(new CafeDocumentReadError())
+        return
+      }
+
+      resolve({
+        fileName: file.name,
+        mimeType,
+        dataUrl: `data:${mimeType};base64,${reader.result.slice(separator + 1)}`,
+      })
+    }
+    reader.onerror = () => reject(new CafeDocumentReadError())
+    reader.readAsDataURL(file)
+  })
+}
+
 type RegistrationPageProps = {
   role: AccountRole
 }
@@ -41,7 +100,11 @@ export function RegistrationPage({ role }: RegistrationPageProps) {
   async function handleRegister(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setFormError('')
+    setMessage('')
     const formData = new FormData(event.currentTarget)
+    let cafeDocumentFiles:
+      | [File, CafeDocumentMimeType, File, CafeDocumentMimeType]
+      | null = null
 
     if (role === 'supplier') {
       const today = new Date()
@@ -60,8 +123,46 @@ export function RegistrationPage({ role }: RegistrationPageProps) {
       }
     }
 
+    if (role === 'cafe') {
+      const registrationFileValue = formData.get('commercialRegistrationDocument')
+      const operatingLicenseValue = formData.get('operatingLicenseDocument')
+      const registrationFile =
+        registrationFileValue instanceof File ? registrationFileValue : null
+      const operatingLicenseFile =
+        operatingLicenseValue instanceof File ? operatingLicenseValue : null
+
+      if (
+        !registrationFile ||
+        registrationFile.size === 0 ||
+        !operatingLicenseFile ||
+        operatingLicenseFile.size === 0
+      ) {
+        setFormError(t('registration.cafeDocumentsRequired'))
+        return
+      }
+      if (
+        registrationFile.size > MAX_CAFE_DOCUMENT_SIZE ||
+        operatingLicenseFile.size > MAX_CAFE_DOCUMENT_SIZE
+      ) {
+        setFormError(t('registration.documentTooLarge'))
+        return
+      }
+
+      const registrationMimeType = getCafeDocumentMimeType(registrationFile)
+      const operatingLicenseMimeType = getCafeDocumentMimeType(operatingLicenseFile)
+      if (!registrationMimeType || !operatingLicenseMimeType) {
+        setFormError(t('registration.documentFormatInvalid'))
+        return
+      }
+      cafeDocumentFiles = [
+        registrationFile,
+        registrationMimeType,
+        operatingLicenseFile,
+        operatingLicenseMimeType,
+      ]
+    }
+
     if (formData.get('password') !== formData.get('confirmPassword')) {
-      setMessage('')
       setFormError(t('registration.passwordMismatch'))
       return
     }
@@ -69,20 +170,57 @@ export function RegistrationPage({ role }: RegistrationPageProps) {
     setSubmitting(true)
     const name = String(formData.get('businessName') ?? '').trim()
     try {
+      let cafeApplication: CafeApplicationDetails | undefined
+      if (role === 'cafe') {
+        if (!cafeDocumentFiles) {
+          setFormError(t('registration.cafeDocumentsRequired'))
+          return
+        }
+        const [
+          registrationFile,
+          registrationMimeType,
+          operatingLicenseFile,
+          operatingLicenseMimeType,
+        ] = cafeDocumentFiles
+        const [
+          commercialRegistrationDocument,
+          operatingLicenseDocument,
+        ] = await Promise.all([
+          readCafeDocument(registrationFile, registrationMimeType),
+          readCafeDocument(operatingLicenseFile, operatingLicenseMimeType),
+        ])
+        cafeApplication = {
+          registeredBusinessName: String(formData.get('registeredBusinessName') ?? '').trim(),
+          commercialRegistration: String(formData.get('commercialRegistration') ?? '').trim(),
+          vatNumber: String(formData.get('vatNumber') ?? '').trim(),
+          city: String(formData.get('city') ?? '').trim(),
+          district: String(formData.get('district') ?? '').trim(),
+          street: String(formData.get('street') ?? '').trim(),
+          buildingNumber: String(formData.get('buildingNumber') ?? '').trim(),
+          postalCode: String(formData.get('postalCode') ?? '').trim(),
+          shortAddress: String(formData.get('shortAddress') ?? '').trim(),
+          commercialRegistrationDocument,
+          operatingLicenseDocument,
+        }
+      }
       await createRegisteredUser({
         name,
         email: String(formData.get('email') ?? '').trim(),
         phone: String(formData.get('phone') ?? '').trim(),
         role,
+        ...(cafeApplication ? { cafeApplication } : {}),
       })
       setMessage(t('registration.success'))
       if (role === 'supplier') setSupplierName(name)
     } catch (error) {
-      setMessage('')
       setFormError(
         error instanceof UserEmailAlreadyExistsError
           ? t('registration.emailExists')
-          : t('registration.saveError'),
+          : error instanceof UserStorageQuotaError
+            ? t('registration.storageFull')
+            : error instanceof CafeDocumentReadError
+              ? t('registration.documentReadError')
+              : t('registration.saveError'),
       )
     } finally {
       setSubmitting(false)
@@ -208,6 +346,35 @@ export function RegistrationPage({ role }: RegistrationPageProps) {
                     </FieldLabel>
                     <Input id="short-address" name="shortAddress" autoComplete="off" />
                   </Field>
+                  <p className="business-details-label">{t('registration.cafeLicenses')}</p>
+                  <div className="auth-field-row">
+                    <Field>
+                      <FieldLabel htmlFor="commercial-registration-document">
+                        {t('registration.commercialRegistrationDocument')}
+                      </FieldLabel>
+                      <Input
+                        id="commercial-registration-document"
+                        name="commercialRegistrationDocument"
+                        type="file"
+                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                        required
+                      />
+                      <FieldDescription>{t('registration.cafeDocumentUploadHelp')}</FieldDescription>
+                    </Field>
+                    <Field>
+                      <FieldLabel htmlFor="operating-license-document">
+                        {t('registration.operatingLicenseDocument')}
+                      </FieldLabel>
+                      <Input
+                        id="operating-license-document"
+                        name="operatingLicenseDocument"
+                        type="file"
+                        accept=".pdf,.jpg,.jpeg,.png,application/pdf,image/jpeg,image/png"
+                        required
+                      />
+                      <FieldDescription>{t('registration.cafeDocumentUploadHelp')}</FieldDescription>
+                    </Field>
+                  </div>
                 </FieldSet>
               )}
 

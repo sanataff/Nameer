@@ -1,19 +1,14 @@
 .customer-service-page {
-  min-height: 100vh;
-  padding: clamp(1.25rem, 3vw, 2.75rem);
+  min-height: calc(100vh - 4rem);
+  padding: clamp(0.75rem, 1.6vw, 1.25rem);
   color: var(--foreground);
-  font-family: Tahoma, "Segoe UI", sans-serif;
-}
-
-html[lang="en"] .customer-service-page {
-  font-family: var(--font-sans);
 }
 
 .customer-service-content {
   display: flex;
-  width: min(100%, 88rem);
+  width: min(100%, 100rem);
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
   margin-inline: auto;
 }
 
@@ -57,12 +52,6 @@ html[lang="en"] .customer-service-page {
 .customer-service-eyebrow svg {
   width: 1rem;
   height: 1rem;
-}
-
-.customer-service-stats {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.85rem;
 }
 
 .customer-service-toolbar {
@@ -112,6 +101,8 @@ html[lang="en"] .customer-service-page {
 }
 
 .customer-service-table-content {
+  min-width: 0;
+  overflow-x: auto;
   padding-inline: 0;
 }
 
@@ -207,6 +198,10 @@ html[lang="en"] .customer-service-page {
   gap: 1rem;
 }
 
+.customer-service-status-control > [data-slot="button"] {
+  width: 100%;
+}
+
 .customer-service-side-column {
   gap: 1rem;
 }
@@ -266,15 +261,11 @@ html[lang="en"] .customer-service-page {
 
 @media (max-width: 48rem) {
   .customer-service-page {
-    padding: 4.5rem 1rem 1.5rem;
+    padding: 0.75rem;
   }
 
   .customer-service-content {
-    gap: 1.1rem;
-  }
-
-  .customer-service-stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
   }
 
   .customer-service-toolbar {
