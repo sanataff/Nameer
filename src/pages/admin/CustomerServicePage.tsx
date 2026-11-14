@@ -3,9 +3,14 @@ import { useTranslation } from 'react-i18next'
 import {
   ArrowLeft,
   ArrowRight,
+  Check,
+  CircleCheck,
+  CircleDot,
+  Clock3,
   Headset,
   RefreshCw,
   Search,
+  Store,
   TicketCheck,
 } from 'lucide-react'
 import { Link, useParams } from 'react-router'
@@ -41,6 +46,7 @@ import {
 } from '@/components/ui/table'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { usePageTitle } from '@/hooks/use-page-title'
+import { AdminSummaryCards } from './AdminSummaryCards'
 import './customer-service.css'
 
 type RequestFilter = 'all' | CustomerRequestStatus
@@ -151,6 +157,28 @@ export function CustomerServicePage() {
     }),
     [requests],
   )
+  const summaryMetrics = [
+    {
+      label: t('customerService.filters.all'),
+      value: numberFormat.format(counts.all),
+      icon: TicketCheck,
+    },
+    {
+      label: t('customerService.status.open'),
+      value: numberFormat.format(counts.open),
+      icon: CircleDot,
+    },
+    {
+      label: t('customerService.status.reviewing'),
+      value: numberFormat.format(counts.reviewing),
+      icon: Clock3,
+    },
+    {
+      label: t('customerService.status.closed'),
+      value: numberFormat.format(counts.closed),
+      icon: CircleCheck,
+    },
+  ]
   const filteredRequests = useMemo(() => {
     const needle = query.trim().toLocaleLowerCase()
     return requests.filter((item) => {
@@ -236,13 +264,20 @@ export function CustomerServicePage() {
         )}
       </div>
       <div className="customer-service-header-actions">
-        <a
+        <Link
           className={buttonVariants({ variant: 'outline', size: 'sm' })}
-          href="/admin/users"
+          to="/admin/users"
         >
           <TicketCheck data-icon="inline-start" />
           {t('customerService.userManagement')}
-        </a>
+        </Link>
+        <Link
+          className={buttonVariants({ variant: 'outline', size: 'sm' })}
+          to="/admin/store-verification"
+        >
+          <Store data-icon="inline-start" />
+          {t('storeVerification.openPage')}
+        </Link>
         <Badge variant="outline">{t('adminUsers.demoData')}</Badge>
       </div>
     </header>
@@ -252,6 +287,11 @@ export function CustomerServicePage() {
       <div className="customer-service-page">
         <div className="customer-service-content">
           {customerServiceHeader}
+          <AdminSummaryCards
+            ariaLabel={t('customerService.statusSummary')}
+            loading={loading}
+            metrics={summaryMetrics}
+          />
           {loading ? (
             <Card>
               <CardContent className="customer-service-loading">
@@ -272,13 +312,13 @@ export function CustomerServicePage() {
           ) : isDetailPage ? (
             request ? (
               <section className="customer-service-detail">
-                <a
+                <Link
                   className={buttonVariants({ variant: 'ghost', size: 'sm' })}
-                  href="/admin/customer-service"
+                  to="/admin/customer-service"
                 >
                   <BackIcon data-icon="inline-start" />
                   {t('customerService.backToRequests')}
-                </a>
+                </Link>
 
                 <div className="customer-service-detail-heading">
                   <div>
@@ -388,7 +428,13 @@ export function CustomerServicePage() {
                             className="w-full"
                             disabled={savingStatus}
                           >
-                            <SelectValue />
+                            <SelectValue>
+                              {(value: string) =>
+                                isRequestStatus(value)
+                                  ? t(`customerService.status.${value}`)
+                                  : value
+                              }
+                            </SelectValue>
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
@@ -402,6 +448,34 @@ export function CustomerServicePage() {
                             </SelectGroup>
                           </SelectContent>
                         </Select>
+                        <Button
+                          type="button"
+                          disabled={savingStatus}
+                          onClick={() =>
+                            void changeStatus(
+                              request.status === 'open'
+                                ? 'reviewing'
+                                : request.status === 'reviewing'
+                                  ? 'closed'
+                                  : 'open',
+                            )
+                          }
+                        >
+                          {savingStatus ? (
+                            <RefreshCw data-icon="inline-start" />
+                          ) : (
+                            <Check data-icon="inline-start" />
+                          )}
+                          {savingStatus
+                            ? t('customerService.updating')
+                            : t(
+                                request.status === 'open'
+                                  ? 'customerService.actions.startReview'
+                                  : request.status === 'reviewing'
+                                    ? 'customerService.actions.close'
+                                    : 'customerService.actions.reopen',
+                              )}
+                        </Button>
                         {feedback && (
                           <p
                             className={`customer-service-feedback${feedback.tone === 'error' ? ' customer-service-feedback--error' : ''}`}
@@ -419,32 +493,17 @@ export function CustomerServicePage() {
               <Card>
                 <CardContent className="customer-service-message">
                   <p>{t('customerService.notFound')}</p>
-                  <a
+                  <Link
                     className={buttonVariants({ variant: 'outline', size: 'sm' })}
-                    href="/admin/customer-service"
+                    to="/admin/customer-service"
                   >
                     {t('customerService.backToRequests')}
-                  </a>
+                  </Link>
                 </CardContent>
               </Card>
             )
           ) : (
             <>
-              <section className="customer-service-stats" aria-label={t('customerService.statusSummary')}>
-                {(['all', 'open', 'reviewing', 'closed'] as const).map((status) => (
-                  <Card key={status} size="sm">
-                    <CardHeader>
-                      <CardDescription>
-                        {t(`customerService.filters.${status}`)}
-                      </CardDescription>
-                      <CardTitle>
-                        {numberFormat.format(counts[status])}
-                      </CardTitle>
-                    </CardHeader>
-                  </Card>
-                ))}
-              </section>
-
               <section className="customer-service-toolbar" aria-label={t('customerService.filtersLabel')}>
                 <ToggleGroup
                   aria-label={t('customerService.filtersLabel')}

@@ -1,26 +1,21 @@
 .admin-users-page {
-  min-height: 100vh;
-  padding: clamp(1.25rem, 3vw, 2.75rem);
+  min-height: calc(100vh - 4rem);
+  padding: clamp(0.75rem, 1.6vw, 1.25rem);
   color: var(--foreground);
-  font-family: Tahoma, "Segoe UI", sans-serif;
-}
-
-html[lang="en"] .admin-users-page {
-  font-family: var(--font-sans);
 }
 
 .admin-users-content {
   display: flex;
-  width: min(100%, 88rem);
+  width: min(100%, 100rem);
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
   margin-inline: auto;
 }
 
 .admin-users-header {
   display: flex;
   flex-wrap: wrap;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
 }
@@ -34,9 +29,16 @@ html[lang="en"] .admin-users-page {
 
 .admin-users-heading h1 {
   margin: 0.4rem 0 0;
-  font-size: clamp(1.75rem, 3vw, 2.35rem);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
   font-weight: 650;
   letter-spacing: -0.035em;
+}
+
+.admin-users-description {
+  margin: 0.35rem 0 0;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.5;
 }
 
 .admin-users-eyebrow {
@@ -96,7 +98,7 @@ html[lang="en"] .admin-users-page {
 }
 
 .admin-users-panel {
-  overflow: hidden;
+  overflow-x: auto;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   background: var(--card);
@@ -258,11 +260,11 @@ html[lang="en"] .admin-users-page {
 
 @media (max-width: 48rem) {
   .admin-users-page {
-    padding: 4.5rem 1rem 1.5rem;
+    padding: 0.75rem;
   }
 
   .admin-users-content {
-    gap: 1.1rem;
+    gap: 1rem;
   }
 
   .admin-users-toolbar {
@@ -270,6 +272,10 @@ html[lang="en"] .admin-users-page {
   }
 
   .admin-users-search {
+    width: 100%;
+  }
+
+  .admin-users-header-actions {
     width: 100%;
   }
 }

@@ -55,9 +55,18 @@
     "buildingNumber": "Building number",
     "postalCode": "Postal code",
     "shortAddress": "Short address",
+    "cafeLicenses": "Licenses and permits",
+    "commercialRegistrationDocument": "Commercial registration certificate",
+    "operatingLicenseDocument": "Operating / municipal license",
+    "cafeDocumentUploadHelp": "Required. PDF, JPG, or PNG; maximum 1 MB per file.",
+    "cafeDocumentsRequired": "Upload both café license documents to continue.",
+    "documentTooLarge": "Each license document must be 1 MB or smaller.",
+    "documentFormatInvalid": "Upload each license as a PDF, JPG, or PNG file.",
+    "documentReadError": "License documents could not be read. Please choose the files again.",
     "passwordMismatch": "The passwords do not match.",
     "success": "Your account has been saved for administrator review (demo mode).",
     "emailExists": "An account with this email address already exists.",
+    "storageFull": "The application could not be saved because this browser's demo storage is full.",
     "saveError": "Your account could not be saved. Please try again."
   },
   "supplierDashboard": {
@@ -374,6 +383,8 @@
   },
   "adminUsers": {
     "title": "User management",
+    "description": "Review account access, verification, and support history.",
+    "summaryLabel": "Account summary",
     "portalLabel": "Nameer Admin Portal",
     "demoData": "Demo data",
     "demoNote": "Example users are stored in this browser only. Newly registered accounts appear as unverified.",
@@ -410,7 +421,12 @@
       "viewUser": "View {{name}}",
       "editUser": "Edit {{name}}",
       "banUser": "Block {{name}}",
-      "unbanUser": "Unblock {{name}}"
+      "unbanUser": "Unblock {{name}}",
+      "statusChangeTitle": "Confirm account status change",
+      "blockDescription": "Block {{name}} from using the platform?",
+      "unblockDescription": "Restore platform access for {{name}}?",
+      "confirmBlock": "Block account",
+      "confirmUnblock": "Unblock account"
     },
     "empty": "No users match your search.",
     "loadError": "Users could not be loaded.",
@@ -432,6 +448,10 @@
   "storeVerification": {
     "title": "Store verification",
     "description": "Review supplier and café applications before they join Nameer.",
+    "summary": {
+      "label": "Store verification summary",
+      "total": "Store accounts"
+    },
     "openPage": "Store verification",
     "demoNote": "Example application data is stored in this browser only.",
     "filtersLabel": "Filter store applications",
@@ -452,10 +472,46 @@
     "reject": "Reject",
     "approveUser": "Approve {{name}}",
     "rejectUser": "Reject {{name}}",
+    "confirm": {
+      "approveTitle": "Approve this store?",
+      "approveDescription": "Approve {{name}} and activate its account?",
+      "rejectTitle": "Reject this store?",
+      "rejectDescription": "Reject the application from {{name}}?"
+    },
+    "processing": "Updating...",
+    "viewApplication": "View application",
+    "viewApplicationForUser": "View {{name}}'s application",
     "approveSuccess": "Store application approved.",
     "rejectSuccess": "Store application rejected.",
     "updateError": "Could not update this application. Please try again.",
     "empty": "No store applications match your search."
+  },
+  "cafeApplication": {
+    "title": "Café application",
+    "pageTitle": "{{name}} application",
+    "description": "Review the café's submitted business details, address, and license documents.",
+    "backToVerification": "Back to store verification",
+    "summary": {
+      "label": "Café application summary",
+      "status": "Application status",
+      "submitted": "Submitted",
+      "documents": "License documents",
+      "documentsValue": "{{received}} of {{total}} submitted"
+    },
+    "businessDetails": "Business details",
+    "businessDetailsDescription": "Information submitted for this café's registration.",
+    "addressDescription": "The café's submitted national address.",
+    "contactDetails": "Account contact",
+    "contactDetailsDescription": "Contact details associated with the application.",
+    "licenses": "Licenses and permits",
+    "documentsDescription": "Open or download the files submitted with this application.",
+    "documentSubmitted": "Submitted",
+    "viewDocument": "View file",
+    "downloadDocument": "Download",
+    "missingDocument": "No document was submitted for this application.",
+    "notProvided": "Not provided",
+    "loadError": "The café application could not be loaded.",
+    "notFound": "This café application could not be found."
   },
   "customerService": {
     "title": "Customer service",
@@ -506,6 +562,12 @@
     "requesterUnavailable": "Customer record unavailable",
     "updateStatus": "Update status",
     "updateStatusDescription": "The latest status also appears in user management.",
+    "actions": {
+      "startReview": "Start review",
+      "close": "Close request",
+      "reopen": "Reopen request"
+    },
+    "updating": "Updating...",
     "statusUpdated": "Request status updated.",
     "updateError": "Could not update this request. Please try again.",
     "loadError": "Customer requests could not be loaded.",

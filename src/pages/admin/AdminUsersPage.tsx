@@ -1,6 +1,18 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Ban, CircleCheck, Eye, Pencil, RefreshCw, Search, Store, UsersRound } from 'lucide-react'
+import {
+  Ban,
+  CircleCheck,
+  Clock3,
+  Eye,
+  Headset,
+  Pencil,
+  RefreshCw,
+  Search,
+  Store,
+  UsersRound,
+} from 'lucide-react'
+import { Link } from 'react-router'
 import {
   CUSTOMER_REQUESTS_STORAGE_KEY,
   CUSTOMER_REQUESTS_UPDATED_EVENT,
@@ -16,6 +28,16 @@ import {
   type ManagedUser,
   type UserStatus,
 } from '@/api/users'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
 import { Badge } from '@/components/ui/badge'
 import { Button, buttonVariants } from '@/components/ui/button'
 import {
@@ -46,6 +68,7 @@ import {
 } from '@/components/ui/table'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { usePageTitle } from '@/hooks/use-page-title'
+import { AdminSummaryCards } from './AdminSummaryCards'
 import './users.css'
 
 type StatusFilter = 'all' | UserStatus
@@ -72,6 +95,11 @@ export function AdminUsersPage() {
   const [filter, setFilter] = useState<StatusFilter>('all')
   const [viewingUser, setViewingUser] = useState<ManagedUser | null>(null)
   const [editingUser, setEditingUser] = useState<ManagedUser | null>(null)
+  const [statusAction, setStatusAction] = useState<{
+    user: ManagedUser
+    status: 'active' | 'banned'
+  } | null>(null)
+  const [pendingStatusId, setPendingStatusId] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const [saveError, setSaveError] = useState('')
   const [toast, setToast] = useState<ToastMessage | null>(null)
@@ -233,8 +261,8 @@ export function AdminUsersPage() {
     }
   }
 
-  async function toggleUserStatus(user: ManagedUser) {
-    const status = user.status === 'banned' ? 'active' : 'banned'
+  async function changeUserStatus(user: ManagedUser, status: 'active' | 'banned') {
+    setPendingStatusId(user.id)
     try {
       const updated = await setUserStatus(user.id, status)
       setUsers((previous) =>
@@ -245,7 +273,15 @@ export function AdminUsersPage() {
       )
     } catch {
       showToast(t('adminUsers.saveError'), 'error')
+    } finally {
+      setPendingStatusId(null)
     }
+  }
+
+  async function confirmUserStatusChange() {
+    if (!statusAction) return
+    await changeUserStatus(statusAction.user, statusAction.status)
+    setStatusAction(null)
   }
 
   function statusBadge(status: UserStatus) {
@@ -282,6 +318,29 @@ export function AdminUsersPage() {
     )
   }
 
+  const summaryMetrics = [
+    {
+      label: t('adminControlPanel.stats.totalAccounts'),
+      value: numberFormat.format(counts.all),
+      icon: UsersRound,
+    },
+    {
+      label: t('adminUsers.status.active'),
+      value: numberFormat.format(counts.active),
+      icon: CircleCheck,
+    },
+    {
+      label: t('adminUsers.status.unverified'),
+      value: numberFormat.format(counts.unverified),
+      icon: Clock3,
+    },
+    {
+      label: t('adminUsers.status.banned'),
+      value: numberFormat.format(counts.banned),
+      icon: Ban,
+    },
+  ]
+
   return (
       <div className="admin-users-page">
       <div className="admin-users-content">
@@ -292,24 +351,32 @@ export function AdminUsersPage() {
               {t('adminUsers.portalLabel')}
             </p>
             <h1>{t('adminUsers.title')}</h1>
+            <p className="admin-users-description">{t('adminUsers.description')}</p>
           </div>
           <div className="admin-users-header-actions">
-            <a
+            <Link
               className={buttonVariants({ variant: 'outline', size: 'sm' })}
-              href="/admin/store-verification"
+              to="/admin/store-verification"
             >
               <Store data-icon="inline-start" />
               {t('storeVerification.openPage')}
-            </a>
-            <a
+            </Link>
+            <Link
               className={buttonVariants({ variant: 'outline', size: 'sm' })}
-              href="/admin/customer-service"
+              to="/admin/customer-service"
             >
+              <Headset data-icon="inline-start" />
               {t('customerService.title')}
-            </a>
+            </Link>
             <Badge variant="outline">{t('adminUsers.demoData')}</Badge>
           </div>
         </header>
+
+        <AdminSummaryCards
+          ariaLabel={t('adminUsers.summaryLabel')}
+          loading={loading}
+          metrics={summaryMetrics}
+        />
 
         <section className="admin-users-toolbar" aria-label={t('adminUsers.filtersLabel')}>
           <ToggleGroup
@@ -440,13 +507,13 @@ export function AdminUsersPage() {
                         (() => {
                           const latestRequest = latestRequestForUser(user.id)
                           return latestRequest ? (
-                            <a
+                            <Link
                               className="admin-users-request-status"
-                              href={`/admin/customer-service/${encodeURIComponent(latestRequest.id)}`}
+                              to={`/admin/customer-service/${encodeURIComponent(latestRequest.id)}`}
                             >
                               {requestStatusBadge(latestRequest.status)}
                               <span dir="ltr">#{latestRequest.id}</span>
-                            </a>
+                            </Link>
                           ) : (
                             <span className="admin-users-no-request">
                               {t('adminUsers.noCustomerRequest')}
@@ -492,7 +559,13 @@ export function AdminUsersPage() {
                               : 'adminUsers.actions.banUser',
                             { name: user.name[language] || user.name.en },
                           )}
-                          onClick={() => void toggleUserStatus(user)}
+                          disabled={pendingStatusId === user.id}
+                          onClick={() =>
+                            setStatusAction({
+                              user,
+                              status: user.status === 'banned' ? 'active' : 'banned',
+                            })
+                          }
                         >
                           {user.status === 'banned' ? (
                             <CircleCheck aria-hidden="true" />
@@ -556,13 +629,13 @@ export function AdminUsersPage() {
                     : (() => {
                         const latestRequest = latestRequestForUser(viewingUser.id)
                         return latestRequest ? (
-                          <a
+                          <Link
                             className="admin-users-request-status"
-                            href={`/admin/customer-service/${encodeURIComponent(latestRequest.id)}`}
+                            to={`/admin/customer-service/${encodeURIComponent(latestRequest.id)}`}
                           >
                             {requestStatusBadge(latestRequest.status)}
                             <span dir="ltr">#{latestRequest.id}</span>
-                          </a>
+                          </Link>
                         ) : (
                           t('adminUsers.noCustomerRequest')
                         )
@@ -651,6 +724,58 @@ export function AdminUsersPage() {
           )}
         </DialogContent>
       </Dialog>
+
+      <AlertDialog
+        open={statusAction !== null}
+        onOpenChange={(open) => {
+          if (!open && pendingStatusId === null) setStatusAction(null)
+        }}
+      >
+        {statusAction && (
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                {t('adminUsers.actions.statusChangeTitle')}
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                {t(
+                  statusAction.status === 'banned'
+                    ? 'adminUsers.actions.blockDescription'
+                    : 'adminUsers.actions.unblockDescription',
+                  {
+                    name:
+                      statusAction.user.name[language] ||
+                      statusAction.user.name.en,
+                  },
+                )}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel disabled={pendingStatusId !== null}>
+                {t('adminUsers.cancel')}
+              </AlertDialogCancel>
+              <AlertDialogAction
+                variant={
+                  statusAction.status === 'banned' ? 'destructive' : 'default'
+                }
+                disabled={pendingStatusId !== null}
+                onClick={(event) => {
+                  event.preventDefault()
+                  void confirmUserStatusChange()
+                }}
+              >
+                {pendingStatusId !== null
+                  ? t('adminUsers.saving')
+                  : t(
+                      statusAction.status === 'banned'
+                        ? 'adminUsers.actions.confirmBlock'
+                        : 'adminUsers.actions.confirmUnblock',
+                    )}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        )}
+      </AlertDialog>
 
       {toast && (
         <div

@@ -55,9 +55,18 @@
     "buildingNumber": "رقم المبنى",
     "postalCode": "الرمز البريدي",
     "shortAddress": "العنوان المختصر",
+    "cafeLicenses": "التراخيص والتصاريح",
+    "commercialRegistrationDocument": "شهادة السجل التجاري",
+    "operatingLicenseDocument": "رخصة التشغيل / الرخصة البلدية",
+    "cafeDocumentUploadHelp": "مطلوب. الصيغ المقبولة PDF أو JPG أو PNG، بحد أقصى ١ ميجابايت لكل ملف.",
+    "cafeDocumentsRequired": "أرفق وثيقتي ترخيص المقهى للمتابعة.",
+    "documentTooLarge": "يجب ألا يتجاوز حجم كل وثيقة ترخيص ١ ميجابايت.",
+    "documentFormatInvalid": "أرفق كل وثيقة بصيغة PDF أو JPG أو PNG.",
+    "documentReadError": "تعذرت قراءة وثائق الترخيص. يرجى اختيار الملفات مرة أخرى.",
     "passwordMismatch": "كلمتا المرور غير متطابقتين.",
     "success": "تم حفظ حسابك لمراجعته من المشرف (وضع تجريبي).",
     "emailExists": "يوجد حساب مسجل بهذا البريد الإلكتروني بالفعل.",
+    "storageFull": "تعذر حفظ الطلب لأن مساحة التخزين التجريبية في هذا المتصفح ممتلئة.",
     "saveError": "تعذر حفظ الحساب. يرجى المحاولة مرة أخرى."
   },
   "supplierDashboard": {
@@ -373,6 +382,8 @@
   },
   "adminUsers": {
     "title": "إدارة المستخدمين",
+    "description": "راجع صلاحيات الحسابات وحالة التوثيق وسجل الدعم.",
+    "summaryLabel": "ملخص الحسابات",
     "portalLabel": "بوابة مشرفي Nameer",
     "demoData": "بيانات تجريبية",
     "demoNote": "تُحفظ بيانات المستخدمين التجريبية في هذا المتصفح فقط. تظهر الحسابات الجديدة بحالة غير موثّق.",
@@ -409,7 +420,12 @@
       "viewUser": "عرض {{name}}",
       "editUser": "تعديل {{name}}",
       "banUser": "حظر {{name}}",
-      "unbanUser": "إلغاء حظر {{name}}"
+      "unbanUser": "إلغاء حظر {{name}}",
+      "statusChangeTitle": "تأكيد تغيير حالة الحساب",
+      "blockDescription": "هل تريد حظر {{name}} من استخدام المنصة؟",
+      "unblockDescription": "هل تريد استعادة صلاحية {{name}} في المنصة؟",
+      "confirmBlock": "حظر الحساب",
+      "confirmUnblock": "إلغاء حظر الحساب"
     },
     "empty": "لا يوجد مستخدمون يطابقون البحث.",
     "loadError": "تعذر تحميل المستخدمين.",
@@ -431,6 +447,10 @@
   "storeVerification": {
     "title": "توثيق المتاجر",
     "description": "راجع طلبات الأسر المنتجة والمقاهي قبل انضمامها إلى Nameer.",
+    "summary": {
+      "label": "ملخص توثيق المتاجر",
+      "total": "حسابات المتاجر"
+    },
     "openPage": "توثيق المتاجر",
     "demoNote": "تُحفظ بيانات الطلبات التجريبية في هذا المتصفح فقط.",
     "filtersLabel": "تصفية طلبات المتاجر",
@@ -451,10 +471,46 @@
     "reject": "رفض",
     "approveUser": "قبول {{name}}",
     "rejectUser": "رفض {{name}}",
+    "confirm": {
+      "approveTitle": "هل تريد قبول هذا المتجر؟",
+      "approveDescription": "قبول {{name}} وتفعيل حسابه؟",
+      "rejectTitle": "هل تريد رفض هذا المتجر؟",
+      "rejectDescription": "رفض طلب {{name}}؟"
+    },
+    "processing": "جارٍ التحديث...",
+    "viewApplication": "عرض الطلب",
+    "viewApplicationForUser": "عرض طلب {{name}}",
     "approveSuccess": "تم قبول طلب المتجر.",
     "rejectSuccess": "تم رفض طلب المتجر.",
     "updateError": "تعذر تحديث هذا الطلب. يرجى المحاولة مرة أخرى.",
     "empty": "لا توجد طلبات متاجر تطابق البحث."
+  },
+  "cafeApplication": {
+    "title": "طلب المقهى",
+    "pageTitle": "طلب {{name}}",
+    "description": "راجع بيانات النشاط والعنوان ووثائق الترخيص التي أرسلها المقهى.",
+    "backToVerification": "العودة إلى توثيق المتاجر",
+    "summary": {
+      "label": "ملخص طلب المقهى",
+      "status": "حالة الطلب",
+      "submitted": "تاريخ التقديم",
+      "documents": "وثائق الترخيص",
+      "documentsValue": "تم تقديم {{received}} من {{total}}"
+    },
+    "businessDetails": "بيانات المنشأة",
+    "businessDetailsDescription": "المعلومات المقدمة لتسجيل هذا المقهى.",
+    "addressDescription": "العنوان الوطني المقدم للمقهى.",
+    "contactDetails": "بيانات التواصل",
+    "contactDetailsDescription": "بيانات التواصل المرتبطة بالطلب.",
+    "licenses": "التراخيص والتصاريح",
+    "documentsDescription": "افتح أو نزّل الملفات المرفقة بهذا الطلب.",
+    "documentSubmitted": "مرفق",
+    "viewDocument": "عرض الملف",
+    "downloadDocument": "تنزيل",
+    "missingDocument": "لم تُرفق وثيقة بهذا الطلب.",
+    "notProvided": "غير مقدم",
+    "loadError": "تعذر تحميل طلب المقهى.",
+    "notFound": "تعذر العثور على طلب هذا المقهى."
   },
   "customerService": {
     "title": "خدمة العملاء",
@@ -505,6 +561,12 @@
     "requesterUnavailable": "بيانات العميل غير متاحة",
     "updateStatus": "تحديث الحالة",
     "updateStatusDescription": "ستظهر الحالة الأحدث أيضاً في إدارة المستخدمين.",
+    "actions": {
+      "startReview": "بدء المراجعة",
+      "close": "إغلاق الطلب",
+      "reopen": "إعادة فتح الطلب"
+    },
+    "updating": "جارٍ التحديث...",
     "statusUpdated": "تم تحديث حالة الطلب.",
     "updateError": "تعذر تحديث الطلب. يرجى المحاولة مرة أخرى.",
     "loadError": "تعذر تحميل طلبات العملاء.",

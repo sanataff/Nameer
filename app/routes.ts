@@ -9,6 +9,7 @@ export default [
     route('users', './routes/admin/users.tsx'),
     route('chat', './routes/admin/chat.tsx'),
     route('store-verification', './routes/admin/store-verification.tsx'),
+    route('store-verification/:userId', './routes/admin/store-verification-detail.tsx'),
     route('customer-service', './routes/admin/customer-service.tsx'),
     route('customer-service/:requestId', './routes/admin/customer-service-request.tsx'),
   ]),

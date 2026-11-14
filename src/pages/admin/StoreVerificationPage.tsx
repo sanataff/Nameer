@@ -1,6 +1,19 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Check, RefreshCw, Search, Store, X } from 'lucide-react'
+import {
+  Check,
+  CircleCheck,
+  CircleX,
+  Clock3,
+  Eye,
+  Headset,
+  RefreshCw,
+  Search,
+  Store,
+  UsersRound,
+  X,
+} from 'lucide-react'
+import { Link } from 'react-router'
 import {
   listUsers,
   setUserStatus,
@@ -8,8 +21,18 @@ import {
   type UserRole,
   type UserStatus,
 } from '@/api/users'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
@@ -22,6 +45,7 @@ import {
 } from '@/components/ui/table'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { usePageTitle } from '@/hooks/use-page-title'
+import { AdminSummaryCards } from './AdminSummaryCards'
 import './store-verification.css'
 
 type VerificationFilter = 'all' | UserRole | 'unverified'
@@ -44,6 +68,10 @@ export function StoreVerificationPage() {
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState<VerificationFilter>('all')
   const [pendingIds, setPendingIds] = useState<Set<string>>(new Set())
+  const [reviewAction, setReviewAction] = useState<{
+    user: ManagedUser
+    status: 'active' | 'rejected'
+  } | null>(null)
   const [toast, setToast] = useState<ToastMessage | null>(null)
   const toastId = useRef(0)
 
@@ -99,6 +127,8 @@ export function StoreVerificationPage() {
       supplier: verificationUsers.filter((user) => user.role === 'supplier').length,
       cafe: verificationUsers.filter((user) => user.role === 'cafe').length,
       unverified: verificationUsers.filter((user) => user.status === 'unverified').length,
+      active: verificationUsers.filter((user) => user.status === 'active').length,
+      rejected: verificationUsers.filter((user) => user.status === 'rejected').length,
     }),
     [verificationUsers],
   )
@@ -145,6 +175,13 @@ export function StoreVerificationPage() {
     }
   }
 
+  async function confirmReviewAction() {
+    if (!reviewAction) return
+    const action = reviewAction
+    await reviewUser(action.user, action.status)
+    setReviewAction(null)
+  }
+
   function statusBadge(status: UserStatus) {
     const variant =
       status === 'rejected' || status === 'banned'
@@ -154,6 +191,29 @@ export function StoreVerificationPage() {
           : 'outline'
     return <Badge variant={variant}>{t(`adminUsers.status.${status}`)}</Badge>
   }
+
+  const summaryMetrics = [
+    {
+      label: t('storeVerification.summary.total'),
+      value: numberFormat.format(counts.all),
+      icon: UsersRound,
+    },
+    {
+      label: t('adminUsers.status.active'),
+      value: numberFormat.format(counts.active),
+      icon: CircleCheck,
+    },
+    {
+      label: t('storeVerification.filters.unverified'),
+      value: numberFormat.format(counts.unverified),
+      icon: Clock3,
+    },
+    {
+      label: t('adminUsers.status.rejected'),
+      value: numberFormat.format(counts.rejected),
+      icon: CircleX,
+    },
+  ]
 
   return (
       <div className="store-verification-page">
@@ -169,8 +229,30 @@ export function StoreVerificationPage() {
                 {t('storeVerification.description')}
               </p>
             </div>
-            <Badge variant="outline">{t('adminUsers.demoData')}</Badge>
+            <div className="store-verification-header-actions">
+              <Link
+                className={buttonVariants({ variant: 'outline', size: 'sm' })}
+                to="/admin/users"
+              >
+                <UsersRound data-icon="inline-start" />
+                {t('adminUsers.title')}
+              </Link>
+              <Link
+                className={buttonVariants({ variant: 'outline', size: 'sm' })}
+                to="/admin/customer-service"
+              >
+                <Headset data-icon="inline-start" />
+                {t('customerService.title')}
+              </Link>
+              <Badge variant="outline">{t('adminUsers.demoData')}</Badge>
+            </div>
           </header>
+
+          <AdminSummaryCards
+            ariaLabel={t('storeVerification.summary.label')}
+            loading={loading}
+            metrics={summaryMetrics}
+          />
 
           <section
             className="store-verification-toolbar"
@@ -286,33 +368,53 @@ export function StoreVerificationPage() {
                       </TableCell>
                       <TableCell>{statusBadge(user.status)}</TableCell>
                       <TableCell>
-                        {user.status === 'unverified' && (
+                        {(user.role === 'cafe' || user.status === 'unverified') && (
                           <div className="store-verification-actions">
-                            <Button
-                              type="button"
-                              size="sm"
-                              disabled={pendingIds.has(user.id)}
-                              aria-label={t('storeVerification.approveUser', {
-                                name: user.name[language] || user.name.en,
-                              })}
-                              onClick={() => void reviewUser(user, 'active')}
-                            >
-                              <Check data-icon="inline-start" />
-                              {t('storeVerification.approve')}
-                            </Button>
-                            <Button
-                              type="button"
-                              variant="destructive"
-                              size="sm"
-                              disabled={pendingIds.has(user.id)}
-                              aria-label={t('storeVerification.rejectUser', {
-                                name: user.name[language] || user.name.en,
-                              })}
-                              onClick={() => void reviewUser(user, 'rejected')}
-                            >
-                              <X data-icon="inline-start" />
-                              {t('storeVerification.reject')}
-                            </Button>
+                            {user.role === 'cafe' && (
+                              <Link
+                                className={buttonVariants({ variant: 'outline', size: 'sm' })}
+                                to={`/admin/store-verification/${encodeURIComponent(user.id)}`}
+                                aria-label={t('storeVerification.viewApplicationForUser', {
+                                  name: user.name[language] || user.name.en,
+                                })}
+                              >
+                                <Eye data-icon="inline-start" />
+                                {t('storeVerification.viewApplication')}
+                              </Link>
+                            )}
+                            {user.status === 'unverified' && (
+                              <>
+                                <Button
+                                  type="button"
+                                  size="sm"
+                                  disabled={pendingIds.has(user.id)}
+                                  aria-label={t('storeVerification.approveUser', {
+                                    name: user.name[language] || user.name.en,
+                                  })}
+                                  onClick={() =>
+                                    setReviewAction({ user, status: 'active' })
+                                  }
+                                >
+                                  <Check data-icon="inline-start" />
+                                  {t('storeVerification.approve')}
+                                </Button>
+                                <Button
+                                  type="button"
+                                  variant="destructive"
+                                  size="sm"
+                                  disabled={pendingIds.has(user.id)}
+                                  aria-label={t('storeVerification.rejectUser', {
+                                    name: user.name[language] || user.name.en,
+                                  })}
+                                  onClick={() =>
+                                    setReviewAction({ user, status: 'rejected' })
+                                  }
+                                >
+                                  <X data-icon="inline-start" />
+                                  {t('storeVerification.reject')}
+                                </Button>
+                              </>
+                            )}
                           </div>
                         )}
                       </TableCell>
@@ -326,6 +428,61 @@ export function StoreVerificationPage() {
             {t('storeVerification.demoNote')}
           </p>
         </div>
+        <AlertDialog
+          open={reviewAction !== null}
+          onOpenChange={(open) => {
+            if (!open && pendingIds.size === 0) setReviewAction(null)
+          }}
+        >
+          {reviewAction && (
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>
+                  {t(
+                    reviewAction.status === 'active'
+                      ? 'storeVerification.confirm.approveTitle'
+                      : 'storeVerification.confirm.rejectTitle',
+                  )}
+                </AlertDialogTitle>
+                <AlertDialogDescription>
+                  {t(
+                    reviewAction.status === 'active'
+                      ? 'storeVerification.confirm.approveDescription'
+                      : 'storeVerification.confirm.rejectDescription',
+                    {
+                      name:
+                        reviewAction.user.name[language] ||
+                        reviewAction.user.name.en,
+                    },
+                  )}
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel
+                  disabled={pendingIds.has(reviewAction.user.id)}
+                >
+                  {t('adminUsers.cancel')}
+                </AlertDialogCancel>
+                <AlertDialogAction
+                  variant={
+                    reviewAction.status === 'rejected' ? 'destructive' : 'default'
+                  }
+                  disabled={pendingIds.has(reviewAction.user.id)}
+                  onClick={(event) => {
+                    event.preventDefault()
+                    void confirmReviewAction()
+                  }}
+                >
+                  {pendingIds.has(reviewAction.user.id)
+                    ? t('storeVerification.processing')
+                    : reviewAction.status === 'active'
+                      ? t('storeVerification.approve')
+                      : t('storeVerification.reject')}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          )}
+        </AlertDialog>
         {toast && (
           <div
             key={toast.id}
