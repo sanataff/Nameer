@@ -1,4 +1,4 @@
-import { CafeApplicationDetailPage } from '../../../src/pages/admin/CafeApplicationDetailPage'
+import { CafeApplicationDetailPage } from '../../server/src/pages/admin/CafeApplicationDetailPage'
 
 export default function StoreVerificationDetailRoute() {
   return <CafeApplicationDetailPage />

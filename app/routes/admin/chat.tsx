@@ -1,4 +1,4 @@
-import { AdminChatPage } from '../../../src/pages/admin/AdminChatPage'
+import { AdminChatPage } from '../../server/src/pages/admin/AdminChatPage'
 
 export default function AdminChatRoute() {
   return <AdminChatPage />

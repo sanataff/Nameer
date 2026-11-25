@@ -1,4 +1,4 @@
-import { LoginPage } from '../../../src/pages/auth/LoginPage'
+import { LoginPage } from '../../server/src/pages/auth/LoginPage'
 
 export default function LoginRoute() {
   return <LoginPage />

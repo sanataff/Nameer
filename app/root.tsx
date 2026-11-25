@@ -8,8 +8,8 @@ import {
   Scripts,
   ScrollRestoration,
 } from 'react-router'
-import { DirectionProvider } from '../src/components/ui/direction'
-import '../src/i18n'
+import { DirectionProvider } from './server/src/components/ui/direction'
+import './server/src/i18n'
 import '../src/index.css'
 
 export function Layout({ children }: { children: ReactNode }) {

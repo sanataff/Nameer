@@ -1,1 +1,1 @@
-﻿export { default } from '../../../src/pages/bussiness/BusinessOrdersPage'
+﻿export { default } from '../../server/src/pages/bussiness/BusinessOrdersPage'
