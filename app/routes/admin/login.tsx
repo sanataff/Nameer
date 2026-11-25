@@ -1,4 +1,4 @@
-import { AdminLoginPage } from '../../../src/pages/auth/AdminLoginPage'
+import { AdminLoginPage } from '../../server/src/pages/auth/AdminLoginPage'
 
 export default function AdminLoginRoute() {
   return <AdminLoginPage />

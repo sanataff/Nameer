@@ -1,1 +1,1 @@
-﻿export { default } from '../../../src/pages/bussiness/chat/BusinessChatPage'
+﻿export { default } from '../../server/src/pages/bussiness/chat/BusinessChatPage'

@@ -1,1 +1,1 @@
-﻿export { default } from '../../../src/pages/bussiness/shoppingCart/CartLayout'
+﻿export { default } from '../../server/src/pages/bussiness/shoppingCart/CartLayout'
